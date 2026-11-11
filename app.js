@@ -3,20 +3,90 @@
 const $ = id => document.getElementById(id);
 const P = window.Physics, all = window.Presets.list;
 const fields = window.Presets.labels.fields;
-let showUniform = true;
-try { showUniform = localStorage.getItem('motion-show-uniform') !== 'false'; } catch (_) {}
-let state = {scope:'pursuit', dimension:'group', category:'', presetId:'', A:{x:0,v:8,a:0,stop:false}, B:{x:6,v:4,a:1,stop:false}, duration:18, time:0, playing:false, last:null};
-const ordered = (key,scope,values) => {
- const preferred = key==='group' ? [] : key==='process' || key==='result' ? (Presets.labels[key]||[]) : (Presets.labels[scope]||{})[key] || [];
- return [...preferred.filter(v=>values.includes(v)),...values.filter(v=>!preferred.includes(v))];
+// A short teaching pathway through the same verified motion presets.
+const typicalCases = [
+ {id:'p-10-fast-0-6',label:'后车加速追上匀速',A:{v:9,a:1.6},B:{x:15,v:5}},
+ {id:'p-10-slow-0-6',label:'加速追匀速：先远离后追上',A:{v:5,a:2.4},B:{x:4.2,v:8}},
+ {id:'p-20-fast-0-6',label:'后车减速追匀速：两次相遇',A:{v:9,a:-1.6},B:{x:3.2,v:5}},
+ {id:'p-20-fast-0-8',label:'后车减速追匀速：恰好追上',A:{v:9,a:-1.6},B:{x:5,v:5}},
+ {id:'p-20-fast-0-12',label:'后车减速追匀速：未追上',A:{v:9,a:-1.6},B:{x:7,v:5}},
+ {id:'m-00-0-8',label:'两车匀速相向相遇'},
+ {id:'m-02-0-72',label:'匀速与减速相向：停下后相遇',A:{v:6},B:{x:19.5,v:-6,a:4}},
+ {id:'m-22-0-36',label:'两车减速相向：停下未相遇',A:{v:8,a:-4},B:{x:20,v:-8,a:4}}
+];
+const themes = {
+ accelerate: { variants: [['一直靠近并追上','p-10-fast-0-6'],['先远离后追上','p-10-slow-0-6']] },
+ decelerate: { variants: [['未追上','p-20-fast-0-12'],['恰好追上','p-20-fast-0-8'],['两次相遇','p-20-fast-0-6']] },
+ 'opposite-uniform': { variants: [['','m-00-0-8']] },
+ 'opposite-mixed': { variants: [['一方停下后相遇','m-02-0-72']] },
+ 'opposite-slow': { variants: [['双方停下仍未相遇','m-22-0-36']] }
 };
+const physicalScope = () => state.scope==='typical' ? (all.find(p=>p.id===state.presetId)?.scope || 'pursuit') : state.scope;
+let showUniform = false;
+try { showUniform = localStorage.getItem('motion-show-uniform') === 'true'; } catch (_) {}
+let state = {mode:'typical',scope:'typical',theme:'accelerate',category:'',resultFilter:'',presetId:'', A:{x:0,v:8,a:0,stop:false}, B:{x:6,v:4,a:1,stop:false}, duration:18, time:0, playing:false, last:null};
 function baseList(){return all.filter(p=>p.scope===state.scope && (showUniform || !(p.scope==='pursuit' && p.group==='匀速追匀速')));}
 function options(select,items,value,display=x=>x){select.replaceChildren(...items.map(x=>{const op=document.createElement('option');op.value=x;op.textContent=display(x);return op;}));select.value=items.includes(value)?value:(items[0]||'');return select.value;}
-function populateDimensions(){const keys=state.scope==='meeting'?['group','advantage','phase','process','result']:['group','initial','advantage','process','result'];state.dimension=options($('dimension'),keys,state.dimension,k=>state.scope==='meeting'&&k==='advantage'?'按靠近速度变化分':fields[k]);populateCategories();}
-function populateCategories(){const list=baseList(),vals=[...new Set(list.map(p=>p[state.dimension]))];state.category=options($('category'),ordered(state.dimension,state.scope,vals),state.category);populatePresets();}
-function populatePresets(){const list=baseList().filter(p=>p[state.dimension]===state.category);const ids=list.map(p=>p.id);state.presetId=options($('preset'),ids,state.presetId,id=>{const p=list.find(v=>v.id===id); return state.scope==='pursuit' ? `${p.group} · ${p.initial} · ${p.process} · ${p.result}` : `${p.group} · ${p.phase} · ${p.result}`;});loadPreset();}
-function loadPreset(){const p=all.find(p=>p.id===state.presetId);if(!p)return;$('preset-selected').textContent=$('preset').selectedOptions[0]?.textContent||p.title;state.A={...p.A};state.B={...p.B};state.duration=p.duration;state.time=0;state.playing=false;state.last=null;$('preset-description').textContent=state.scope==='pursuit'?'A 在后，B 在前；两者初始都向右运动。':'A 向右、B 向左；两者开始时相向运动。';$('model-note').textContent='分类是预设的观察入口；调整参数后，初速度比较、间距变化或相遇结果可能改变。减速物体到零后停住。';renderParams();refresh();}
-function selectScope(scope){state.scope=scope;state.time=0;state.playing=false;state.last=null;state.category='';state.presetId='';document.querySelectorAll('[data-scope]').forEach(b=>b.classList.toggle('selected',b.dataset.scope===scope));$('classification').hidden=scope==='general';$('general-note').hidden=scope!=='general';if(scope==='general'){state.A={x:0,v:8,a:0,stop:false};state.B={x:30,v:-4,a:0,stop:false};state.duration=5;$('model-note').textContent='通用模式持续按匀变速直线运动计算：速度经过零后可反向，不会自动停车。';renderParams();refresh();}else{state.dimension='group';populateDimensions();}}
+function shortLabel(p){
+ if(p.scope==='meeting')return ({'相遇前都在运动':'运动中相遇','一方停下后相遇':'一方停后相遇','双方停下仍未相遇':'双方停下未相遇','恰好停下时相遇':'停下时相遇','展示时间内未相遇':'未相遇'})[p.phase]||p.result;
+ if(p.result==='相遇两次')return '两次相遇';
+ if(p.result==='恰好相遇')return '恰好追上';
+ if(p.result==='相遇后保持同位置')return '相遇后保持同位置';
+ if(p.result==='相遇一次')return p.process==='先远离后靠近'?'先远离后追上':'追上一次';
+ return ({'先靠近后远离':'靠近后远离，未追上','先远离后靠近':'先远离后靠近，未追上','一直远离':'一直远离，未追上','一直靠近':'一直靠近，未追上','间距保持不变':'间距不变'})[p.process]||'未追上';
+}
+function exampleNames(items){
+ const bases=items.map(shortLabel), counts={};for(const label of bases)counts[label]=(counts[label]||0)+1;
+ const names=items.map((p,i)=>counts[bases[i]]===1?bases[i]:`${bases[i]} · ${p.scope==='pursuit'?p.initial:p.advantage}`);
+ const duplicates={};for(const name of names)duplicates[name]=(duplicates[name]||0)+1;
+ for(let i=0;i<items.length;i++)if(duplicates[names[i]]>1)names[i]+=` · ${items[i].scope==='pursuit'?items[i].advantage:items[i].phase}`;
+ const finalCounts={};for(const name of names)finalCounts[name]=(finalCounts[name]||0)+1;
+ const seen={};return names.map(name=>finalCounts[name]>1?`${name}（${seen[name]=(seen[name]||0)+1}）`:name);
+}
+function populateGroups(){
+ const list=baseList(), groups=[...new Set(list.map(p=>p.group))];
+ state.category=options($('category'),groups,state.category);
+ document.querySelectorAll('[data-scope]').forEach(b=>b.classList.toggle('selected',b.dataset.scope===state.scope));
+ populateMoreExamples();
+}
+function populateMoreExamples(){
+ const list=baseList().filter(p=>p.group===state.category), results=[...new Set(list.map(p=>p.result))];
+ const allowed=['',...results]; state.resultFilter=options($('result-filter'),allowed,state.resultFilter,v=>v||'全部结果');
+ const visible=list.filter(p=>!state.resultFilter||p.result===state.resultFilter), names=exampleNames(visible);
+ state.presetId=options($('preset'),visible.map(p=>p.id),state.presetId,id=>names[visible.findIndex(p=>p.id===id)]);
+ const root=$('preset-examples');root.replaceChildren();
+ visible.forEach((p,i)=>{const button=document.createElement('button');button.type='button';button.className='preset-example';button.textContent=names[i];button.classList.toggle('selected',p.id===state.presetId);button.setAttribute('aria-pressed',String(p.id===state.presetId));button.addEventListener('click',()=>{state.presetId=p.id;$('preset').value=p.id;root.querySelectorAll('button').forEach(b=>{const active=b===button;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});loadPreset();});root.append(button);});
+ if(state.presetId)loadPreset();
+}
+function presetExplanation(p){
+ const process={'一直靠近':'运动时一直靠近','一直远离':'运动时一直远离','先靠近后远离':'先靠近后远离','先远离后靠近':'先远离后靠近','间距保持不变':'间距保持不变','间距多次变化':'间距多次变化'}[p.process]||p.process;
+ if(p.scope==='pursuit')return `预设初速：${p.initial}；${p.advantage}。${p.result==='没有相遇'?'展示时间内':'首次相遇前'}，${process}。`;
+ return `预设：${p.advantage}；${p.phase}。`;
+}
+function loadPreset(){const p=all.find(p=>p.id===state.presetId);if(!p)return;const example=state.scope==='typical'?typicalCases.find(c=>c.id===p.id):null;state.A={...p.A,...example?.A};state.B={...p.B,...example?.B};state.duration=p.duration;state.time=0;state.playing=false;state.last=null;if(state.mode==='more'){$('preset-selected').textContent=$('preset').selectedOptions[0]?.textContent||p.title;$('preset-description').textContent=presetExplanation(p);}$('model-note').textContent=state.scope==='typical'?'调整参数后，运动结果可能改变；减速物体到零后停住。':'以上说明对应预设；调整参数后结果可能改变。减速物体到零后停住。';renderParams();refresh();}
+function resetGeneral(){state.A={x:0,v:8,a:0,stop:false};state.B={x:30,v:-4,a:0,stop:false};state.duration=5;state.time=0;state.playing=false;state.last=null;$('model-note').textContent='自由设置持续按匀变速直线运动计算：速度经过零后可反向，不会自动停车。';renderParams();refresh();}
+function showTheme(theme,id){
+ state.scope='typical';state.theme=theme;const def=themes[theme]; if(!def)return;
+ state.presetId=id&&def.variants.some(v=>v[1]===id)?id:def.variants[0][1];
+ document.querySelectorAll('[data-theme]').forEach(b=>{const active=b.dataset.theme===theme;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
+ document.querySelectorAll('[data-variants]').forEach(el=>{const active=el.dataset.variants===theme&&(def.variants.length>1||!!def.variants[0][0]);el.hidden=!active;el.replaceChildren();if(active&&def.variants.length===1){const note=document.createElement('span');note.className='theme-example';note.textContent=def.variants[0][0];el.append(note);}else if(active)for(const [label,value] of def.variants){const b=document.createElement('button');b.type='button';b.className='variant-button';b.textContent=label;b.classList.toggle('selected',value===state.presetId);b.setAttribute('aria-pressed',String(value===state.presetId));b.addEventListener('click',()=>showTheme(theme,value));el.append(b);}});
+ loadPreset();
+}
+function selectMode(mode){
+ state.mode=mode;state.time=0;state.playing=false;state.last=null;
+ document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
+ $('classification').hidden=mode!=='more';$('typical-selection').hidden=mode!=='typical';$('general-note').hidden=mode!=='general';
+ if(mode==='general'){state.scope='general';resetGeneral();}else if(mode==='typical')showTheme('accelerate');else{state.scope='pursuit';state.category='';state.presetId='';state.resultFilter='';populateGroups();}
+}
+window.motionNavigate=({scope,group,presetId,field,value}={})=>{
+ if(scope==='general'){selectMode('general');return;}
+ const allowed=all.filter(p=>p.scope===scope&&(showUniform||!(p.scope==='pursuit'&&p.group==='匀速追匀速')));
+ const p=allowed.find(p=>p.id===presetId)||allowed.find(p=>group&&p.group===group)||allowed.find(p=>field&&p[field]===value)||allowed[0];
+ if(!p)return;state.mode='more';state.scope=scope;state.category=p.group;state.presetId=p.id;state.resultFilter='';
+ document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode==='more';b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
+ $('classification').hidden=false;$('typical-selection').hidden=true;$('general-note').hidden=true;populateGroups();
+};
+window.motionCurrent=()=>({scope:physicalScope(),field:'group',value:state.category,presetId:state.presetId,mode:state.mode});
 function fmt(n,d=1){if(Math.abs(n)<0.00001)n=0;return Number(n).toFixed(d);}
 function nice(n){return Number(n.toFixed(2)).toString();}
 function paramRow(container,obj,key,label,lo,hi,step,allowBeyondSlider=false){
@@ -31,13 +101,13 @@ function paramRow(container,obj,key,label,lo,hi,step,allowBeyondSlider=false){
 function renderParams(){
  const root=$('params');root.replaceChildren();const general=state.scope==='general';
  const preset=all.find(p=>p.id===state.presetId);
- const kinds=!general&&preset?preset.group.replace(/相向$/,'').split(state.scope==='pursuit'?'追':'与'):[];
+ const kinds=!general&&preset?preset.group.replace(/相向$/,'').split(physicalScope()==='pursuit'?'追':'与'):[];
  if(!general){const box=document.createElement('div');box.className='param-group';const heading=document.createElement('div');heading.className='param-title';heading.textContent='初始位置';box.append(heading);paramRow(box,'B','x','两物体初始间距 d（m）',0,200,.1);root.append(box);}
  for(const [id,name,color,i] of [['A','A 物体','purple',0],['B','B 物体','green',1]]){
-  const group=document.createElement('div');group.className='param-group';const heading=document.createElement('div');heading.className='param-title';const role=state.scope==='pursuit'?(id==='A'?' · 追赶者':' · 被追赶者'):'';heading.innerHTML=`<i class="dot ${color}"></i>${name}${role}`;group.append(heading);
+  const group=document.createElement('div');group.className='param-group';const heading=document.createElement('div');heading.className='param-title';const role=physicalScope()==='pursuit'?(id==='A'?' · 追赶者':' · 被追赶者'):'';heading.innerHTML=`<i class="dot ${color}"></i>${name}${role}`;group.append(heading);
   if(general){paramRow(group,id,'x','初始位置 x₀（m）',-100,100,1,true);paramRow(group,id,'v','初速度 v₀（m/s）',-30,30,.5,true);paramRow(group,id,'a','加速度 a（m/s²）',-5,5,.1,true);}
   else{
-   const direction=state.scope==='meeting'&&id==='B'?-1:1;const kind=kinds[i];
+   const direction=physicalScope()==='meeting'&&id==='B'?-1:1;const kind=kinds[i];
    paramRow(group,id,'v',`初速度 v₀（m/s）${direction<0?' · 向左':' · 向右'}`,direction<0?-50:.1,direction<0?-.1:50,.1);
    if(kind==='匀速'){const fixed=document.createElement('p');fixed.className='model-note';fixed.textContent='匀速运动：加速度固定为 0 m/s²';group.append(fixed);}
    else{const sign=(kind==='匀加速'?1:-1)*direction;paramRow(group,id,'a',`${kind==='匀加速'?'加速度':'减速时的加速度'} a（m/s²）`,sign<0?-25:.1,sign<0?-.1:25,.05);}
@@ -84,7 +154,7 @@ function drawTrack(){
   const x=value=>margin+(value-min)/(max-min)*axisWidth;
   const xa=x(P.position(state.A,state.time)), xb=x(P.position(state.B,state.time));
   const frontDirection=o=>Math.sign(o.v)||Math.sign(o.a)||1;
-  const labelA=state.scope==='pursuit'?'A 追':'A', labelB=state.scope==='pursuit'?'B 被追':'B';
+  const labelA=physicalScope()==='pursuit'?'A 追':'A', labelB=physicalScope()==='pursuit'?'B 被追':'B';
   const blockHeight=Math.min(50,Math.max(38,h*.15));
   const topA=Math.max(20,14+4*scale);
   const axisY=h-Math.max(40,25+12*scale);
@@ -207,6 +277,61 @@ function plot(canvas,type){
   c.textBaseline='alphabetic';
 }
 function formatTimes(arr){return arr.map(t=>`${nice(t)} s`).join('、');}
+// Distinguish genuine distance turns from a stretch of equal velocities.
+function timelineEvents(){
+ const T=state.duration, ev=P.events(state.A,state.B,T), points=[];
+ const add=(t,label)=>{if(Number.isFinite(t)&&t>=0&&t<=T)points.push({t,label});};
+ if(!ev.coincident)for(const t of ev.meetings)add(t,t===0?'初始同位':'相遇');
+ for(const t of ev.equalTimes){
+  if(t<=0||t>=T)continue;
+  const nearby=ev.meetings.concat(['A','B'].map(id=>{
+   const o=state[id];return o.v*o.a<0?-o.v/o.a:Infinity;
+  })).map(x=>Math.abs(x-t)).filter(d=>d>64*Number.EPSILON*Math.max(1,Math.abs(t)));
+  // Do not sample across a nearby encounter or stopping/reversal time.
+  const dt=Math.min(T*1e-4,t/2,(T-t)/2,...nearby.map(d=>d/3));
+  const rate=q=>(P.position(state.B,q)-P.position(state.A,q))*(P.velocity(state.B,q)-P.velocity(state.A,q));
+  const left=rate(t-dt),right=rate(t+dt);
+  if(left < 0 && right >= 0)add(t,'间距极小');
+  else if(left > 0 && right <= 0)add(t,'间距极大');
+ }
+ for(const id of ['A','B']){
+  const o=state[id];if(o.v*o.a<0){const t=-o.v/o.a;add(t,`${id} ${o.stop?'停下':'转向'}`);}
+ }
+ points.sort((a,b)=>a.t-b.t);
+ const merged=[];
+ for(const p of points){const prev=merged[merged.length-1];if(prev&&Math.abs(prev.t-p.t)<=64*Number.EPSILON*Math.max(1,Math.abs(prev.t),Math.abs(p.t))){if(!prev.labels.includes(p.label))prev.labels.push(p.label);}else merged.push({t:p.t,labels:[p.label]});}
+ return merged;
+}
+let timelineCache='', timelinePoints=[], timelineDragging=false;
+function timelineTime(t){
+ let digits=3;
+ while(digits<12){
+  const rounded=Number(t.toFixed(digits));
+  if((t===0||rounded!==0)&&!timelinePoints.some(p=>p.t!==t&&Number(p.t.toFixed(digits))===rounded))break;
+  digits++;
+ }
+ const value=Number(t.toFixed(digits));
+ return value===0&&t!==0?Number(t.toPrecision(3)).toString():value.toString();
+}
+function renderTimeline(){
+ const enabled=$('timeline-enabled').checked;
+ const key=JSON.stringify([state.A,state.B,state.duration,enabled]);
+ if(key!==timelineCache){
+  timelineCache=key; timelinePoints=enabled?timelineEvents():[];
+  const marks=$('timeline-marks'), list=$('timeline-events');marks.replaceChildren();list.replaceChildren();
+  for(const point of timelinePoints){
+   const fraction=point.t/state.duration, marker=document.createElement('i');
+   marker.className='timeline-mark';marker.style.left=`calc(${fraction*100}% + ${10-20*fraction}px)`;marks.append(marker);
+   const button=document.createElement('button');button.type='button';button.className='timeline-event';
+   button.textContent=`${timelineTime(point.t)}s ${point.labels.join(' · ')}`;
+   button.setAttribute('aria-label',`${timelineTime(point.t)} 秒，${point.labels.join('，')}`);
+   button.addEventListener('click',()=>{state.time=point.t;state.playing=false;state.last=null;refresh();});list.append(button);
+  }
+  list.hidden=!enabled||!timelinePoints.length;
+ }
+ const at=timelinePoints.find(p=>p.t===state.time);
+ $('timeline').setAttribute('aria-valuetext',`${timelineTime(state.time)} 秒${at?'，'+at.labels.join('，'):''}`);
+}
 function renderResults(){
  const ev=P.events(state.A,state.B,state.duration),EPS=1e-8;
  const initialSame=Math.abs(P.position(state.A,0)-P.position(state.B,0))<EPS;
@@ -255,6 +380,13 @@ function renderResults(){
  const interval=initialSame?(laterMeetings.length?'再次相遇前（含相遇）':'当前展示时间内'):(ev.meetings.length?'首次相遇前（含相遇）':'当前展示时间内');
  $('rule-detail').textContent=`${interval}：最大 ${nice(largest.d)} m（${nice(largest.t)} s），最小 ${nice(smallest.d)} m（${nice(smallest.t)} s）。`;
 }
-function refresh(){if(state.scope!=='general')$('preset-description').textContent=Math.abs(state.B.x-state.A.x)<1e-8?(state.scope==='pursuit'?'A、B 从同一位置出发；初始都向右运动。':'A、B 从同一位置出发；A 向右、B 向左运动。'):(state.scope==='pursuit'?'A 在后，B 在前；两者初始都向右运动。':'A 向右、B 向左；两者开始时相向运动。');const t=state.time; $('time-readout').innerHTML=`${fmt(t)} <em>s</em>`;const relative=P.position(state.B,t)-P.position(state.A,t);$('distance-readout').innerHTML=`${fmt(Math.abs(relative))} <em>m</em>`;$('relative-readout').textContent=`位置差 xB − xA = ${relative>0?'+':''}${fmt(relative)} m` ;for(const key of ['A','B']){const obj=state[key],prefix=key.toLowerCase(),position=P.position(obj,t);const signed=value=>Math.abs(value)<.00001?fmt(0):(value>0?'+':'')+fmt(value);$(prefix+'-position').textContent=signed(position);$(prefix+'-displacement').textContent=signed(position-obj.x);$(prefix+'-velocity').textContent=signed(P.velocity(obj,t));} $('play').innerHTML=state.playing?'Ⅱ &nbsp;暂停':'▶ &nbsp;播放';$('timeline').max=state.duration;$('timeline').value=t;$('duration-label').textContent=`${fmt(t)} / ${nice(state.duration)} s`;drawTrack();plot($('position-chart'),'x');plot($('velocity-chart'),'v');renderResults();}
-$('dimension').addEventListener('change',e=>{state.dimension=e.target.value;state.category='';state.presetId='';populateCategories();});$('category').addEventListener('change',e=>{state.category=e.target.value;state.presetId='';populatePresets();});$('preset').addEventListener('change',e=>{state.presetId=e.target.value;loadPreset();});document.querySelectorAll('[data-scope]').forEach(b=>b.addEventListener('click',()=>selectScope(b.dataset.scope)));$('play').addEventListener('click',()=>{if(state.time>=state.duration)state.time=0;state.playing=!state.playing;state.last=null;refresh();});$('reset').addEventListener('click',()=>{state.time=0;state.playing=false;state.last=null;refresh();});$('timeline').addEventListener('input',e=>{state.time=Number(e.target.value);state.playing=false;state.last=null;refresh();});$('show-uniform').checked=showUniform;$('show-uniform').addEventListener('change',e=>{showUniform=e.target.checked;try{localStorage.setItem('motion-show-uniform',String(showUniform));}catch(_){}if(state.scope!=='general'){const oldId=state.presetId, oldA={...state.A},oldB={...state.B},oldTime=state.time,oldDuration=state.duration,oldPlaying=state.playing;populateDimensions();if(state.presetId===oldId){state.A=oldA;state.B=oldB;state.time=oldTime;state.duration=oldDuration;state.playing=oldPlaying;state.last=null;renderParams();refresh();}}});$('settings-open').addEventListener('click',()=>$('settings-dialog').showModal());$('settings-dialog').addEventListener('click',e=>{if(e.target===$('settings-dialog'))$('settings-dialog').close();});let timer;window.addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(refresh,80);});function tick(now){if(state.playing){if(state.last!==null)state.time=Math.min(state.duration,state.time+(now-state.last)/1000);state.last=now;if(state.time>=state.duration){state.playing=false;state.last=null;}refresh();}requestAnimationFrame(tick);}selectScope('pursuit');requestAnimationFrame(tick);
+function refresh(){renderTimeline();const t=state.time,shownTime=timelinePoints.some(p=>p.t===t)?timelineTime(t):fmt(t); $('time-readout').innerHTML=`${shownTime} <em>s</em>`;const relative=P.position(state.B,t)-P.position(state.A,t);$('distance-readout').innerHTML=`${fmt(Math.abs(relative))} <em>m</em>`;$('relative-readout').textContent=`位置差 xB − xA = ${relative>0?'+':''}${fmt(relative)} m` ;for(const key of ['A','B']){const obj=state[key],prefix=key.toLowerCase(),position=P.position(obj,t);const signed=value=>Math.abs(value)<.00001?fmt(0):(value>0?'+':'')+fmt(value);$(prefix+'-position').textContent=signed(position);$(prefix+'-displacement').textContent=signed(position-obj.x);$(prefix+'-velocity').textContent=signed(P.velocity(obj,t));} $('play').innerHTML=state.playing?'Ⅱ &nbsp;暂停':'▶ &nbsp;播放';$('timeline').max=state.duration;$('timeline').value=t;$('duration-label').textContent=`${fmt(t)} / ${nice(state.duration)} s`;drawTrack();plot($('position-chart'),'x');plot($('velocity-chart'),'v');renderResults();}
+$('params-reset').addEventListener('click',()=>{if(state.scope==='general')resetGeneral();else loadPreset();});
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
+document.querySelectorAll('[data-theme]').forEach(b=>b.addEventListener('click',()=>showTheme(b.dataset.theme)));
+document.querySelectorAll('[data-scope]').forEach(b=>b.addEventListener('click',()=>{state.scope=b.dataset.scope;state.category='';state.presetId='';state.resultFilter='';populateGroups();}));
+$('category').addEventListener('change',e=>{state.category=e.target.value;state.presetId='';state.resultFilter='';populateMoreExamples();});
+$('result-filter').addEventListener('change',e=>{state.resultFilter=e.target.value;state.presetId='';populateMoreExamples();});
+$('preset').addEventListener('change',e=>{state.presetId=e.target.value;loadPreset();});
+$('play').addEventListener('click',()=>{if(state.time>=state.duration)state.time=0;state.playing=!state.playing;state.last=null;refresh();});$('reset').addEventListener('click',()=>{state.time=0;state.playing=false;state.last=null;refresh();});$('timeline').addEventListener('pointerdown',()=>{timelineDragging=true;});window.addEventListener('pointerup',()=>{timelineDragging=false;});window.addEventListener('pointercancel',()=>{timelineDragging=false;});$('timeline').addEventListener('input',e=>{let time=Number(e.target.value);if(timelineDragging&&$('timeline-enabled').checked&&timelinePoints.length){const width=e.target.getBoundingClientRect().width,threshold=state.duration*Math.min(.025,12/Math.max(width-20,1));const nearest=timelinePoints.reduce((a,b)=>Math.abs(b.t-time)<Math.abs(a.t-time)?b:a);if(Math.abs(nearest.t-time)<=threshold)time=nearest.t;}state.time=time;state.playing=false;state.last=null;refresh();});$('timeline-enabled').addEventListener('change',refresh);$('show-uniform').checked=showUniform;$('show-uniform').addEventListener('change',e=>{showUniform=e.target.checked;try{localStorage.setItem('motion-show-uniform',String(showUniform));}catch(_){}if(state.mode==='more'){const oldId=state.presetId,oldA={...state.A},oldB={...state.B},oldTime=state.time,oldDuration=state.duration,oldPlaying=state.playing;populateGroups();if(state.presetId===oldId){state.A=oldA;state.B=oldB;state.time=oldTime;state.duration=oldDuration;state.playing=oldPlaying;state.last=null;renderParams();refresh();}}});$('settings-open').addEventListener('click',()=>$('settings-dialog').showModal());$('settings-dialog').addEventListener('click',e=>{if(e.target===$('settings-dialog'))$('settings-dialog').close();});let timer;window.addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(refresh,80);});function tick(now){if(state.playing){if(state.last!==null)state.time=Math.min(state.duration,state.time+(now-state.last)/1000);state.last=now;if(state.time>=state.duration){state.playing=false;state.last=null;}refresh();}requestAnimationFrame(tick);}selectMode('typical');requestAnimationFrame(tick);
 })();

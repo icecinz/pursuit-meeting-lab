@@ -45,19 +45,20 @@
     return [...preferred.filter(value => values.includes(value)), ...values.filter(value => !preferred.includes(value))];
   }
 
-  function go(scope, dimension, category) {
-    const scopeButton = document.querySelector(`[data-scope="${scope}"]`);
-    if (!scopeButton) return;
-    scopeButton.click();
-    if (scope !== 'general') {
-      const dimensionSelect = document.getElementById('dimension');
-      const categorySelect = document.getElementById('category');
-      dimensionSelect.value = dimension;
-      dimensionSelect.dispatchEvent(new Event('change', { bubbles: true }));
-      categorySelect.value = category;
-      categorySelect.dispatchEvent(new Event('change', { bubbles: true }));
-    }
+  function go(scope, presetId) {
+    if (typeof window.motionNavigate !== 'function') return;
+    window.motionNavigate({ scope, presetId });
     dialog.close();
+  }
+
+  function exampleName(item) {
+    let process = item.process;
+    // The process labels describe the period before the first encounter.
+    if (process === '一直靠近' && item.result !== '没有相遇') process = '首次相遇前一直靠近';
+    const parts = item.scope === 'pursuit'
+      ? [item.group, item.initial, item.advantage, process, item.result]
+      : [item.group, item.advantage, item.phase, item.result];
+    return parts.filter(Boolean).join(' · ');
   }
 
   function dimensionBranch(scope, field, items, current) {
@@ -74,17 +75,29 @@
 
     const leaves = node('div', 'map-leaves');
     for (const value of categoryValues) {
-      const matching = items.filter(item => item[field] === value).length;
-      const leaf = node('button', 'map-leaf');
-      leaf.type = 'button';
-      leaf.title = `查看“${value}”中的演示情境`;
-      if (current.scope === scope && current.dimension === field && current.category === value) {
-        leaf.classList.add('is-current');
-        leaf.setAttribute('aria-current', 'true');
+      const matching = items.filter(item => item[field] === value);
+      const category = node('details', 'map-dimension');
+      category.style.flex = '1 1 100%';
+      const leaf = node('summary', 'map-dimension-summary map-leaf');
+      leaf.style.display = 'flex';
+      leaf.title = `展开“${value}”中的演示情境`;
+      if (current.scope === scope && matching.some(item => item.id === current.presetId)) leaf.classList.add('is-current');
+      leaf.append(node('span', 'map-leaf-name', value), node('span', 'map-leaf-count', `${matching.length} 个情境`));
+      const examples = node('div', 'map-leaves');
+      for (const item of matching) {
+        const example = node('button', 'map-leaf', exampleName(item));
+        example.type = 'button';
+        example.style.flex = '1 1 100%';
+        example.style.whiteSpace = 'normal';
+        if (current.scope === scope && current.presetId === item.id) {
+          example.classList.add('is-current');
+          example.setAttribute('aria-current', 'true');
+        }
+        example.addEventListener('click', () => go(scope, item.id));
+        examples.appendChild(example);
       }
-      leaf.append(node('span', 'map-leaf-name', value), node('span', 'map-leaf-count', `${matching} 个情境`));
-      leaf.addEventListener('click', () => go(scope, field, value));
-      leaves.appendChild(leaf);
+      category.append(leaf, examples);
+      leaves.appendChild(category);
     }
     branch.appendChild(leaves);
     return branch;
@@ -109,12 +122,7 @@
   function render() {
     const showUniform = document.getElementById('show-uniform')?.checked !== false;
     const allItems = window.Presets.list.filter(item => showUniform || !(item.scope === 'pursuit' && item.group === '匀速追匀速'));
-    const selectedScope = document.querySelector('.scope-tabs button.selected');
-    const current = {
-      scope: selectedScope?.dataset.scope || '',
-      dimension: document.getElementById('dimension')?.value || '',
-      category: document.getElementById('category')?.value || ''
-    };
+    const current = typeof window.motionCurrent === 'function' ? window.motionCurrent() : {};
     content.replaceChildren();
     const root = node('div', 'map-root');
     root.append(node('span', 'map-root-eyebrow', '直线运动'), node('strong', 'map-root-title', '追及与相遇'));
@@ -124,13 +132,13 @@
     const general = node('button', 'map-general');
     general.type = 'button';
     const generalText = node('span', 'map-general-description');
-    generalText.append(node('strong', 'map-general-title', '通用模式'), node('span', 'map-general-note', '自由设置两物体的位置、速度和加速度'));
+    generalText.append(node('strong', 'map-general-title', '自由设置'), node('span', 'map-general-note', '自由设置两物体的位置、速度和加速度'));
     general.append(generalText, node('span', 'map-general-action', '进入 →'));
     if (current.scope === 'general') general.classList.add('is-current');
     general.addEventListener('click', () => go('general'));
     tree.appendChild(general);
     content.appendChild(tree);
-    const foot = node('p', 'map-foot', '数字表示该分类下的预设情境数量。点击任一分类，可回到演示并查看。');
+    const foot = node('p', 'map-foot', '展开分类可查看其中的情境；选择具体情境后进入演示。');
     content.appendChild(foot);
   }
 

@@ -217,7 +217,102 @@
     }
     return { ...preset, A, B };
   }
-  const list = createPursuit().concat(createMeeting()).map(shortenDemo).map(clearerPursuit);
+  // Reusable examples keep their classifications but place meaningful
+  // events near the middle of the five-second demonstration.
+  const teachingDefaults = {
+    'p-00-fast-0-6': {"B": {"x": 10}},
+    'p-01-fast-0-8': {"A": {"v": 5}, "B": {"x": 5, "v": 1, "a": 1.6}},
+    'p-01-fast-0-12': {"A": {"v": 8.5}, "B": {"v": 1.5, "a": 2.75}},
+    'p-02-fast-0-6': {"A": {"v": 10}, "B": {"v": 5, "a": -1.75, "x": 18}},
+    'p-02-slow-0-6': {"A": {"v": 11}, "B": {"v": 22, "a": -7.5}},
+    'p-02-equal-0-6': {"B": {"x": 7}},
+    'p-10-fast-0-6': {"A": {"v": 7, "a": 2}, "B": {"v": 1.5, "x": 20}},
+    'p-10-slow-0-6': {"A": {"a": 7}, "B": {"v": 11.5}},
+    'p-10-equal-0-6': {"A": {"v": 1.5, "a": 2.25}, "B": {"v": 1.5, "x": 7}},
+    'p-11-fast-0-6': {"A": {"v": 6.5, "a": 3.25}, "B": {"v": 1.5, "a": 1.5, "x": 18}},
+    'p-11-fast-1-6': {"B": {"x": 10}},
+    'p-11-fast-2-8': {"A": {"v": 5, "a": 1}, "B": {"x": 5, "v": 1, "a": 2.6}},
+    'p-11-fast-2-12': {"A": {"v": 8.5, "a": 2.75}, "B": {"v": 1.5, "a": 5.5}},
+    'p-11-slow-0-6': {"A": {"a": 14.5}, "B": {"v": 12, "a": 7.25}},
+    'p-11-equal-0-6': {"A": {"v": 1.5, "a": 3.25}, "B": {"v": 1.5, "a": 1.5, "x": 5.5}},
+    'p-12-fast-0-6': {"A": {"v": 7.5}, "B": {"x": 15}},
+    'p-12-slow-0-6': {"A": {"v": 6, "a": 2}, "B": {"v": 11.5, "a": -2}},
+    'p-12-equal-0-6': {"A": {"v": 8.5, "a": 2}, "B": {"v": 8.5, "a": -2, "x": 12.5}},
+    'p-20-fast-0-6': {"A": {"v": 10, "a": -2}, "B": {"v": 5, "x": 4}},
+    'p-20-fast-0-8': {"A": {"v": 8, "a": -1.6}, "B": {"x": 5, "v": 4}},
+    'p-20-fast-0-12': {"A": {"v": 13, "a": -2.5}, "B": {"v": 6.5}},
+    'p-21-fast-0-6': {"A": {"v": 5.5, "a": -0.5}, "B": {"v": 3, "a": 0.5}},
+    'p-21-fast-0-4': {"A": {"v": 8, "a": -0.8}, "B": {"x": 5, "v": 4, "a": 0.8}},
+    'p-21-fast-0-2': {"A": {"v": 8, "a": -1}, "B": {"v": 3, "a": 1, "x": 4}},
+    'p-22-fast-0-6': {"A": {"v": 14.5, "a": -2.5}, "B": {"v": 11.5, "a": -1.25}},
+    'p-22-fast-0-4': {"A": {"v": 12, "a": -2.5}, "B": {"v": 7, "a": -0.5}},
+    'p-22-fast-0-4.5': {"A": {"v": 12, "a": -3}, "B": {"x": 5, "v": 8, "a": -1.4}},
+    'p-22-fast-1-6': {"A": {"v": 12, "a": -2}, "B": {"x": 10, "v": 8, "a": -2}},
+    'p-22-fast-2-6': {"A": {"v": 12, "a": -1}, "B": {"x": 13, "v": 8, "a": -2}},
+    'p-22-slow-2-6': {"A": {"v": 18, "a": -4}, "B": {"v": 28, "a": -8}},
+    'p-22-equal-2-6': {"A": {"v": 12, "a": -1}, "B": {"x": 3, "v": 12, "a": -2}},
+    'm-00-0-8': {"B": {"x": 30}},
+    'm-01-0-8': {"B": {"x": 33}},
+    'm-02-0-8': {"B": {"x": 38}},
+    'm-02-0-72': {"B": {"x": 55.5}},
+    'm-10-0-8': {"B": {"x": 33}},
+    'm-11-0-8': {"A": {"v": 5.5, "a": 1.5}, "B": {"v": -5.5, "a": -0.75, "x": 34.5}},
+    'm-12-0-8': {"B": {"x": 45}},
+    'm-12-0-72': {"A": {"v": 10, "a": 4}, "B": {"x": 50, "v": -10, "a": 4}},
+    'm-12-1-8': {"B": {"x": 52}},
+    'm-12-2-8': {"A": {"v": 5, "a": 0.75}, "B": {"v": -5, "a": 1.25, "x": 23.5}},
+    'm-12-2-36': {"A": {"v": 8, "a": 1.75}, "B": {"v": -8, "a": 3.75, "x": 34}},
+    'm-20-0-8': {"B": {"x": 38}},
+    'm-20-0-72': {"B": {"x": 55.5}},
+    'm-21-0-8': {"B": {"x": 45}},
+    'm-21-0-72': {"A": {"v": 10, "a": -4}, "B": {"x": 50, "v": -10, "a": -4}},
+    'm-21-1-8': {"A": {"v": 5, "a": -1.25}, "B": {"v": -5, "a": -0.75, "x": 23.5}},
+    'm-21-1-36': {"A": {"v": 8, "a": -3.75}, "B": {"v": -8, "a": -1.75, "x": 34}},
+    'm-21-2-8': {"B": {"x": 52}},
+    'm-22-0-8': {"A": {"v": 7, "a": -2.75}, "B": {"v": -7, "a": 1.25, "x": 22.5}},
+    'm-22-0-24': {"A": {"a": -4.25}, "B": {"x": 25}},
+    'm-22-0-36': {"A": {"v": 10, "a": -8}, "B": {"x": 36, "v": -10, "a": 4}},
+    'm-22-1-36': {"A": {"v": 10, "a": -4}, "B": {"x": 25, "v": -10, "a": 4}},
+  };
+  function centerTeachingEvent(preset) {
+    const values = teachingDefaults[preset.id];
+    if (!values) return preset;
+    const A = { ...preset.A, ...values.A }, B = { ...preset.B, ...values.B };
+    const description = preset.description.replace(/初始间距 [\d.]+ m/, `初始间距 ${B.x} m`);
+    return { ...preset, A, B, description };
+  }
+  // A shared forward speed preserves the relative motion and event times,
+  // while giving both initial velocity arrows enough length to compare.
+  // Apply only while neither object stops: adding speed during braking would
+  // otherwise change the stop times and the physical situation.
+  const sharedSpeed = {
+    'p-01-fast-0-6': 5, 'p-01-fast-0-8': 2, 'p-01-fast-0-12': 3,
+    'p-01-slow-0-6': 2, 'p-01-equal-0-6': 2,
+    'p-10-fast-0-6': 3, 'p-10-equal-0-6': 2,
+    'p-11-fast-0-6': 5, 'p-11-fast-1-6': 2,
+    'p-11-fast-2-6': 6, 'p-11-fast-2-8': 3, 'p-11-fast-2-12': 6,
+    'p-11-slow-1-6': 2, 'p-11-slow-2-6': 3,
+    'p-11-equal-0-6': 3, 'p-11-equal-1-6': 2, 'p-11-equal-2-6': 2
+  };
+  // For the most extreme accelerating/braking examples, choose simpler
+  // numbers while retaining the declared motion and encounter outcome.
+  const balancedDefaults = {
+    'p-10-slow-0-6': { A: { v: 6, a: 4 }, B: { x: 3.5, v: 12 } },
+    'p-11-slow-0-6': { A: { v: 6, a: 4 }, B: { x: 5, v: 9, a: 2 } },
+    'p-22-fast-1-40': { A: { v: 13, a: -3.5 }, B: { x: 12, v: 10, a: -3.5 } },
+    'p-22-slow-0-6': { A: { v: 9, a: -7 }, B: { v: 14, a: -3.5 } },
+    'p-22-slow-1-6': { A: { v: 9, a: -3.5 }, B: { v: 14, a: -3.5 } },
+    'p-22-equal-0-6': { A: { v: 12, a: -6 }, B: { v: 12, a: -3 } },
+    'p-22-equal-2-40': { A: { v: 12, a: -3 }, B: { x: 15, v: 12, a: -6 } }
+  };
+  function balanceTeachingExample(preset) {
+    const extra = sharedSpeed[preset.id] || 0;
+    const values = balancedDefaults[preset.id] || {};
+    const A = { ...preset.A, v: preset.A.v + extra, ...values.A };
+    const B = { ...preset.B, v: preset.B.v + extra, ...values.B };
+    return { ...preset, A, B, description: preset.description.replace(/初始间距 [\d.]+ m/, `初始间距 ${B.x} m`) };
+  }
+  const list = createPursuit().concat(createMeeting()).map(shortenDemo).map(clearerPursuit).map(centerTeachingEvent).map(balanceTeachingExample);
   window.Presets = {
     list,
     labels: {
