@@ -1,0 +1,63 @@
+/* 投屏阅读：各档均在原字号基础上放大，文字与图表使用同一比例。 */
+:root,:root[data-font-size="small"]{--font-scale:1.5}
+:root[data-font-size="medium"]{--font-scale:1.7}
+:root[data-font-size="large"]{--font-scale:1.9}
+body,button,input,select,small,.legend,.chart-legend,.direction,.eyebrow,.section-no,
+.section-label span,.hint,.select-label,.param-row label,.preset-desc,.general-note,
+.model-note,.chart-heading>span,.insight-head>span,.insight-grid p,.player span,
+.status-row .object-readings>div,.status-row .object-readings>div>span:first-child,
+.status-row strong,.status-row>div.object-status:nth-child(n) strong,
+.font-choices span,.classification-map,.classification-map p,
+.classification-map summary,.classification-map button,.classification-map span{
+  font-weight:600;
+}
+h1,h2,h3,.section-label strong,.status-row .object-status>small,
+.status-row>div.object-status:nth-child(n) .object-readings strong,
+.classification-map strong{font-weight:700}
+button,select,.param-row input[type=number]{min-height:44px}
+.param-row input[type=range]{height:22px;cursor:pointer}
+.scope-tabs button{padding-inline:3px;overflow-wrap:anywhere}
+#settings-dialog{max-height:calc(100vh - 32px);overflow:auto}
+.chart canvas{height:clamp(230px,calc(155px * var(--font-scale)),310px)}
+.dot{width:10px;height:10px}
+@media(min-width:1001px){.layout{grid-template-columns:minmax(0,1fr) clamp(350px,27vw,385px)}}
+@media(max-width:1000px){
+ .layout{display:grid;grid-template-columns:minmax(0,1fr)}
+ .visuals{display:contents}.stage{order:1}.controls{order:2;position:static;width:100%}
+ .charts{order:3;margin-top:0}.insight{order:4;margin-top:0}
+ .chart canvas{height:clamp(230px,calc(155px * var(--font-scale)),310px)}
+}
+@media(max-width:480px){
+ :root[data-font-size="large"] .status-row .object-status{grid-column:span 4}
+ :root[data-font-size="large"] .status-row .object-status:nth-child(4){border-left:0;border-top:1px solid #e5e9df;padding-left:0;padding-top:10px}
+}
+@media(max-width:400px){
+ :root[data-font-size="medium"] .status-row .object-status{grid-column:span 4}
+ :root[data-font-size="medium"] .status-row .object-status:nth-child(4){border-left:0;border-top:1px solid #e5e9df;padding-left:0;padding-top:10px}
+}
+
+/* 扩大运动画面，让运动轨道成为卡片的视觉主体。 */
+#track{height:clamp(260px,22vw,330px)}
+/* 更窄的屏幕保持每个物体的读数完整，不把数字压碎。 */
+@media(max-width:400px){
+ .status-row .object-status{grid-column:span 4}
+ .status-row .object-status:nth-child(4){border-left:0;border-top:1px solid #e5e9df;padding-left:0;padding-top:10px}
+}
+
+/* 文字变大后，保持方向提示和页眉完整。 */
+.direction{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 14px;max-width:100%}
+.direction span,.identity{white-space:nowrap}
+.topbar{flex-wrap:wrap;row-gap:10px}.top-actions{margin-left:auto}
+@media(max-width:400px){.status-row .time-status,.status-row .gap-status{grid-column:span 2}}
+
+/* 完整展示较长的情境名称，便于触屏和投屏阅读。 */
+.preset-desc #preset-selected,.preset-desc #preset-description{display:block}
+.preset-desc #preset-selected{color:#344c38;font-weight:700;line-height:1.5;overflow-wrap:anywhere}
+.preset-desc #preset-description{margin-top:6px;line-height:1.6}
+@media(max-width:480px){
+ .scope-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .scope-tabs button:last-child{grid-column:1/-1}
+ .player input{flex:1 1 65%}
+ .insight-head{display:block}.insight-head>span{display:block;margin-top:8px}
+}
+.panel-bottom p{font-weight:600;color:#526250}

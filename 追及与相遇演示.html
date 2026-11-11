@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f0eee6"><title>追及与相遇 · 直线运动实验室</title><style>
+:root{--font-scale:1;--paper:#f0eee6;--ink:#30362e;--muted:#697166;--line:#d8dacd;--white:#fbfaf5;--purple:#477fa8;--green:#795bb1;--soft-purple:#ede8f1;--soft-green:#e4ebe1;--serif:"Songti SC","STSong","Noto Serif CJK SC",serif;--sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:calc(14px * var(--font-scale));-webkit-font-smoothing:antialiased}.wrap{max-width:1510px;margin:auto;padding:0 clamp(18px,3.5vw,54px)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #859884;outline-offset:3px}.topbar{height:67px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #c6cbbf;color:#667061;font-size:calc(12px * var(--font-scale));letter-spacing:.1em}.identity{display:flex;align-items:center;gap:11px}.orb{width:21px;height:21px;border:1px solid #7d8b76;border-radius:50%;position:relative}.orb:after{content:"";position:absolute;background:#7d8b76;width:6px;height:6px;border-radius:50%;left:7px;top:7px}.settings-trigger{border:1px solid #d1d5c9;color:#596458;background:#f8f8f1;border-radius:3px;padding:8px 13px}.settings-trigger:hover{background:#e5eae0}.intro{display:flex;justify-content:space-between;align-items:end;gap:30px;padding:35px 0 31px}.eyebrow,.section-no{font-size:calc(10px * var(--font-scale));letter-spacing:.15em;color:#82907a}.eyebrow span{color:#c3c8bb}.intro h1{font:600 clamp(calc(33px * var(--font-scale)),calc(3.8vw * var(--font-scale)),calc(52px * var(--font-scale)))/1.25 var(--serif);letter-spacing:.08em;margin:9px 0 8px}.intro p{margin:0;color:#6b7568;font:calc(15px * var(--font-scale))/1.8 var(--serif)}.intro-note{border-left:1px solid #c7ccbf;padding:2px 0 2px 19px;margin-bottom:3px}.intro-note .note-index{font-size:calc(11px * var(--font-scale));letter-spacing:.1em;color:#909b89}.intro-note p{font:calc(12px * var(--font-scale))/1.8 var(--sans);margin-top:5px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 355px;gap:19px;align-items:start}.visuals{min-width:0}.panel{background:var(--white);border:1px solid #dadfd2;border-radius:4px}.stage{padding:22px 24px 0}.panel-heading,.insight-head,.controls-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.panel h2{font:600 calc(20px * var(--font-scale))/1.4 var(--serif);letter-spacing:.04em;margin:6px 0 0}.live-tag{font-size:calc(11px * var(--font-scale));color:#6e806a;background:#edf2e9;border:1px solid #dce5d8;border-radius:99px;padding:6px 10px;white-space:nowrap}.live-tag span{display:inline-block;width:6px;height:6px;background:#8ea888;border-radius:50%;margin-right:4px}.legend{display:flex;gap:18px;align-items:center;margin-top:23px;font-size:calc(12px * var(--font-scale));color:#697168}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}.purple{background:var(--purple)}.green{background:var(--green)}.direction{margin-left:auto;color:#8c9687;font-size:calc(11px * var(--font-scale))}canvas{display:block;width:100%}#track{height:193px;margin:0 auto}.status-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;border-top:1px solid #e6e9e0;padding:17px 0}.status-row>div:not(:first-child){border-left:1px solid #e5e9df;padding-left:15px}small{display:block;color:#8a9587;font-size:calc(11px * var(--font-scale))}.status-row strong{display:block;font-weight:500;font-size:calc(17px * var(--font-scale));margin-top:7px;font-variant-numeric:tabular-nums}.status-row strong em{font-size:calc(11px * var(--font-scale));font-style:normal;color:#889287}.status-row>div:nth-child(n+3) strong{font-size:calc(13px * var(--font-scale));margin-top:10px}.player{display:flex;gap:9px;align-items:center;border-top:1px solid #e6e9e0;padding:14px 0}.player button{border-radius:3px;padding:9px 13px;font-size:calc(12px * var(--font-scale));white-space:nowrap}.play-btn{background:#586e59;border:1px solid #586e59;color:#fff}.play-btn:hover{background:#465c48}.reset-btn{background:transparent;border:1px solid #d8ddd1;color:#657062}.player input{flex:1;min-width:50px;accent-color:#70866c}.player span{font-size:calc(11px * var(--font-scale));color:#8a9386;white-space:nowrap;font-variant-numeric:tabular-nums}.charts{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}.chart{padding:18px 18px 10px;min-width:0}.chart-heading{display:flex;align-items:end;justify-content:space-between;gap:6px}.chart h3{font:600 calc(17px * var(--font-scale))/1.3 var(--serif);margin:6px 0 0}.chart-heading>span{font-size:calc(11px * var(--font-scale));color:#929b8f}.chart canvas{height:190px;margin-top:5px}.insight{padding:20px 23px;margin-top:15px}.insight-head>span{font-size:calc(11px * var(--font-scale));color:#909a8e}.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:21px}.insight-grid>div{padding-right:16px}.insight-grid>div+div{border-left:1px solid #e6e9e0;padding-left:18px}.insight-grid strong{display:block;font:600 calc(17px * var(--font-scale))/1.5 var(--serif);margin:7px 0;color:#465744}.insight-grid p{margin:0;font-size:calc(12px * var(--font-scale));line-height:1.7;color:#788273}footer{display:flex;justify-content:space-between;font-size:calc(11px * var(--font-scale));letter-spacing:.05em;color:#9aa394;padding:21px 0 35px}footer span{letter-spacing:0}.controls{padding:22px 20px;position:sticky;top:16px}.controls-header{padding-bottom:21px}.control-icon{color:#869884;font-size:calc(22px * var(--font-scale))}.control-section{border-top:1px solid #e1e6db;padding:20px 0}.section-label{display:flex;gap:10px;align-items:baseline;margin-bottom:12px}.section-label span{font-size:calc(10px * var(--font-scale));color:#98a290}.section-label strong{font-size:calc(14px * var(--font-scale));font-weight:600}.scope-tabs{display:grid;grid-template-columns:repeat(3,1fr);background:#f2f3ed;padding:3px;border:1px solid #e6e9df;border-radius:4px;gap:2px}.scope-tabs button{padding:9px 2px;color:#6c7769;background:transparent;border:0;border-radius:3px;font-size:calc(12px * var(--font-scale))}.scope-tabs button.selected{background:#dfe9dc;color:#3d5c42;font-weight:600}.hint{font-size:calc(11px * var(--font-scale));color:#929b8e;line-height:1.65;margin:11px 0}.select-label{display:block;font-size:calc(11px * var(--font-scale));color:#778173;margin:13px 0 7px}select{width:100%;height:38px;border:1px solid #dfe4d8;border-radius:3px;background:#fdfdf9;color:#435043;padding:0 10px;font-size:calc(12px * var(--font-scale))}.preset-desc,.general-note{background:#f3f4ec;border-left:2px solid #a7b8a0;color:#75816f;font-size:calc(11px * var(--font-scale));line-height:1.7;padding:10px 12px;margin:13px 0 0}.general-note strong{font-size:calc(12px * var(--font-scale));color:#5f705b}.general-note p{margin:5px 0 0}.param-group{margin-top:16px}.param-title{font-size:calc(12px * var(--font-scale));font-weight:600;margin:0 0 9px;display:flex;align-items:center;gap:6px}.param-row{display:grid;grid-template-columns:1fr 71px;column-gap:8px;align-items:center;margin:11px 0}.param-row label{font-size:calc(11px * var(--font-scale));color:#707c6d}.param-row input[type=number]{width:100%;min-width:0;background:#f7f8f3;border:1px solid #e2e6dc;border-radius:3px;padding:6px 4px;text-align:right;font-size:calc(12px * var(--font-scale));color:#4c5c4c}.param-row input[type=range]{grid-column:1/-1;width:100%;height:15px;margin:5px 0 0;accent-color:#879b80}.model-note{font-size:calc(11px * var(--font-scale));line-height:1.7;color:#90998c;background:#f4f5ef;padding:9px 10px;margin:16px 0 0}.panel-bottom{border-top:1px solid #e2e7dc;display:flex;gap:13px;align-items:center;padding-top:16px;color:#8a9883}.panel-bottom span{font-size:calc(22px * var(--font-scale))}.panel-bottom p{font:calc(13px * var(--font-scale))/1.7 var(--serif);margin:0}dialog{border:1px solid #d6dccf;border-radius:4px;background:#fbfaf5;padding:24px;width:min(440px,calc(100vw - 32px));box-shadow:0 18px 60px #39473522;color:var(--ink)}dialog::backdrop{background:#30382d70}.dialog-head{display:flex;justify-content:space-between;align-items:start}.dialog-head h2{font:600 calc(25px * var(--font-scale)) var(--serif);margin:8px 0}.dialog-head button{font-size:calc(24px * var(--font-scale));background:none;border:0;color:#778272}.dialog-head+p{font-size:calc(12px * var(--font-scale));color:#869182}.setting-row{border:1px solid #e0e5da;padding:15px;margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}.setting-row strong{font-size:calc(13px * var(--font-scale))}.setting-row small{margin-top:7px}.setting-row input{position:absolute;opacity:0}.switch{width:36px;height:20px;flex:none;border-radius:20px;background:#cdd4c9;position:relative}.switch:after{content:"";width:14px;height:14px;position:absolute;top:3px;left:3px;background:white;border-radius:50%;transition:.15s}.setting-row input:checked+.switch{background:#7d9678}.setting-row input:checked+.switch:after{transform:translateX(16px)}.setting-row input:focus-visible+.switch{outline:2px solid #859884;outline-offset:3px}[hidden]{display:none!important}@media(max-width:1100px){.layout{grid-template-columns:minmax(0,1fr) 320px}.status-row{grid-template-columns:1fr 1fr}.status-row>div:nth-child(3){border-left:0;padding-left:0}.status-row>div:nth-child(n+3){padding-top:9px}.chart-heading{display:block}.chart-heading>span{display:block;margin-top:5px}}@media(max-width:760px){.intro{padding:30px 0 24px}.intro-note{display:none}.layout{display:flex;flex-direction:column-reverse}.controls{position:static;width:100%}.visuals{width:100%}.charts{grid-template-columns:1fr}.chart canvas{height:190px}.insight-grid{grid-template-columns:1fr;gap:15px}.insight-grid>div+div{border-left:0;border-top:1px solid #e6e9e0;padding:14px 0 0}.stage{padding:19px 16px 0}.player{flex-wrap:wrap}.player input{min-width:90px}.status-row strong{font-size:calc(15px * var(--font-scale))}.direction{font-size:calc(10px * var(--font-scale))}footer span{display:none}}
+
+@media(max-width:760px){.layout{display:grid;grid-template-columns:minmax(0,1fr)}.visuals{display:contents}.stage{order:1}.controls{order:2}.charts{order:3;margin-top:0}.insight{order:4;margin-top:0}footer{order:5}}
+
+/* 字号从当前基准放大，界面与演示同时使用同一档位。 */
+:root[data-font-size="medium"]{--font-scale:1.18}
+:root[data-font-size="large"]{--font-scale:1.35}
+select{min-height:calc(38px * var(--font-scale));height:auto}
+.font-setting{border:1px solid #e0e5da;margin:14px 0 0;padding:14px 15px 15px;min-width:0}
+.font-setting legend{padding:0 5px;color:#536150;font-size:calc(13px * var(--font-scale));font-weight:600}
+.font-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.font-choices label{position:relative;text-align:center;cursor:pointer}
+.font-choices input{position:absolute;opacity:0;inset:0}
+.font-choices span{display:block;padding:8px 5px;border:1px solid #dfe4d8;border-radius:3px;color:#667360;background:#fafbf7;font-size:calc(12px * var(--font-scale))}
+.font-choices input:checked+span{background:#dfe9dc;color:#3d5c42;border-color:#abbfa5;font-weight:600}
+.font-choices input:focus-visible+span{outline:2px solid #859884;outline-offset:3px}
+@media(max-width:760px){.legend{flex-wrap:wrap;row-gap:7px}.scope-tabs button{white-space:normal}}
+.topbar{min-height:67px;height:auto;padding-block:8px}
+@media(max-width:760px){.intro{flex-direction:column;align-items:stretch}.intro-note{display:block;margin-top:2px}footer{gap:12px}footer span{display:inline}}
+
+.chart-legend{display:flex;gap:18px;align-items:center;margin:9px 0 0;color:#69766c;font-size:calc(11px * var(--font-scale));line-height:1.5;flex-wrap:wrap}.chart-legend span:before{content:"";display:inline-block;width:20px;vertical-align:middle;margin-right:6px;border-top:2px solid #477fa8}.chart-legend .legend-b:before{border-top:2px dashed #795bb1}
+
+/* 方向、读数、图例与操作提示需要在课堂投屏时清晰可读。 */
+.direction{color:#405546;font-weight:600}
+.legend,.chart-legend{color:#4c5b4d}
+small,.status-row strong em,.player span,.chart-heading>span,.insight-head>span,.insight-grid p,.hint,.select-label,.param-row label,.preset-desc,.general-note,.model-note,.dialog-head+p{color:#526250}
+.section-no,.section-label span{color:#596859}
+.scope-tabs button,.font-choices span{color:#526250}
+
+/* 精简标题区与演示区的空白。 */
+.intro{padding:27px 0 24px}.intro h1{margin:0}.stage .legend{margin-top:0}.top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}
+
+/* 将 A、B 的位置、位移与速度分行，缩窄时间列。 */
+.status-row{grid-template-columns:minmax(62px,.52fr) minmax(126px,.95fr) minmax(145px,1.25fr) minmax(145px,1.25fr);align-items:start}
+.status-row>div{min-width:0}
+.status-row .gap-status #relative-readout{margin-top:5px;line-height:1.5;overflow-wrap:anywhere}
+.status-row .object-status>small{display:flex;align-items:center;gap:2px;font-weight:600;color:#465b4a}
+.status-row .object-status>small .dot{flex:none}
+.status-row .object-readings{display:grid;gap:6px;margin-top:9px}
+.status-row .object-readings>div{display:flex;gap:4px 9px;justify-content:space-between;align-items:baseline;flex-wrap:wrap;line-height:1.35;color:#526250;font-size:calc(11px * var(--font-scale))}
+.status-row .object-readings sub{font-size:.8em}
+.status-row>div.object-status:nth-child(n) strong{display:inline;margin:0;font-size:calc(12px * var(--font-scale));font-weight:500;color:#30362e;white-space:nowrap}
+.status-row .object-readings strong em{font-size:calc(10px * var(--font-scale));font-style:normal;color:#526250}
+@media(max-width:1100px){.status-row{grid-template-columns:minmax(70px,.65fr) minmax(0,1.35fr)}.status-row>div:nth-child(3){border-left:0;padding-left:0}.status-row>div:nth-child(n+3){padding-top:9px}}
+@media(max-width:400px){.status-row{gap:8px;grid-template-columns:minmax(65px,.75fr) minmax(0,1.25fr)}.status-row>div:not(:first-child){padding-left:9px}.status-row>div:nth-child(3){padding-left:0}.status-row .object-readings>div{gap:2px 5px}}
+/* 小屏上时间列保持紧凑，A、B 读数各占半行。 */
+@media(max-width:1100px){
+ .status-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .status-row .time-status{grid-column:span 1}
+ .status-row .gap-status{grid-column:span 3}
+ .status-row .object-status{grid-column:span 2}
+}
+
+/* 读数对齐并靠近，给运动过程留出更多视觉空间。 */
+.status-row{gap:8px 12px;padding:13px 0}
+.status-row .time-status strong,.status-row .gap-status strong{margin-top:5px;line-height:1.25}
+.status-row .gap-status #relative-readout{margin-top:3px}
+.status-row .object-readings{grid-template-columns:max-content minmax(0,max-content);justify-content:start;gap:4px 10px;margin-top:7px;max-width:100%}
+.status-row .object-readings>div{display:contents}
+.status-row .object-readings>div>span:first-child{line-height:1.35;color:#526250;font-size:calc(11px * var(--font-scale));white-space:nowrap}
+.status-row>div.object-status:nth-child(n) .object-readings strong{line-height:1.35;white-space:normal;overflow-wrap:anywhere;min-width:0;text-align:right}
+@media(max-width:1100px){.status-row>div:nth-child(n+3){padding-top:5px}}
+@media(max-width:400px){.status-row .object-readings{column-gap:6px}}
+
+</style><style>
+/* 分类图谱：根节点 → 情境 → 分类线索 → 具体分类。 */
+.classification-map{width:min(950px,calc(100vw - 32px));max-width:none;max-height:min(88vh,900px);padding:0;border:1px solid #ccd5c6;border-radius:5px;background:#fbfaf5;color:#30362e;box-shadow:0 22px 70px #30382d38;overflow:hidden}
+.classification-map[open]{display:flex;flex-direction:column}
+.classification-map::backdrop{background:#30382d80}
+.map-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 26px 19px;border-bottom:1px solid #dce2d6;background:#fbfaf5;flex:none}
+.map-kicker{font-size:calc(10px * var(--font-scale));letter-spacing:.14em;color:#6d806a}
+.map-top h2{margin:7px 0 5px;font:600 calc(25px * var(--font-scale))/1.35 var(--serif);letter-spacing:.04em;color:#303b31}
+.map-top p{margin:0;color:#526250;font-size:calc(12px * var(--font-scale));line-height:1.7}
+.map-close{flex:none;border:0;background:transparent;color:#526250;padding:0 2px;font-size:calc(26px * var(--font-scale));line-height:1;cursor:pointer}
+.map-close:hover{color:#263b2c}
+.map-content{padding:22px 26px 26px;overflow-y:auto;overscroll-behavior:contain}
+.map-root{display:flex;align-items:center;justify-content:center;gap:12px;width:max-content;max-width:100%;margin:0 auto;padding:11px 20px;border:1px solid #9daf98;border-radius:4px;background:#e6eee1;color:#38533c}
+.map-root-eyebrow{font-size:calc(10px * var(--font-scale));letter-spacing:.06em}
+.map-root-title{font:600 calc(17px * var(--font-scale))/1.4 var(--serif)}
+.map-tree{position:relative;display:grid;gap:12px;margin:24px auto 0;padding-left:20px;max-width:790px}
+.map-tree:before{content:"";position:absolute;top:-24px;bottom:30px;left:4px;width:1px;background:#bdcbb6}
+.map-scope,.map-general{position:relative;border:1px solid #d9e1d3;border-radius:4px;background:#fcfcf8;min-width:0}
+.map-scope:before,.map-general:before{content:"";position:absolute;top:25px;left:-16px;width:15px;height:1px;background:#bdcbb6}
+.map-scope-summary,.map-dimension-summary{list-style:none;cursor:pointer}
+.map-scope-summary::-webkit-details-marker,.map-dimension-summary::-webkit-details-marker{display:none}
+.map-scope-summary{display:flex;align-items:center;gap:10px;padding:14px 16px;min-width:0}
+.map-scope-summary:before,.map-dimension-summary:before{content:"";width:7px;height:7px;border-right:1.5px solid #69816a;border-bottom:1.5px solid #69816a;transform:rotate(-45deg);flex:none;transition:transform .15s}
+.map-scope[open]>.map-scope-summary:before,.map-dimension[open]>.map-dimension-summary:before{transform:rotate(45deg)}
+.map-scope-description,.map-general-description{display:flex;gap:8px 15px;align-items:baseline;flex:1;min-width:0;flex-wrap:wrap}
+.map-scope-title,.map-general-title{font:600 calc(17px * var(--font-scale))/1.4 var(--serif);color:#3f5942}
+.map-scope-note,.map-general-note{font-size:calc(11px * var(--font-scale));line-height:1.5;color:#596b59}
+.map-scope-count,.map-dimension-count,.map-general-action{margin-left:auto;color:#657762;font-size:calc(11px * var(--font-scale));white-space:nowrap}
+.map-dimensions{display:grid;gap:7px;border-top:1px solid #e4e9df;padding:12px 15px 15px 29px}
+.map-dimension{position:relative;border:1px solid #e2e8dc;border-radius:3px;background:#f8f9f3}
+.map-dimension:before{content:"";position:absolute;top:17px;left:-15px;width:14px;border-top:1px solid #cbd7c6}
+.map-dimension-summary{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.map-dimension-title{font-weight:600;font-size:calc(12px * var(--font-scale));color:#415641}
+.map-dimension-note{font-size:calc(11px * var(--font-scale));color:#677866}
+.map-leaves{display:flex;flex-wrap:wrap;gap:7px;padding:2px 12px 12px 28px}
+.map-leaf{display:inline-flex;align-items:baseline;gap:7px;padding:7px 10px;border:1px solid #d8e1d3;border-radius:3px;background:#fffefa;color:#425344;text-align:left;font-size:calc(12px * var(--font-scale));line-height:1.45}
+.map-leaf:hover,.map-general:hover{background:#eaf1e6;border-color:#acc0a5}
+.map-leaf.is-current,.map-general.is-current{background:#e5eee1;border-color:#9eb69a}
+.map-leaf-count{color:#71806e;font-size:calc(10px * var(--font-scale));white-space:nowrap}
+.map-general{display:flex;align-items:center;gap:10px;width:100%;padding:14px 17px;text-align:left;cursor:pointer}
+.map-general-title{color:#66527c}
+.map-general-action{color:#6c5b7d}
+.map-foot{max-width:790px;margin:16px auto 0;color:#657663;font-size:calc(11px * var(--font-scale));line-height:1.7}
+.classification-map button:focus-visible,.classification-map summary:focus-visible{outline:2px solid #748e70;outline-offset:3px}
+@media(max-width:620px){.classification-map{width:calc(100vw - 20px);max-height:90vh}.map-top{padding:18px 17px 15px}.map-content{padding:18px 15px 23px}.map-tree{margin-top:21px;padding-left:15px}.map-tree:before{left:2px}.map-scope:before,.map-general:before{left:-13px;width:12px}.map-scope-summary{padding:12px 11px;gap:8px}.map-scope-note{display:block}.map-scope-count{white-space:normal;text-align:right}.map-dimensions{padding-left:22px;padding-right:10px}.map-dimension-note{display:none}.map-dimension-summary{padding:10px}.map-leaves{padding-left:10px}.map-leaf{flex:1 1 140px;justify-content:space-between}.map-general{padding:12px}.map-general-action{align-self:center}}
+
+</style><style>
+/* 投屏阅读：各档均在原字号基础上放大，文字与图表使用同一比例。 */
+:root,:root[data-font-size="small"]{--font-scale:1.5}
+:root[data-font-size="medium"]{--font-scale:1.7}
+:root[data-font-size="large"]{--font-scale:1.9}
+body,button,input,select,small,.legend,.chart-legend,.direction,.eyebrow,.section-no,
+.section-label span,.hint,.select-label,.param-row label,.preset-desc,.general-note,
+.model-note,.chart-heading>span,.insight-head>span,.insight-grid p,.player span,
+.status-row .object-readings>div,.status-row .object-readings>div>span:first-child,
+.status-row strong,.status-row>div.object-status:nth-child(n) strong,
+.font-choices span,.classification-map,.classification-map p,
+.classification-map summary,.classification-map button,.classification-map span{
+  font-weight:600;
+}
+h1,h2,h3,.section-label strong,.status-row .object-status>small,
+.status-row>div.object-status:nth-child(n) .object-readings strong,
+.classification-map strong{font-weight:700}
+button,select,.param-row input[type=number]{min-height:44px}
+.param-row input[type=range]{height:22px;cursor:pointer}
+.scope-tabs button{padding-inline:3px;overflow-wrap:anywhere}
+#settings-dialog{max-height:calc(100vh - 32px);overflow:auto}
+.chart canvas{height:clamp(230px,calc(155px * var(--font-scale)),310px)}
+.dot{width:10px;height:10px}
+@media(min-width:1001px){.layout{grid-template-columns:minmax(0,1fr) clamp(350px,27vw,385px)}}
+@media(max-width:1000px){
+ .layout{display:grid;grid-template-columns:minmax(0,1fr)}
+ .visuals{display:contents}.stage{order:1}.controls{order:2;position:static;width:100%}
+ .charts{order:3;margin-top:0}.insight{order:4;margin-top:0}
+ .chart canvas{height:clamp(230px,calc(155px * var(--font-scale)),310px)}
+}
+@media(max-width:480px){
+ :root[data-font-size="large"] .status-row .object-status{grid-column:span 4}
+ :root[data-font-size="large"] .status-row .object-status:nth-child(4){border-left:0;border-top:1px solid #e5e9df;padding-left:0;padding-top:10px}
+}
+@media(max-width:400px){
+ :root[data-font-size="medium"] .status-row .object-status{grid-column:span 4}
+ :root[data-font-size="medium"] .status-row .object-status:nth-child(4){border-left:0;border-top:1px solid #e5e9df;padding-left:0;padding-top:10px}
+}
+
+/* 扩大运动画面，让运动轨道成为卡片的视觉主体。 */
+#track{height:clamp(260px,22vw,330px)}
+/* 更窄的屏幕保持每个物体的读数完整，不把数字压碎。 */
+@media(max-width:400px){
+ .status-row .object-status{grid-column:span 4}
+ .status-row .object-status:nth-child(4){border-left:0;border-top:1px solid #e5e9df;padding-left:0;padding-top:10px}
+}
+
+/* 文字变大后，保持方向提示和页眉完整。 */
+.direction{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 14px;max-width:100%}
+.direction span,.identity{white-space:nowrap}
+.topbar{flex-wrap:wrap;row-gap:10px}.top-actions{margin-left:auto}
+@media(max-width:400px){.status-row .time-status,.status-row .gap-status{grid-column:span 2}}
+
+/* 完整展示较长的情境名称，便于触屏和投屏阅读。 */
+.preset-desc #preset-selected,.preset-desc #preset-description{display:block}
+.preset-desc #preset-selected{color:#344c38;font-weight:700;line-height:1.5;overflow-wrap:anywhere}
+.preset-desc #preset-description{margin-top:6px;line-height:1.6}
+@media(max-width:480px){
+ .scope-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .scope-tabs button:last-child{grid-column:1/-1}
+ .player input{flex:1 1 65%}
+ .insight-head{display:block}.insight-head>span{display:block;margin-top:8px}
+}
+.panel-bottom p{font-weight:600;color:#526250}
+
+</style></head>
+<body><div class="wrap"><header class="topbar"><div class="identity"><span class="orb"></span><span>高一物理组</span></div><div class="top-actions"><button class="settings-trigger" id="map-open">分类图谱</button><button class="settings-trigger" id="settings-open" aria-label="打开设置">⚙ <span>设置</span></button></div></header>
+<section class="intro"><div><h1>追及与相遇</h1></div></section>
+<main class="layout"><div class="visuals"><section class="panel stage"><div class="legend"><span><i class="dot purple"></i>A 物体</span><span><i class="dot green"></i>B 物体</span><span class="direction"><span>箭头长度 ∝ 速度大小</span><span>向右为正 →</span></span></div><canvas id="track" aria-label="两物体车头位置与间距演示"></canvas><div class="status-row">
+<div class="time-status"><small>经过时间</small><strong id="time-readout">0.0 <em>s</em></strong></div>
+<div class="gap-status"><small>两车头间距</small><strong id="distance-readout">0.0 <em>m</em></strong><small id="relative-readout">位置差 xB − xA = 0.0 m</small></div>
+<div class="object-status"><small><i class="dot purple"></i>A 物体</small><div class="object-readings"><div><span>位置 x<sub>A</sub> =</span><strong><span id="a-position">0.0</span> <em>m</em></strong></div><div><span>位移 Δx<sub>A</sub> =</span><strong><span id="a-displacement">0.0</span> <em>m</em></strong></div><div><span>速度 v<sub>A</sub> =</span><strong><span id="a-velocity">0.0</span> <em>m/s</em></strong></div></div></div>
+<div class="object-status"><small><i class="dot green"></i>B 物体</small><div class="object-readings"><div><span>位置 x<sub>B</sub> =</span><strong><span id="b-position">0.0</span> <em>m</em></strong></div><div><span>位移 Δx<sub>B</sub> =</span><strong><span id="b-displacement">0.0</span> <em>m</em></strong></div><div><span>速度 v<sub>B</sub> =</span><strong><span id="b-velocity">0.0</span> <em>m/s</em></strong></div></div></div>
+</div><div class="player"><button class="play-btn" id="play">▶ &nbsp;播放</button><button class="reset-btn" id="reset">↺ &nbsp;重置</button><input id="timeline" aria-label="演示进度" type="range" min="0" max="20" step="0.01" value="0"><span id="duration-label">0 / 20 s</span></div></section>
+<div class="charts"><section class="panel chart"><div class="chart-heading"><div><span class="section-no">02 / 位置与时间</span><h3>位置—时间图</h3></div><span>车头位置相同即相遇</span></div><div class="chart-legend" aria-label="曲线图例"><span class="legend-a">A 物体 · 实线</span><span class="legend-b">B 物体 · 虚线</span></div><canvas id="position-chart" aria-label="位置时间图"></canvas></section><section class="panel chart"><div class="chart-heading"><div><span class="section-no">03 / 速度与时间</span><h3>速度—时间图</h3></div><span>交点表示速度相等</span></div><div class="chart-legend" aria-label="曲线图例"><span class="legend-a">A 物体 · 实线</span><span class="legend-b">B 物体 · 虚线</span></div><canvas id="velocity-chart" aria-label="速度时间图"></canvas></section></div>
+<section class="panel insight"><div class="insight-head"><div><span class="section-no">04 / 观察与思考</span><h2>这个过程里，发生了什么？</h2></div><span>在当前展示时间内</span></div><div class="insight-grid"><div><small>相遇时刻</small><strong id="meeting-result">—</strong><p id="meeting-detail">调整参数，观察两者的位置。</p></div><div><small>速度相等时刻</small><strong id="equal-result">—</strong><p id="equal-detail">速度相等时，两者不一定相遇。</p></div><div><small>运动规律</small><strong id="rule-title">直线运动</strong><p id="rule-detail">位置由初始位置、速度和加速度共同决定。</p></div></div></section></div>
+<aside class="panel controls"><div class="controls-header"><div><h2>设置</h2></div><span class="control-icon">↗</span></div><div class="control-section"><div class="section-label"><span>01</span><strong>选择情境</strong></div><div class="scope-tabs" role="group" aria-label="情境类型"><button data-scope="pursuit" class="selected">同向追及</button><button data-scope="meeting">相向相遇</button><button data-scope="general">通用模式</button></div><div id="classification"><label class="select-label" for="dimension">分类方式</label><select id="dimension"></select><label class="select-label" for="category">选择分类</label><select id="category"></select><label class="select-label" for="preset">选择运动情境</label><select id="preset"></select><div class="preset-desc"><strong id="preset-selected"></strong><span id="preset-description"></span></div></div><div id="general-note" class="general-note" hidden><strong>自由探索</strong><p>独立调整两物体车头的初始位置、速度和加速度。向右为正，负数表示向左。</p></div></div>
+<div class="control-section"><div class="section-label"><span>02</span><strong>调整参数</strong></div><p class="hint" id="parameter-hint">拖动滑杆，或直接输入数值。</p><div id="params"></div><p class="model-note" id="model-note"></p></div><div class="panel-bottom"><span>↗</span><p>改变初始条件，<br>看看相遇会不会发生。</p></div></aside></main></div>
+<dialog id="settings-dialog"><form method="dialog"><div class="dialog-head"><div><span class="section-no">PREFERENCES</span><h2>设置</h2></div><button class="dialog-close" aria-label="关闭">×</button></div><p>调整显示选项。</p><label class="setting-row"><span><strong>显示「匀速追匀速」</strong><small>在同向追及的分类中显示这一基础情境</small></span><input id="show-uniform" type="checkbox"><span class="switch" aria-hidden="true"></span></label><fieldset class="font-setting"><legend>字体大小</legend><div class="font-choices" role="radiogroup" aria-label="字体大小"><label><input type="radio" name="font-size" value="small" checked><span>小</span></label><label><input type="radio" name="font-size" value="medium"><span>中</span></label><label><input type="radio" name="font-size" value="large"><span>大</span></label></div></fieldset></form></dialog>
+<script>
+/* Font selection is kept on this device, with a safe default if storage is unavailable. */
+(() => {
+  'use strict';
+  const options = {small: 1.5, medium: 1.7, large: 1.9};
+  let size = 'small';
+  try {
+    const saved = localStorage.getItem('motion-font-size');
+    if (Object.hasOwn(options, saved)) size = saved;
+  } catch (_) {}
+  window.motionFontScale = () => options[size];
+  function apply(next, save) {
+    size = Object.hasOwn(options, next) ? next : 'small';
+    document.documentElement.dataset.fontSize = size;
+    const choice = document.querySelector(`input[name="font-size"][value="${size}"]`);
+    if (choice) choice.checked = true;
+    if (save) {
+      try { localStorage.setItem('motion-font-size', size); } catch (_) {}
+      window.dispatchEvent(new Event('resize'));
+    }
+  }
+  apply(size, false);
+  document.addEventListener('change', event => {
+    if (event.target.matches('input[name="font-size"]')) apply(event.target.value, true);
+  });
+})();
+
+</script><script>
+/* One-dimensional motion. Positive values point to the right. */
+(function (root) {
+  'use strict';
+
+  const EPS = 1e-9;
+
+  function stopTime(obj) {
+    if (obj.stop && Math.abs(obj.v) < EPS && Math.abs(obj.a) >= EPS) return 0;
+    return obj.stop && obj.v * obj.a < 0 ? -obj.v / obj.a : Infinity;
+  }
+
+  function position(obj, t) {
+    const elapsed = Math.max(0, Math.min(t, stopTime(obj)));
+    return obj.x + obj.v * elapsed + 0.5 * obj.a * elapsed * elapsed;
+  }
+
+  function velocity(obj, t) {
+    if (t >= stopTime(obj)) return 0;
+    return obj.v + obj.a * Math.max(0, t);
+  }
+
+  function accelerationAt(obj, t) {
+    return t >= stopTime(obj) ? 0 : obj.a;
+  }
+
+  function uniqueSorted(values) {
+    values.sort((a, b) => a - b);
+    return values.filter((v, i) => i === 0 || Math.abs(v - values[i - 1]) > EPS * Math.max(1, Math.abs(v), Math.abs(values[i - 1])));
+  }
+
+  function boundaries(A, B, T) {
+    const points = [0, T];
+    for (const obj of [A, B]) {
+      const t = stopTime(obj);
+      if (t > 0 && t < T) points.push(t);
+    }
+    return uniqueSorted(points);
+  }
+
+  // Solve c + b*t + a*t² = 0, including a repeated quadratic root.
+  function roots(a, b, c) {
+    if (Math.abs(a) < EPS) {
+      if (Math.abs(b) < EPS) return [];
+      return [-c / b];
+    }
+    let discriminant = b * b - 4 * a * c;
+    const scale = Math.max(1, b * b, Math.abs(4 * a * c));
+    if (discriminant < -EPS * scale) return [];
+    if (Math.abs(discriminant) <= EPS * scale) discriminant = 0;
+    const sqrt = Math.sqrt(discriminant);
+    if (sqrt === 0) return [-b / (2 * a)];
+    // This form avoids cancellation for one root; the other follows from their product.
+    const q = -0.5 * (b + (b >= 0 ? sqrt : -sqrt));
+    return [q / a, c / q];
+  }
+
+  function events(A, B, duration) {
+    const T = Number.isFinite(duration) ? Math.max(0, duration) : 0;
+    const cuts = boundaries(A, B, T);
+    const meetings = [];
+    const equalTimes = [];
+    let coincident = true;
+    let previousCoincident = false;
+    let previousEqual = false;
+
+    if (T === 0) {
+      if (Math.abs(position(A, 0) - position(B, 0)) < EPS) meetings.push(0);
+      if (Math.abs(velocity(A, 0) - velocity(B, 0)) < EPS) equalTimes.push(0);
+      return { meetings, equalTimes, coincident: false };
+    }
+
+    for (let i = 0; i < cuts.length - 1; i++) {
+      const start = cuts[i];
+      const end = cuts[i + 1];
+      const length = end - start;
+      const midpoint = (start + end) / 2;
+      const c = position(B, start) - position(A, start);
+      const b = velocity(B, start) - velocity(A, start);
+      const accelerationDifference = accelerationAt(B, midpoint) - accelerationAt(A, midpoint);
+      const a = accelerationDifference / 2;
+      const samePositionThroughout = Math.abs(c) < EPS && Math.abs(b) < EPS && Math.abs(a) < EPS;
+      const sameVelocityThroughout = Math.abs(b) < EPS && Math.abs(accelerationDifference) < EPS;
+      coincident = coincident && samePositionThroughout;
+
+      if (samePositionThroughout) {
+        // Record when a stretch of coincident motion begins, not every instant in it.
+        if (!previousCoincident) meetings.push(start);
+      } else {
+        for (let t of roots(a, b, c)) {
+          if (t >= -EPS && t <= length + EPS) {
+            t = Math.max(0, Math.min(length, t));
+            // The end of a coincident stretch is not a new encounter.
+            if (!(previousCoincident && t < EPS)) meetings.push(start + t);
+          }
+        }
+      }
+      if (sameVelocityThroughout) {
+        if (!previousEqual) equalTimes.push(start);
+      } else if (Math.abs(accelerationDifference) >= EPS) {
+        let t = -b / accelerationDifference;
+        if (t >= -EPS && t <= length + EPS) {
+          t = Math.max(0, Math.min(length, t));
+          if (!(previousEqual && t < EPS)) equalTimes.push(start + t);
+        }
+      }
+      previousCoincident = samePositionThroughout;
+      previousEqual = sameVelocityThroughout;
+    }
+
+    return {
+      meetings: coincident ? [] : uniqueSorted(meetings),
+      equalTimes: uniqueSorted(equalTimes),
+      coincident
+    };
+  }
+
+  function bounds(A, B, duration) {
+    const T = Number.isFinite(duration) ? Math.max(0, duration) : 0;
+    let min = Infinity;
+    let max = -Infinity;
+    for (const obj of [A, B]) {
+      const samples = [0, T];
+      const stoppedAt = stopTime(obj);
+      if (stoppedAt > 0 && stoppedAt < T) samples.push(stoppedAt);
+      if (Math.abs(obj.a) >= EPS) {
+        const turningAt = -obj.v / obj.a;
+        if (turningAt > 0 && turningAt < T && turningAt <= stoppedAt) samples.push(turningAt);
+      }
+      for (const time of samples) {
+        const x = position(obj, time);
+        min = Math.min(min, x);
+        max = Math.max(max, x);
+      }
+    }
+    return { min, max };
+  }
+
+  root.Physics = { position, velocity, events, bounds };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script><script>
+/* 同一组物理情境可从多种分类入口访问。无外部依赖，可离线使用。 */
+(function () {
+  'use strict';
+  const EPS = 1e-7;
+  const T = 18;
+  const types = ['匀速', '匀加速', '匀减速'];
+  const kindShort = { '匀速': '匀速', '匀加速': '匀加速', '匀减速': '匀减速' };
+  const fmt = n => Number(n.toFixed(2));
+  const stopTime = o => o.stop && o.a !== 0 && o.v * o.a < 0 ? Math.max(0, -o.v / o.a) : Infinity;
+  function state(o, t, after) {
+    const ts = stopTime(o);
+    if (t > ts - (after ? EPS : -EPS)) {
+      return { x: o.x + o.v * ts + .5 * o.a * ts * ts, v: 0, a: 0 };
+    }
+    return { x: o.x + o.v * t + .5 * o.a * t * t, v: o.v + o.a * t, a: o.a };
+  }
+  function uniq(xs) {
+    return xs.sort((a, b) => a - b).filter((x, i, arr) => !i || Math.abs(x - arr[i - 1]) > 1e-5);
+  }
+  function equationRoots(c, b, a) {
+    if (Math.abs(a) < EPS) return Math.abs(b) < EPS ? [] : [-c / b];
+    const d = b * b - 4 * a * c;
+    if (d < -EPS) return [];
+    if (Math.abs(d) <= EPS) return [-b / (2 * a)];
+    const s = Math.sqrt(d);
+    return [(-b - s) / (2 * a), (-b + s) / (2 * a)];
+  }
+  function analyze(A, B, duration) {
+    const cuts = uniq([0, duration, stopTime(A), stopTime(B)].filter(t => Number.isFinite(t) && t >= 0 && t <= duration));
+    const roots = [];
+    let together = false;
+    for (let i = 0; i + 1 < cuts.length; i++) {
+      const from = cuts[i], span = cuts[i + 1] - from;
+      const a = state(A, from, true), b = state(B, from, true);
+      const c = b.x - a.x, v = b.v - a.v, acc = (b.a - a.a) / 2;
+      if (Math.abs(c) < EPS && Math.abs(v) < EPS && Math.abs(acc) < EPS) {
+        together = true;
+        roots.push(from);
+      } else {
+        for (const q of equationRoots(c, v, acc)) {
+          if (q >= -EPS && q <= span + EPS) roots.push(Math.max(0, from + q));
+        }
+      }
+    }
+    const hits = uniq(roots.filter(t => t >= -EPS && t <= duration + EPS));
+    let result;
+    if (together) result = '相遇后保持同位置';
+    else if (hits.length >= 2) result = '相遇两次';
+    else if (hits.length === 1) {
+      const va = state(A, hits[0], true).v, vb = state(B, hits[0], true).v;
+      result = Math.abs(va - vb) < 1e-5 ? '恰好相遇' : '相遇一次';
+    } else result = '没有相遇';
+
+    // Classify the observed gap only up to the first encounter; after that
+    // front/back positions change, so the usual pursuit labels no longer apply.
+    const end = hits.length ? hits[0] : duration;
+    const turning = [0, end];
+    for (let i = 0; i + 1 < cuts.length; i++) {
+      const lo = cuts[i], hi = Math.min(cuts[i + 1], end);
+      if (lo > end || hi < lo + EPS) continue;
+      turning.push(lo, hi);
+      const a = state(A, lo, true), b = state(B, lo, true);
+      const dv = b.v - a.v, da = b.a - a.a;
+      if (Math.abs(da) > EPS) {
+        const t = lo - dv / da;
+        if (t > lo + EPS && t < hi - EPS) turning.push(t);
+      }
+    }
+    const ts = uniq(turning.filter(t => t >= 0 && t <= end));
+    const signs = [];
+    for (let i = 0; i + 1 < ts.length; i++) {
+      if (ts[i + 1] - ts[i] < EPS) continue;
+      const mid = (ts[i] + ts[i + 1]) / 2;
+      const va = state(A, mid, true).v, vb = state(B, mid, true).v;
+      const gap = state(B, mid, true).x - state(A, mid, true).x;
+      const rate = Math.sign(gap || 1) * (vb - va);
+      const s = rate > EPS ? 1 : rate < -EPS ? -1 : 0;
+      if (s && signs[signs.length - 1] !== s) signs.push(s);
+    }
+    let process = '间距保持不变';
+    if (signs.length === 1) process = signs[0] < 0 ? '一直靠近' : '一直远离';
+    else if (signs.length === 2) process = signs[0] < 0 ? '先靠近后远离' : '先远离后靠近';
+    else if (signs.length > 2) process = '间距多次变化';
+    return { result, process, hits };
+  }
+  function accPairs(typeA, typeB, signA, signB) {
+    const a = typeA === '匀速' ? [0] : typeA === '匀加速' ? [signA] : [-signA];
+    const b = typeB === '匀速' ? [0] : typeB === '匀加速' ? [signB] : [-signB];
+    if (typeA === typeB && typeA !== '匀速') {
+      return [[a[0] * 2, b[0]], [a[0], b[0]], [a[0], b[0] * 2]];
+    }
+    return [[a[0], b[0]]];
+  }
+  function createPursuit() {
+    const out = [], seen = new Set();
+    const speedCases = [
+      { name: '后快前慢', va: 8, vb: 4, key: 'fast' },
+      { name: '后慢前快', va: 4, vb: 8, key: 'slow' },
+      { name: '初速度相同', va: 6, vb: 6, key: 'equal' }
+    ];
+    const distances = [6, 8, 4, 4.5, 2, 12, 20, 40];
+    types.forEach((ka, ia) => types.forEach((kb, ib) => {
+      const group = `${kindShort[ka]}追${kindShort[kb]}`;
+      speedCases.forEach(s => accPairs(ka, kb, 1, 1).forEach(([aa, ab], ai) => distances.forEach(d => {
+        // 两车都减速时采用较大的初速度，使两次相遇可以在停车前完整呈现。
+        const va = ka === '匀减速' && kb === '匀减速' ? s.va + 5 : s.va;
+        const vb = ka === '匀减速' && kb === '匀减速' ? s.vb + 6 : s.vb;
+        // 保持所声明的初速度关系，包括相等这一特殊情况。
+        const adjustedVa = ka === '匀减速' && kb === '匀减速' && s.key === 'equal' ? 12 : va;
+        const adjustedVb = ka === '匀减速' && kb === '匀减速' && s.key === 'equal' ? 12 : vb;
+        const A = { x: 0, v: adjustedVa, a: aa, stop: ka === '匀减速' };
+        const B = { x: d, v: adjustedVb, a: ab, stop: kb === '匀减速' };
+        const adv = aa > ab ? '越来越有利' : aa < ab ? '越来越不利' : '速度差不变';
+        const info = analyze(A, B, T);
+        const key = [group, s.name, adv, info.process, info.result].join('|');
+        if (seen.has(key)) return;
+        seen.add(key);
+        out.push({
+          id: `p-${ia}${ib}-${s.key}-${ai}-${d}`, title: `${group} · ${s.name} · ${info.result}`,
+          scope: 'pursuit', group, initial: s.name, advantage: adv,
+          process: info.process, result: info.result, A, B, duration: T,
+          description: `A 在后，B 在前；初始间距 ${d} m。减速物体停下后保持静止；速度差分类描述起始运动阶段。`,
+        });
+      })));
+    }));
+    return out;
+  }
+  function meetingPhase(A, B, info, duration) {
+    const ta = stopTime(A), tb = stopTime(B);
+    if (!info.hits.length) {
+      return ta <= duration + EPS && tb <= duration + EPS
+        ? '双方停下仍未相遇' : '展示时间内未相遇';
+    }
+    const t = info.hits[0];
+    if (Math.abs(t - ta) < 1e-5 || Math.abs(t - tb) < 1e-5) return '恰好停下时相遇';
+    if (ta < t - EPS || tb < t - EPS) return '一方停下后相遇';
+    return '相遇前都在运动';
+  }
+  function createMeeting() {
+    const out = [], seen = new Set();
+    types.forEach((ka, ia) => types.forEach((kb, ib) => {
+      const group = `${kindShort[ka]}与${kindShort[kb]}相向`;
+      const pairs = accPairs(ka, kb, 1, -1);
+      // Mixed acceleration and deceleration can make the initial closing rate
+      // increase, decrease, or stay constant depending on their magnitudes.
+      if (ka === '匀加速' && kb === '匀减速') pairs.push([2, 1], [1, 2]);
+      if (ka === '匀减速' && kb === '匀加速') pairs.push([-2, -1], [-1, -2]);
+      pairs.forEach(([aa, ab], ai) => [8, 24, 36, 48, 72].forEach(d => {
+        const A = { x: 0, v: 6, a: aa, stop: ka === '匀减速' };
+        const B = { x: d, v: -6, a: ab, stop: kb === '匀减速' };
+        const r = aa - ab;
+        const advantage = r > 0 ? '靠近越来越快' : r < 0 ? '靠近越来越慢' : '靠近速度不变';
+        const info = analyze(A, B, T);
+        const phase = meetingPhase(A, B, info, T);
+        const key = [group, advantage, info.process, info.result, phase].join('|');
+        if (seen.has(key)) return;
+        seen.add(key);
+        out.push({
+          id: `m-${ia}${ib}-${ai}-${d}`, title: `${group} · ${phase}`,
+          scope: 'meeting', group, initial: '双方运动', advantage,
+          process: info.process, result: info.result, phase, A, B, duration: T,
+          description: `A 向右、B 向左，初始间距 ${d} m。减速物体停下后保持静止；靠近速度分类描述起始运动阶段。`,
+        });
+      }));
+    }));
+    return out;
+  }
+  // Keep each trajectory and its classifications intact, while bringing its
+  // meaningful events into a short, classroom-friendly viewing window.
+  function shortenDemo(preset) {
+    const events = window.Physics.events(preset.A, preset.B, preset.duration);
+    const times = [...events.meetings, ...events.equalTimes, stopTime(preset.A), stopTime(preset.B)]
+      .filter(t => Number.isFinite(t) && t > EPS && t <= preset.duration + EPS);
+    const lastEvent = times.length ? Math.max(...times) : 0;
+    const scale = (obj, factor) => ({ ...obj, v: obj.v * factor, a: obj.a * factor * factor });
+    for (const factor of [1, 1.5, 2, 2.5, 3, 3.5]) {
+      if (lastEvent / factor > 4 + EPS) continue;
+      const A = scale(preset.A, factor), B = scale(preset.B, factor);
+      const info = analyze(A, B, 5);
+      if (info.result !== preset.result || info.process !== preset.process) continue;
+      if (preset.scope === 'meeting' && meetingPhase(A, B, info, 5) !== preset.phase) continue;
+      return { ...preset, A, B, duration: 5 };
+    }
+    // Preserve the original rather than mislabel a future preset that cannot
+    // safely be compressed into the standard viewing window.
+    return preset;
+  }
+  // Reduce common forward drift in pursuit examples where both bodies keep
+  // moving forward throughout. This changes the actual preset speeds (not the
+  // plotted data), while leaving their relative motion and event times intact.
+  function clearerPursuit(preset) {
+    if (preset.scope !== 'pursuit') return preset;
+    const A = { ...preset.A }, B = { ...preset.B };
+
+    // Two meetings within five seconds, with a clearly visible separation
+    // between them; use genuine position equations and a shared linear scale.
+    if (preset.id === 'p-01-fast-0-6') {
+      Object.assign(A, { v: 11, a: 0 });
+      Object.assign(B, { x: 6, v: 1, a: 4 });
+      return { ...preset, A, B };
+    }
+    if (preset.id === 'p-11-fast-2-6') {
+      Object.assign(A, { v: 11, a: 1 });
+      Object.assign(B, { x: 6, v: 1, a: 5 });
+      return { ...preset, A, B };
+    }
+    if (!A.stop && !B.stop) {
+      const commonSpeed = Math.max(0, Math.min(A.v, B.v) - 1);
+      A.v -= commonSpeed;
+      B.v -= commonSpeed;
+    } else if (A.stop && B.stop && A.v === B.v && A.a === B.a && A.v > 8) {
+      // Identical braking keeps the interval constant and the stop time
+      // unchanged, so a gentler shared motion makes parallel lines clearer.
+      const factor = 8 / A.v;
+      A.v *= factor; B.v *= factor;
+      A.a *= factor; B.a *= factor;
+    }
+    return { ...preset, A, B };
+  }
+  const list = createPursuit().concat(createMeeting()).map(shortenDemo).map(clearerPursuit);
+  window.Presets = {
+    list,
+    labels: {
+      scope: { pursuit: '同向追及', meeting: '相向相遇' },
+      fields: { group: '按运动形式分', initial: '按初速度关系分', advantage: '按速度差变化分', process: '按间距变化分', phase: '按运动过程分', result: '按相遇结果分' },
+      pursuit: { initial: ['后快前慢', '后慢前快', '初速度相同'], advantage: ['越来越有利', '越来越不利', '速度差不变'] },
+      meeting: { initial: ['双方运动'], advantage: ['靠近越来越快', '靠近越来越慢', '靠近速度不变'], phase: ['相遇前都在运动', '一方停下后相遇', '双方停下仍未相遇', '恰好停下时相遇'] },
+      process: ['一直靠近', '一直远离', '先远离后靠近', '先靠近后远离', '间距保持不变', '间距多次变化'],
+      result: ['没有相遇', '相遇一次', '恰好相遇', '相遇两次', '相遇后保持同位置']
+    }
+  };
+})();
+
+</script><script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const P = window.Physics, all = window.Presets.list;
+const fields = window.Presets.labels.fields;
+let showUniform = true;
+try { showUniform = localStorage.getItem('motion-show-uniform') !== 'false'; } catch (_) {}
+let state = {scope:'pursuit', dimension:'group', category:'', presetId:'', A:{x:0,v:8,a:0,stop:false}, B:{x:6,v:4,a:1,stop:false}, duration:18, time:0, playing:false, last:null};
+const ordered = (key,scope,values) => {
+ const preferred = key==='group' ? [] : key==='process' || key==='result' ? (Presets.labels[key]||[]) : (Presets.labels[scope]||{})[key] || [];
+ return [...preferred.filter(v=>values.includes(v)),...values.filter(v=>!preferred.includes(v))];
+};
+function baseList(){return all.filter(p=>p.scope===state.scope && (showUniform || !(p.scope==='pursuit' && p.group==='匀速追匀速')));}
+function options(select,items,value,display=x=>x){select.replaceChildren(...items.map(x=>{const op=document.createElement('option');op.value=x;op.textContent=display(x);return op;}));select.value=items.includes(value)?value:(items[0]||'');return select.value;}
+function populateDimensions(){const keys=state.scope==='meeting'?['group','advantage','phase','process','result']:['group','initial','advantage','process','result'];state.dimension=options($('dimension'),keys,state.dimension,k=>state.scope==='meeting'&&k==='advantage'?'按靠近速度变化分':fields[k]);populateCategories();}
+function populateCategories(){const list=baseList(),vals=[...new Set(list.map(p=>p[state.dimension]))];state.category=options($('category'),ordered(state.dimension,state.scope,vals),state.category);populatePresets();}
+function populatePresets(){const list=baseList().filter(p=>p[state.dimension]===state.category);const ids=list.map(p=>p.id);state.presetId=options($('preset'),ids,state.presetId,id=>{const p=list.find(v=>v.id===id); return state.scope==='pursuit' ? `${p.group} · ${p.initial} · ${p.process} · ${p.result}` : `${p.group} · ${p.phase} · ${p.result}`;});loadPreset();}
+function loadPreset(){const p=all.find(p=>p.id===state.presetId);if(!p)return;$('preset-selected').textContent=$('preset').selectedOptions[0]?.textContent||p.title;state.A={...p.A};state.B={...p.B};state.duration=p.duration;state.time=0;state.playing=false;state.last=null;$('preset-description').textContent=state.scope==='pursuit'?'A 在后，B 在前；两者初始都向右运动。':'A 向右、B 向左；两者开始时相向运动。';$('model-note').textContent='分类是预设的观察入口；调整参数后，初速度比较、间距变化或相遇结果可能改变。减速物体到零后停住。';renderParams();refresh();}
+function selectScope(scope){state.scope=scope;state.time=0;state.playing=false;state.last=null;state.category='';state.presetId='';document.querySelectorAll('[data-scope]').forEach(b=>b.classList.toggle('selected',b.dataset.scope===scope));$('classification').hidden=scope==='general';$('general-note').hidden=scope!=='general';if(scope==='general'){state.A={x:0,v:8,a:0,stop:false};state.B={x:30,v:-4,a:0,stop:false};state.duration=5;$('model-note').textContent='通用模式持续按匀变速直线运动计算：速度经过零后可反向，不会自动停车。';renderParams();refresh();}else{state.dimension='group';populateDimensions();}}
+function fmt(n,d=1){if(Math.abs(n)<0.00001)n=0;return Number(n).toFixed(d);}
+function nice(n){return Number(n.toFixed(2)).toString();}
+function paramRow(container,obj,key,label,lo,hi,step,allowBeyondSlider=false){
+ const row=document.createElement('div');row.className='param-row';const id=`p-${obj}-${key}`;
+ const text=document.createElement('label');text.htmlFor=id;text.textContent=label;
+ const num=document.createElement('input');num.type='number';num.id=id;num.step=step;num.value=state[obj][key];num.min=allowBeyondSlider?-10000:lo;num.max=allowBeyondSlider?10000:hi;num.setAttribute('aria-label',label);
+ const range=document.createElement('input');range.type='range';range.min=lo;range.max=hi;range.step=step;range.value=state[obj][key];range.setAttribute('aria-label',label+'滑杆');
+ row.append(text,num,range);container.append(row);
+ function update(value){if(value===''||!Number.isFinite(Number(value)))return;const low=allowBeyondSlider?-10000:lo,high=allowBeyondSlider?10000:hi;const v=Math.max(low,Math.min(high,Number(value)));state[obj][key]=v;if(state.scope!=='general')state[obj].stop=state[obj].v*state[obj].a<0;num.value=v;range.value=v;state.time=0;state.playing=false;state.last=null;refresh();}
+ range.addEventListener('input',()=>update(range.value));num.addEventListener('change',()=>{update(num.value);num.value=state[obj][key];});
+}
+function renderParams(){
+ const root=$('params');root.replaceChildren();const general=state.scope==='general';
+ const preset=all.find(p=>p.id===state.presetId);
+ const kinds=!general&&preset?preset.group.replace(/相向$/,'').split(state.scope==='pursuit'?'追':'与'):[];
+ if(!general){const box=document.createElement('div');box.className='param-group';const heading=document.createElement('div');heading.className='param-title';heading.textContent='初始位置';box.append(heading);paramRow(box,'B','x','两物体初始间距 d（m）',0,200,.1);root.append(box);}
+ for(const [id,name,color,i] of [['A','A 物体','purple',0],['B','B 物体','green',1]]){
+  const group=document.createElement('div');group.className='param-group';const heading=document.createElement('div');heading.className='param-title';const role=state.scope==='pursuit'?(id==='A'?' · 追赶者':' · 被追赶者'):'';heading.innerHTML=`<i class="dot ${color}"></i>${name}${role}`;group.append(heading);
+  if(general){paramRow(group,id,'x','初始位置 x₀（m）',-100,100,1,true);paramRow(group,id,'v','初速度 v₀（m/s）',-30,30,.5,true);paramRow(group,id,'a','加速度 a（m/s²）',-5,5,.1,true);}
+  else{
+   const direction=state.scope==='meeting'&&id==='B'?-1:1;const kind=kinds[i];
+   paramRow(group,id,'v',`初速度 v₀（m/s）${direction<0?' · 向左':' · 向右'}`,direction<0?-50:.1,direction<0?-.1:50,.1);
+   if(kind==='匀速'){const fixed=document.createElement('p');fixed.className='model-note';fixed.textContent='匀速运动：加速度固定为 0 m/s²';group.append(fixed);}
+   else{const sign=(kind==='匀加速'?1:-1)*direction;paramRow(group,id,'a',`${kind==='匀加速'?'加速度':'减速时的加速度'} a（m/s²）`,sign<0?-25:.1,sign<0?-.1:25,.05);}
+  }
+  root.append(group);
+ }
+ const row=document.createElement('div');row.className='param-row';row.innerHTML='<label for="duration-input">展示时间（s）</label><input id="duration-input" type="number" min="1" max="120" step="1" aria-label="展示时间">';root.append(row);const inp=$('duration-input');inp.value=state.duration;inp.addEventListener('change',()=>{state.duration=Math.max(1,Math.min(120,Number(inp.value)||18));inp.value=state.duration;state.time=Math.min(state.time,state.duration);state.playing=false;state.last=null;refresh();});
+}
+function canvasContext(canvas){const rect=canvas.getBoundingClientRect(), ratio=window.devicePixelRatio||1;const w=Math.max(rect.width,1),h=Math.max(rect.height,1);if(canvas.width!==Math.round(w*ratio)||canvas.height!==Math.round(h*ratio)){canvas.width=Math.round(w*ratio);canvas.height=Math.round(h*ratio);}const ctx=canvas.getContext('2d');ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,w,h);return {ctx,w,h};}
+function rrect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
+// Pick intervals from 1, 2 and 5 times powers of ten, and expand the
+// displayed domain to exact tick values. Physical values are never rounded.
+function niceAxis(low,high,target=4){
+  if(!Number.isFinite(low)||!Number.isFinite(high)){low=-1;high=1;}
+  if(low>high)[low,high]=[high,low];
+  if(low===high){const padding=Math.max(1,Math.abs(low)*.1);low-=padding;high+=padding;}
+  const rough=(high-low)/Math.max(1,target),power=10**Math.floor(Math.log10(rough));
+  const fraction=rough/power,unit=fraction<=1?1:fraction<=2?2:fraction<=5?5:10,step=unit*power;
+  const eps=step*1e-10;
+  let start=Math.floor((low+eps)/step)*step,end=Math.ceil((high-eps)/step)*step;
+  if(start>low+eps)start-=step;
+  if(end<high-eps)end+=step;
+  // Floating point multiplication can produce -0 or 0.30000000000000004.
+  const clean=n=>Math.abs(n)<eps?0:Number(n.toPrecision(14));
+  start=clean(start);end=clean(end);
+  const count=Math.round((end-start)/step),ticks=[];
+  for(let i=0;i<=count&&i<=30;i++)ticks.push(clean(start+i*step));
+  return {min:start,max:end,step,ticks};
+}
+function axisLabel(value,step){
+  const digits=Math.max(0,Math.min(15,-Math.floor(Math.log10(step)+1e-10)));
+  if(Math.abs(value)<step*1e-9)value=0;
+  return value.toLocaleString('en-US',{maximumFractionDigits:digits});
+}
+function canvasFontScale(){return typeof window.motionFontScale==='function'?window.motionFontScale():1;}
+function drawTrack(){
+  const {ctx:c,w,h}=canvasContext($('track'));
+  const bounds=P.bounds(state.A,state.B,state.duration), range=Math.max(15,bounds.max-bounds.min), pad=range*.11;
+  // The reference point is the marked front edge, not the block's centre.
+  const blockWidth=Math.min(116,Math.max(82,w*.2),Math.max(42,(w-32)/2)),margin=blockWidth+12;
+  const axisWidth=Math.max(1,w-2*margin),scale=canvasFontScale();
+  const min=bounds.min-pad,max=bounds.max+pad;
+  const axis=niceAxis(min,max,Math.max(2,Math.min(6,Math.floor(axisWidth/(100*scale)))));
+  const x=value=>margin+(value-min)/(max-min)*axisWidth;
+  const xa=x(P.position(state.A,state.time)), xb=x(P.position(state.B,state.time));
+  const frontDirection=o=>Math.sign(o.v)||Math.sign(o.a)||1;
+  const labelA=state.scope==='pursuit'?'A 追':'A', labelB=state.scope==='pursuit'?'B 被追':'B';
+  const blockHeight=Math.min(50,Math.max(38,h*.15));
+  const topA=Math.max(20,14+4*scale);
+  const axisY=h-Math.max(40,25+12*scale);
+  const topB=Math.max(topA+blockHeight+36,axisY-blockHeight-Math.max(22,10+10*scale));
+  const guideY=(topA+blockHeight+topB)/2;
+
+  // One shared scale for both objects over the full time window: arrows can
+  // be compared across objects and frames without changing the scale mid-play.
+  const maxSpeed=Math.max(...[state.A,state.B].flatMap(o=>[Math.abs(P.velocity(o,0)),Math.abs(P.velocity(o,state.duration))]));
+  // A and B occupy separate lanes even when their reference points coincide.
+  car(c,xa,topA,blockWidth,blockHeight,labelA,'#477fa8',frontDirection(state.A),P.velocity(state.A,state.time),maxSpeed,w);
+  car(c,xb,topB,blockWidth,blockHeight,labelB,'#795bb1',frontDirection(state.B),P.velocity(state.B,state.time),maxSpeed,w);
+
+  c.save();
+  c.setLineDash([3,4]);c.lineWidth=1;c.strokeStyle='#aab4a7';
+  c.beginPath();c.moveTo(xa,topA+blockHeight+2);c.lineTo(xa,guideY);c.moveTo(xb,guideY);c.lineTo(xb,topB-2);c.stroke();
+  c.setLineDash([]);c.strokeStyle='#869783';c.lineWidth=1.2;
+  c.beginPath();c.moveTo(xa,guideY);c.lineTo(xb,guideY);c.stroke();
+  for(const [point,color] of [[xa,'#477fa8'],[xb,'#795bb1']]){c.fillStyle=color;c.beginPath();c.arc(point,guideY,2.3,0,Math.PI*2);c.fill();}
+  const text=`车头间距 ${nice(Math.abs(P.position(state.B,state.time)-P.position(state.A,state.time)))} m`;
+  c.font=`600 ${13*scale}px -apple-system, BlinkMacSystemFont, sans-serif`;c.textAlign='center';
+  const textWidth=Math.min(w-8,c.measureText(text).width+12),mid=Math.max(textWidth/2+3,Math.min(w-textWidth/2-3,(xa+xb)/2));
+  c.fillStyle='#fbfaf5';c.fillRect(mid-textWidth/2,guideY-6-14*scale,textWidth,16*scale);
+  c.fillStyle='#4d5c50';c.fillText(text,mid,guideY-6,Math.max(40,w-8));
+  c.restore();
+
+  c.strokeStyle='#c5d0c2';c.lineWidth=1;c.beginPath();c.moveTo(margin,axisY);c.lineTo(w-margin,axisY);c.stroke();
+  c.fillStyle='#4d5c50';c.font=`600 ${12*scale}px -apple-system, sans-serif`;c.textAlign='center';
+  for(const tick of axis.ticks){if(tick<min-1e-9||tick>max+1e-9)continue;const xx=x(tick);c.beginPath();c.moveTo(xx,axisY);c.lineTo(xx,axisY+5);c.stroke();c.fillText(axisLabel(tick,axis.step),xx,axisY+7+12*scale);}
+  c.textAlign='right';c.fillText('位置 / m',w-8,axisY+20+12*scale);
+}
+function car(c,front,top,width,height,label,color,frontDirection,velocity,maxSpeed,canvasWidth){
+  const left=frontDirection>0?front-width:front, right=left+width, bottom=top+height;
+  c.save();c.fillStyle='#faf9f4';c.fillRect(left,top,width,height);
+  // Regular fine hatching and slightly doubled edges evoke a hand-drawn block.
+  c.save();c.beginPath();c.rect(left,top,width,height);c.clip();c.globalAlpha=.34;c.strokeStyle=color;c.lineWidth=.8;
+  for(let i=-height;i<width+height;i+=8){c.beginPath();c.moveTo(left+i,bottom+1);c.lineTo(left+i+height+1,top-1);c.stroke();}c.restore();
+  c.strokeStyle=color;c.lineWidth=1.8;c.lineJoin='round';
+  c.beginPath();c.moveTo(left+.4,top+.3);c.lineTo(right-.4,top);c.lineTo(right, bottom-.3);c.lineTo(left,bottom);c.closePath();c.stroke();
+  c.globalAlpha=.34;c.lineWidth=.65;c.beginPath();c.moveTo(left-1,top+1.4);c.lineTo(right+.5,top+.7);c.lineTo(right+1,bottom+.6);c.lineTo(left-.7,bottom-.4);c.closePath();c.stroke();c.globalAlpha=1;
+  // The thicker end remains attached to the same material point if velocity reverses.
+  c.lineWidth=5;c.beginPath();c.moveTo(front,top+1);c.lineTo(front,bottom-1);c.stroke();
+  c.fillStyle=color;c.font=`600 ${Math.min(17*canvasFontScale(),height*.62)}px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillText(label,(left+right)/2,top+height/2+1);
+  // The shaft's actual length is proportional to |v|, with a shared maximum
+  // of 54 px. Zero speed has no arrow; its direction is the sign of velocity.
+  const arrowLength=maxSpeed>0 ? (Math.abs(velocity)/maxSpeed)*Math.min(54,width*.6,Math.max(0,canvasWidth-8)) : 0;
+  if(arrowLength>0){
+    const direction=Math.sign(velocity),center=(left+right)/2,y=top-8;
+    // Translate the arrow when needed to keep both ends inside the canvas;
+    // never shorten it, so the displayed length remains comparable.
+    const start=direction>0?Math.max(4,Math.min(center,canvasWidth-4-arrowLength)):Math.max(4+arrowLength,Math.min(center,canvasWidth-4));
+    const tip=start+direction*arrowLength,head=Math.min(6,arrowLength*.35),halfHead=head*.65;
+    c.lineWidth=Math.min(1.8,Math.max(.15,arrowLength/2));c.beginPath();c.moveTo(start,y);c.lineTo(tip,y);
+    c.moveTo(tip-direction*head,y-halfHead);c.lineTo(tip,y);c.lineTo(tip-direction*head,y+halfHead);c.stroke();
+  }
+  c.restore();
+}
+// Include zero in each vertical scale so the axes really intersect at (0, 0).
+// Only pad on sides containing nonzero data, avoiding artificial negative space.
+function plotLimits(type){
+  let low,high;
+  if(type==='x'){
+    const b=P.bounds(state.A,state.B,state.duration);low=b.min;high=b.max;
+  }else{
+    const values=[P.velocity(state.A,0),P.velocity(state.A,state.duration),P.velocity(state.B,0),P.velocity(state.B,state.duration)];
+    low=Math.min(...values);high=Math.max(...values);
+  }
+  low=Math.min(0,low);high=Math.max(0,high);
+  if(low===high)return [0,1];
+  const padding=(high-low)*.06;
+  return [low<0?low-padding:0,high>0?high+padding:0];
+}
+function plot(canvas,type){
+  const {ctx:c,w,h}=canvasContext(canvas),scale=canvasFontScale(),T=state.duration;
+  const fontSize=10*scale,top=Math.ceil(18+fontSize*.8),bottom=h-Math.ceil(18+fontSize),r=Math.ceil(Math.max(17,fontSize*1.6));
+  const [dataMin,dataMax]=plotLimits(type),ph=Math.max(1,bottom-top);
+  // Generate tidy tick labels separately from the view limits. Expanding to
+  // the next major tick can double unused space; data remain on a linear scale.
+  const yAxis=niceAxis(dataMin,dataMax,Math.max(4,Math.min(6,Math.floor(ph/(27*scale))))*1.5);
+  const visibleTicks=yAxis.ticks.filter(t=>t>=dataMin-yAxis.step*1e-9&&t<=dataMax+yAxis.step*1e-9);
+  c.font=`600 ${fontSize}px -apple-system, sans-serif`;
+  const labelWidth=Math.max(0,...visibleTicks.map(t=>c.measureText(axisLabel(t,yAxis.step)).width));
+  const l=Math.max(36,Math.ceil(labelWidth+13)),pw=Math.max(1,w-l-r);
+  const X=t=>l+t/T*pw,Y=v=>top+(dataMax-v)/(dataMax-dataMin)*ph;
+  const at=(o,t)=>type==='x'?P.position(o,t):P.velocity(o,t);
+  const zeroY=Y(0),axisColor='#68766a',tickLength=3;
+  c.lineWidth=1;c.textAlign='right';c.textBaseline='middle';
+  // Thin gridlines are guides; the zero line is the actual horizontal axis.
+  for(const tick of visibleTicks){
+    const yy=Y(tick);
+    if(Math.abs(tick)>yAxis.step*1e-9){c.strokeStyle='#edf0e8';c.beginPath();c.moveTo(l,yy);c.lineTo(w-r,yy);c.stroke();}
+    c.fillStyle='#4d5c50';c.fillText(axisLabel(tick,yAxis.step),l-6,yy);
+    c.strokeStyle=axisColor;c.beginPath();c.moveTo(l-tickLength,yy);c.lineTo(l,yy);c.stroke();
+  }
+  const timeAxis=niceAxis(0,T,Math.max(3,Math.min(6,Math.floor(pw/(65*scale)))));
+  c.textAlign='center';c.textBaseline='top';c.fillStyle='#4d5c50';
+  for(const tick of timeAxis.ticks){
+    if(tick<=0||tick>T+timeAxis.step*1e-9)continue;
+    const xx=X(tick);
+    c.strokeStyle=axisColor;c.beginPath();c.moveTo(xx,zeroY);c.lineTo(xx,zeroY+tickLength);c.stroke();
+    c.fillText(axisLabel(tick,timeAxis.step),xx,zeroY+tickLength+2);
+  }
+  // Standard x/v versus t axes with positive direction indicated by arrows.
+  c.strokeStyle=axisColor;c.lineWidth=1.1;c.setLineDash([]);c.beginPath();
+  c.moveTo(l,bottom);c.lineTo(l,top-5);c.lineTo(l-3.5,top);
+  c.moveTo(l,top-5);c.lineTo(l+3.5,top);
+  c.moveTo(l,zeroY);c.lineTo(w-r+5,zeroY);c.lineTo(w-r,zeroY-3.5);
+  c.moveTo(w-r+5,zeroY);c.lineTo(w-r,zeroY+3.5);c.stroke();
+  c.fillStyle='#4d5c50';c.textBaseline='alphabetic';c.textAlign='left';
+  c.fillText(type==='x'?'x / m':'v / (m/s)',l+5,top-10);
+  c.textAlign='right';c.fillText('t / s',w-2,Math.max(fontSize+1,zeroY-6));
+  for(const [obj,col,dashed] of [[state.A,'#477fa8',false],[state.B,'#795bb1',true]]){
+    c.strokeStyle=col;c.lineWidth=2.1;c.setLineDash(dashed?[6,3.5]:[]);c.beginPath();
+    for(let i=0;i<=160;i++){const t=T*i/160,px=X(t),py=Y(at(obj,t));if(i===0)c.moveTo(px,py);else c.lineTo(px,py);}c.stroke();
+    c.setLineDash([]);const px=X(state.time),py=Y(at(obj,state.time));c.fillStyle='#fbfaf5';c.beginPath();c.arc(px,py,4,0,Math.PI*2);c.fill();c.strokeStyle=col;c.lineWidth=2;c.stroke();
+  }
+  if(state.time>1e-9){c.strokeStyle='#bfc8b9';c.lineWidth=1;c.setLineDash([3,4]);c.beginPath();c.moveTo(X(state.time),top);c.lineTo(X(state.time),bottom);c.stroke();c.setLineDash([]);}
+  const ev=P.events(state.A,state.B,T);
+  for(const t of type==='x'?ev.meetings:ev.equalTimes){if(t<0||t>T)continue;const py=Y(at(state.A,t));c.fillStyle='#c28a55';c.beginPath();c.arc(X(t),py,3.3,0,Math.PI*2);c.fill();}
+  c.textBaseline='alphabetic';
+}
+function formatTimes(arr){return arr.map(t=>`${nice(t)} s`).join('、');}
+function renderResults(){
+ const ev=P.events(state.A,state.B,state.duration),EPS=1e-8;
+ const initialSame=Math.abs(P.position(state.A,0)-P.position(state.B,0))<EPS;
+ const laterMeetings=ev.meetings.filter(t=>t>EPS);
+ const joinedAt=t=>{
+  const dt=Math.min(.01,(state.duration-t)/2);
+  return dt>EPS&&Math.abs(P.position(state.A,t+dt)-P.position(state.B,t+dt))<EPS&&Math.abs(P.velocity(state.A,t+dt)-P.velocity(state.B,t+dt))<EPS;
+ };
+ const joined=ev.meetings.find(joinedAt);
+ let meetTitle,meetDetail;
+ if(ev.coincident){
+  meetTitle='始终处于同一位置';meetDetail='展示时间内两者位置始终相同。';
+ }else if(initialSame){
+  if(laterMeetings.length){
+   const laterJoined=laterMeetings.find(joinedAt);
+   meetTitle=`之后相遇 ${laterMeetings.length} 次`;
+   meetDetail=`初始位于同一位置；之后相遇时刻：${formatTimes(laterMeetings)}。`;
+   if(laterJoined!==undefined)meetDetail+=`${nice(laterJoined)} s 起有一段时间重合。`;
+  }else{
+   meetTitle='同一位置出发';
+   meetDetail=joined===0?'初始位于同一位置，并有一段时间重合；之后没有再次相遇。':'初始位于同一位置；展示时间内没有再次相遇。';
+  }
+ }else if(joined!==undefined){
+  meetTitle='相遇后有一段时间重合';meetDetail=`${nice(joined)} s 起，两者有一段时间处在同一位置。`;
+ }else if(ev.meetings.length){
+  meetTitle=`${ev.meetings.length} 次相遇`;meetDetail=`相遇时刻：${formatTimes(ev.meetings)}。`;
+ }else{
+  meetTitle='尚未相遇';meetDetail='在当前展示时间内没有相遇。';
+ }
+ $('meeting-result').textContent=meetTitle;$('meeting-detail').textContent=meetDetail;
+ const eq=ev.equalTimes;
+ if(eq.length){
+  const t=eq[0],delta=Math.min(.01,Math.max(0,(state.duration-t)/2));
+  const continues=delta>0&&Math.abs(P.velocity(state.A,t+delta)-P.velocity(state.B,t+delta))<1e-7;
+  $('equal-result').textContent=continues?(t<1e-7?'有一段时间共速':`${nice(t)} s 起有一段共速`):formatTimes(eq);
+  $('equal-detail').textContent='速度相同不代表位置相同；是否为距离极值还需看前后变化。';
+ }else{
+  $('equal-result').textContent='没有共速时刻';$('equal-detail').textContent='在当前展示时间内，两者速度没有相同。';
+ }
+ // An initial coincidence describes the starting condition, not a later
+ // meeting. Use the next positive meeting as the boundary for distance extrema.
+ const end=ev.coincident?state.duration:initialSame?(laterMeetings[0]??state.duration):(ev.meetings[0]??state.duration);
+ const candidates=[0,end,...ev.equalTimes.filter(t=>t>0&&t<end)].map(t=>({t,d:Math.abs(P.position(state.B,t)-P.position(state.A,t))}));
+ const smallest=candidates.reduce((a,b)=>b.d<a.d?b:a),largest=candidates.reduce((a,b)=>b.d>a.d?b:a);
+ $('rule-title').textContent='间距的最大与最小';
+ const interval=initialSame?(laterMeetings.length?'再次相遇前（含相遇）':'当前展示时间内'):(ev.meetings.length?'首次相遇前（含相遇）':'当前展示时间内');
+ $('rule-detail').textContent=`${interval}：最大 ${nice(largest.d)} m（${nice(largest.t)} s），最小 ${nice(smallest.d)} m（${nice(smallest.t)} s）。`;
+}
+function refresh(){if(state.scope!=='general')$('preset-description').textContent=Math.abs(state.B.x-state.A.x)<1e-8?(state.scope==='pursuit'?'A、B 从同一位置出发；初始都向右运动。':'A、B 从同一位置出发；A 向右、B 向左运动。'):(state.scope==='pursuit'?'A 在后，B 在前；两者初始都向右运动。':'A 向右、B 向左；两者开始时相向运动。');const t=state.time; $('time-readout').innerHTML=`${fmt(t)} <em>s</em>`;const relative=P.position(state.B,t)-P.position(state.A,t);$('distance-readout').innerHTML=`${fmt(Math.abs(relative))} <em>m</em>`;$('relative-readout').textContent=`位置差 xB − xA = ${relative>0?'+':''}${fmt(relative)} m` ;for(const key of ['A','B']){const obj=state[key],prefix=key.toLowerCase(),position=P.position(obj,t);const signed=value=>Math.abs(value)<.00001?fmt(0):(value>0?'+':'')+fmt(value);$(prefix+'-position').textContent=signed(position);$(prefix+'-displacement').textContent=signed(position-obj.x);$(prefix+'-velocity').textContent=signed(P.velocity(obj,t));} $('play').innerHTML=state.playing?'Ⅱ &nbsp;暂停':'▶ &nbsp;播放';$('timeline').max=state.duration;$('timeline').value=t;$('duration-label').textContent=`${fmt(t)} / ${nice(state.duration)} s`;drawTrack();plot($('position-chart'),'x');plot($('velocity-chart'),'v');renderResults();}
+$('dimension').addEventListener('change',e=>{state.dimension=e.target.value;state.category='';state.presetId='';populateCategories();});$('category').addEventListener('change',e=>{state.category=e.target.value;state.presetId='';populatePresets();});$('preset').addEventListener('change',e=>{state.presetId=e.target.value;loadPreset();});document.querySelectorAll('[data-scope]').forEach(b=>b.addEventListener('click',()=>selectScope(b.dataset.scope)));$('play').addEventListener('click',()=>{if(state.time>=state.duration)state.time=0;state.playing=!state.playing;state.last=null;refresh();});$('reset').addEventListener('click',()=>{state.time=0;state.playing=false;state.last=null;refresh();});$('timeline').addEventListener('input',e=>{state.time=Number(e.target.value);state.playing=false;state.last=null;refresh();});$('show-uniform').checked=showUniform;$('show-uniform').addEventListener('change',e=>{showUniform=e.target.checked;try{localStorage.setItem('motion-show-uniform',String(showUniform));}catch(_){}if(state.scope!=='general'){const oldId=state.presetId, oldA={...state.A},oldB={...state.B},oldTime=state.time,oldDuration=state.duration,oldPlaying=state.playing;populateDimensions();if(state.presetId===oldId){state.A=oldA;state.B=oldB;state.time=oldTime;state.duration=oldDuration;state.playing=oldPlaying;state.last=null;renderParams();refresh();}}});$('settings-open').addEventListener('click',()=>$('settings-dialog').showModal());$('settings-dialog').addEventListener('click',e=>{if(e.target===$('settings-dialog'))$('settings-dialog').close();});let timer;window.addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(refresh,80);});function tick(now){if(state.playing){if(state.last!==null)state.time=Math.min(state.duration,state.time+(now-state.last)/1000);state.last=now;if(state.time>=state.duration){state.playing=false;state.last=null;}refresh();}requestAnimationFrame(tick);}selectScope('pursuit');requestAnimationFrame(tick);
+})();
+
+</script><script>
+(() => {
+  'use strict';
+  const trigger = document.getElementById('map-open');
+  if (!trigger || !window.Presets) return;
+
+  const dialog = document.createElement('dialog');
+  dialog.className = 'classification-map';
+  dialog.setAttribute('aria-labelledby', 'classification-map-title');
+  dialog.setAttribute('aria-describedby', 'classification-map-description');
+  dialog.innerHTML = '<div class="map-top"><div><span class="map-kicker">CLASSIFICATION MAP</span><h2 id="classification-map-title">追及与相遇分类图谱</h2><p id="classification-map-description">从不同线索查看运动情境。同一个情境可以出现在多个分类中。</p></div><button type="button" class="map-close" aria-label="关闭分类图谱">×</button></div><div class="map-content"></div>';
+  document.body.appendChild(dialog);
+  const content = dialog.querySelector('.map-content');
+  dialog.querySelector('.map-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+
+  const dimensions = {
+    pursuit: ['group', 'initial', 'advantage', 'process', 'result'],
+    meeting: ['group', 'advantage', 'phase', 'process', 'result']
+  };
+  const dimensionNotes = {
+    group: '两物体分别怎样运动',
+    initial: '开始时谁的速度更大',
+    advantage: '两者速度差如何变化',
+    process: '间距或运动过程如何变化',
+    phase: '相遇与停车的先后',
+    result: '在展示时间内的结果'
+  };
+  const headings = {
+    pursuit: ['同向追及', 'A 在后，B 在前，初始时同向运动'],
+    meeting: ['相向相遇', '两物体初始时朝彼此运动']
+  };
+
+  function node(tag, className, text) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  }
+
+  function orderedValues(scope, field, values) {
+    const labels = window.Presets.labels;
+    const preferred = field === 'group' ? [] :
+      (field === 'process' || field === 'result') ? (labels[field] || []) :
+      ((labels[scope] || {})[field] || []);
+    return [...preferred.filter(value => values.includes(value)), ...values.filter(value => !preferred.includes(value))];
+  }
+
+  function go(scope, dimension, category) {
+    const scopeButton = document.querySelector(`[data-scope="${scope}"]`);
+    if (!scopeButton) return;
+    scopeButton.click();
+    if (scope !== 'general') {
+      const dimensionSelect = document.getElementById('dimension');
+      const categorySelect = document.getElementById('category');
+      dimensionSelect.value = dimension;
+      dimensionSelect.dispatchEvent(new Event('change', { bubbles: true }));
+      categorySelect.value = category;
+      categorySelect.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    dialog.close();
+  }
+
+  function dimensionBranch(scope, field, items, current) {
+    const branch = node('details', 'map-dimension');
+    const summary = node('summary', 'map-dimension-summary');
+    const labels = window.Presets.labels.fields;
+    const name = scope === 'meeting' && field === 'advantage' ? '按靠近速度变化分' : labels[field];
+    const heading = node('span', 'map-dimension-title', name);
+    const note = node('span', 'map-dimension-note', field === 'advantage' && scope === 'meeting' ? '靠近速度如何变化' : dimensionNotes[field]);
+    const categoryValues = orderedValues(scope, field, [...new Set(items.map(item => item[field]).filter(Boolean))]);
+    const count = node('span', 'map-dimension-count', `${categoryValues.length} 类`);
+    summary.append(heading, note, count);
+    branch.appendChild(summary);
+
+    const leaves = node('div', 'map-leaves');
+    for (const value of categoryValues) {
+      const matching = items.filter(item => item[field] === value).length;
+      const leaf = node('button', 'map-leaf');
+      leaf.type = 'button';
+      leaf.title = `查看“${value}”中的演示情境`;
+      if (current.scope === scope && current.dimension === field && current.category === value) {
+        leaf.classList.add('is-current');
+        leaf.setAttribute('aria-current', 'true');
+      }
+      leaf.append(node('span', 'map-leaf-name', value), node('span', 'map-leaf-count', `${matching} 个情境`));
+      leaf.addEventListener('click', () => go(scope, field, value));
+      leaves.appendChild(leaf);
+    }
+    branch.appendChild(leaves);
+    return branch;
+  }
+
+  function scopeBranch(scope, allItems, current) {
+    const items = allItems.filter(item => item.scope === scope);
+    const [name, note] = headings[scope];
+    const branch = node('details', 'map-scope');
+    branch.open = true;
+    const summary = node('summary', 'map-scope-summary');
+    const description = node('span', 'map-scope-description');
+    description.append(node('strong', 'map-scope-title', name), node('span', 'map-scope-note', note));
+    summary.append(description, node('span', 'map-scope-count', `${items.length} 个演示情境`));
+    branch.appendChild(summary);
+    const branches = node('div', 'map-dimensions');
+    dimensions[scope].forEach(field => branches.appendChild(dimensionBranch(scope, field, items, current)));
+    branch.appendChild(branches);
+    return branch;
+  }
+
+  function render() {
+    const showUniform = document.getElementById('show-uniform')?.checked !== false;
+    const allItems = window.Presets.list.filter(item => showUniform || !(item.scope === 'pursuit' && item.group === '匀速追匀速'));
+    const selectedScope = document.querySelector('.scope-tabs button.selected');
+    const current = {
+      scope: selectedScope?.dataset.scope || '',
+      dimension: document.getElementById('dimension')?.value || '',
+      category: document.getElementById('category')?.value || ''
+    };
+    content.replaceChildren();
+    const root = node('div', 'map-root');
+    root.append(node('span', 'map-root-eyebrow', '直线运动'), node('strong', 'map-root-title', '追及与相遇'));
+    content.appendChild(root);
+    const tree = node('div', 'map-tree');
+    tree.append(scopeBranch('pursuit', allItems, current), scopeBranch('meeting', allItems, current));
+    const general = node('button', 'map-general');
+    general.type = 'button';
+    const generalText = node('span', 'map-general-description');
+    generalText.append(node('strong', 'map-general-title', '通用模式'), node('span', 'map-general-note', '自由设置两物体的位置、速度和加速度'));
+    general.append(generalText, node('span', 'map-general-action', '进入 →'));
+    if (current.scope === 'general') general.classList.add('is-current');
+    general.addEventListener('click', () => go('general'));
+    tree.appendChild(general);
+    content.appendChild(tree);
+    const foot = node('p', 'map-foot', '数字表示该分类下的预设情境数量。点击任一分类，可回到演示并查看。');
+    content.appendChild(foot);
+  }
+
+  trigger.addEventListener('click', () => {
+    render();
+    dialog.showModal();
+    content.scrollTop = 0;
+  });
+})();
+
+</script></body></html>
