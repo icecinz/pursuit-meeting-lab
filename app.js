@@ -2,17 +2,16 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const P = window.Physics, all = window.Presets.list;
-const fields = window.Presets.labels.fields;
-// A short teaching pathway through the same verified motion presets.
+// Fixed teaching examples share the verified motion model with editable scenarios.
 const typicalCases = [
  {id:'p-10-fast-0-6',label:'后车加速追上匀速',A:{v:9,a:1.6},B:{x:15,v:5}},
- {id:'p-10-slow-0-6',label:'加速追匀速：先远离后追上',A:{v:5,a:2.4},B:{x:4.2,v:8}},
+ {id:'p-10-slow-0-6',label:'加速追匀速：先远离后追上',A:{v:7,a:1.6},B:{x:3.75,v:9}},
  {id:'p-20-fast-0-6',label:'后车减速追匀速：两次相遇',A:{v:9,a:-1.6},B:{x:3.2,v:5}},
  {id:'p-20-fast-0-8',label:'后车减速追匀速：恰好追上',A:{v:9,a:-1.6},B:{x:5,v:5}},
  {id:'p-20-fast-0-12',label:'后车减速追匀速：未追上',A:{v:9,a:-1.6},B:{x:7,v:5}},
  {id:'m-00-0-8',label:'两车匀速相向相遇'},
- {id:'m-02-0-72',label:'匀速与减速相向：停下后相遇',A:{v:6},B:{x:19.5,v:-6,a:4}},
- {id:'m-22-0-36',label:'两车减速相向：停下未相遇',A:{v:8,a:-4},B:{x:20,v:-8,a:4}}
+ {id:'m-02-0-72',label:'匀速与减速相向：停下后相遇',A:{v:6},B:{x:24,v:-6,a:3}},
+ {id:'m-22-0-36',label:'两车减速相向：停下未相遇',A:{v:10,a:-4},B:{x:30,v:-10,a:4}}
 ];
 const themes = {
  accelerate: { variants: [['一直靠近并追上','p-10-fast-0-6'],['先远离后追上','p-10-slow-0-6']] },
@@ -21,10 +20,11 @@ const themes = {
  'opposite-mixed': { variants: [['一方停下后相遇','m-02-0-72']] },
  'opposite-slow': { variants: [['双方停下仍未相遇','m-22-0-36']] }
 };
-const physicalScope = () => state.scope==='typical' ? (all.find(p=>p.id===state.presetId)?.scope || 'pursuit') : state.scope;
+const isComparison = () => state.mode === 'typical' && !!state.demoId;
+const physicalScope = () => isComparison() ? (window.MotionComparison.cases[0]?.scope || 'pursuit') : state.scope==='typical' ? (all.find(p=>p.id===state.presetId)?.scope || 'pursuit') : state.scope;
 let showUniform = false;
 try { showUniform = localStorage.getItem('motion-show-uniform') === 'true'; } catch (_) {}
-let state = {mode:'typical',scope:'typical',theme:'accelerate',category:'',resultFilter:'',presetId:'', A:{x:0,v:8,a:0,stop:false}, B:{x:6,v:4,a:1,stop:false}, duration:18, time:0, playing:false, last:null};
+let state = {mode:'typical',scope:'typical',theme:'accelerate',demoId:'slow-start',category:'',resultFilter:'',presetId:'', A:{x:0,v:8,a:0,stop:false}, B:{x:6,v:4,a:1,stop:false}, duration:5, time:0, playing:false, last:null};
 function baseList(){return all.filter(p=>p.scope===state.scope && (showUniform || !(p.scope==='pursuit' && p.group==='匀速追匀速')));}
 function options(select,items,value,display=x=>x){select.replaceChildren(...items.map(x=>{const op=document.createElement('option');op.value=x;op.textContent=display(x);return op;}));select.value=items.includes(value)?value:(items[0]||'');return select.value;}
 function shortLabel(p){
@@ -46,7 +46,7 @@ function exampleNames(items){
 function populateGroups(){
  const list=baseList(), groups=[...new Set(list.map(p=>p.group))];
  state.category=options($('category'),groups,state.category);
- document.querySelectorAll('[data-scope]').forEach(b=>b.classList.toggle('selected',b.dataset.scope===state.scope));
+ document.querySelectorAll('button[data-scope]').forEach(b=>{const active=b.dataset.scope===state.scope;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
  populateMoreExamples();
 }
 function populateMoreExamples(){
@@ -63,31 +63,104 @@ function presetExplanation(p){
  if(p.scope==='pursuit')return `预设初速：${p.initial}；${p.advantage}。${p.result==='没有相遇'?'展示时间内':'首次相遇前'}，${process}。`;
  return `预设：${p.advantage}；${p.phase}。`;
 }
-function loadPreset(){const p=all.find(p=>p.id===state.presetId);if(!p)return;const example=state.scope==='typical'?typicalCases.find(c=>c.id===p.id):null;state.A={...p.A,...example?.A};state.B={...p.B,...example?.B};state.duration=p.duration;state.time=0;state.playing=false;state.last=null;if(state.mode==='more'){$('preset-selected').textContent=$('preset').selectedOptions[0]?.textContent||p.title;$('preset-description').textContent=presetExplanation(p);}$('model-note').textContent=state.scope==='typical'?'调整参数后，运动结果可能改变；减速物体到零后停住。':'以上说明对应预设；调整参数后结果可能改变。减速物体到零后停住。';renderParams();refresh();}
+function loadPreset(){const p=all.find(p=>p.id===state.presetId);if(!p)return;const example=state.scope==='typical'?typicalCases.find(c=>c.id===p.id):null;state.A={...p.A,...example?.A};state.B={...p.B,...example?.B};state.duration=p.duration;state.time=0;state.playing=false;state.last=null;if(state.mode==='more'){$('preset-selected').textContent=$('preset').selectedOptions[0]?.textContent||p.title;$('preset-description').textContent=presetExplanation(p);}$('model-note').textContent='说明对应预设；调整后结果可能改变。减速物体到零后停住。';renderParams();refresh();}
 function resetGeneral(){state.A={x:0,v:8,a:0,stop:false};state.B={x:30,v:-4,a:0,stop:false};state.duration=5;state.time=0;state.playing=false;state.last=null;$('model-note').textContent='自由设置持续按匀变速直线运动计算：速度经过零后可反向，不会自动停车。';renderParams();refresh();}
 function showTheme(theme,id){
- state.scope='typical';state.theme=theme;const def=themes[theme]; if(!def)return;
+ state.scope='typical';state.demoId='';state.theme=theme;const def=themes[theme]; if(!def)return;
+ updateModeUI();
  state.presetId=id&&def.variants.some(v=>v[1]===id)?id:def.variants[0][1];
- document.querySelectorAll('[data-theme]').forEach(b=>{const active=b.dataset.theme===theme;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
+ document.querySelectorAll('button[data-theme]').forEach(b=>{const active=b.dataset.theme===theme;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
  document.querySelectorAll('[data-variants]').forEach(el=>{const active=el.dataset.variants===theme&&(def.variants.length>1||!!def.variants[0][0]);el.hidden=!active;el.replaceChildren();if(active&&def.variants.length===1){const note=document.createElement('span');note.className='theme-example';note.textContent=def.variants[0][0];el.append(note);}else if(active)for(const [label,value] of def.variants){const b=document.createElement('button');b.type='button';b.className='variant-button';b.textContent=label;b.classList.toggle('selected',value===state.presetId);b.setAttribute('aria-pressed',String(value===state.presetId));b.addEventListener('click',()=>showTheme(theme,value));el.append(b);}});
  loadPreset();
 }
-function selectMode(mode){
- state.mode=mode;state.time=0;state.playing=false;state.last=null;
- document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
- $('classification').hidden=mode!=='more';$('typical-selection').hidden=mode!=='typical';$('general-note').hidden=mode!=='general';
- if(mode==='general'){state.scope='general';resetGeneral();}else if(mode==='typical')showTheme('accelerate');else{state.scope='pursuit';state.category='';state.presetId='';state.resultFilter='';populateGroups();}
+function syncControlHeight() {
+ const layout = document.querySelector('.layout');
+ const origin = Math.ceil(layout.getBoundingClientRect().top + window.scrollY);
+ layout.style.setProperty('--controls-origin', `${origin}px`);
+}
+function updateModeUI() {
+ const comparison = isComparison();
+ document.querySelectorAll('button[data-mode]').forEach(button => {
+  const active = button.dataset.mode === state.mode;
+  button.classList.toggle('selected', active);
+  button.setAttribute('aria-pressed', String(active));
+ });
+ document.querySelectorAll('button[data-demo]').forEach(button => {
+  const active = comparison && button.dataset.demo === state.demoId;
+  button.classList.toggle('selected', active);
+  button.setAttribute('aria-pressed', String(active));
+ });
+ $('classification').hidden = state.mode !== 'more';
+ $('typical-selection').hidden = state.mode !== 'typical';
+ $('general-note').hidden = state.mode !== 'general';
+ $('parameter-section').hidden = state.mode === 'typical';
+ $('comparison-view').hidden = !comparison;
+ $('single-view').hidden = comparison;
+ document.querySelector('.layout').classList.toggle('is-comparison', comparison);
+ document.body.dataset.motionMode = state.mode;
+ $('comparison-note').hidden = !comparison;
+ syncControlHeight();
+}
+function showComparison(id) {
+ const demo = window.MotionComparison;
+ if (!demo.select(id)) return;
+ state.mode = 'typical';
+ state.scope = 'typical';
+ state.demoId = id;
+ state.presetId = '';
+ state.duration = demo.duration;
+ $('comparison-title').textContent = demo.title;
+ const summary = $('comparison-summary');
+ summary.replaceChildren();
+ demo.summary.split(/\s*·\s*/).forEach((part, index) => {
+  if (index) summary.append(document.createTextNode(' · '));
+  const span = document.createElement('span');
+  span.textContent = part;
+  summary.append(span);
+ });
+ $('comparison-scale-note').textContent = `${demo.cases.length === 4 ? '四' : '三'}组同刻度 · 向右为正 →`;
+ document.querySelector('.comparison-heading .chart-legend').setAttribute('aria-label', `${demo.cases.length}图共用图例`);
+ $('comparison-note').textContent = demo.description;
+ $('comparison-view').dataset.activeDemo = demo.id;
+ state.time = 0;
+ state.playing = false;
+ state.last = null;
+ document.querySelectorAll('button[data-theme]').forEach(button => {
+  button.classList.remove('selected');
+  button.setAttribute('aria-pressed', 'false');
+ });
+ document.querySelectorAll('[data-variants]').forEach(element => { element.hidden = true; });
+ updateModeUI();
+ renderParams();
+ refresh();
+}
+function selectMode(mode) {
+ state.mode = mode;
+ state.time = 0;
+ state.playing = false;
+ state.last = null;
+ if (mode === 'typical') { showComparison('slow-start'); return; }
+ state.demoId = '';
+ updateModeUI();
+ if (mode === 'general') { state.scope = 'general'; resetGeneral(); }
+ else {
+  state.scope = 'pursuit';
+  state.category = '';
+  state.presetId = '';
+  state.resultFilter = '';
+  populateGroups();
+ }
 }
 window.motionNavigate=({scope,group,presetId,field,value}={})=>{
  if(scope==='general'){selectMode('general');return;}
  const allowed=all.filter(p=>p.scope===scope&&(showUniform||!(p.scope==='pursuit'&&p.group==='匀速追匀速')));
  const p=allowed.find(p=>p.id===presetId)||allowed.find(p=>group&&p.group===group)||allowed.find(p=>field&&p[field]===value)||allowed[0];
  if(!p)return;state.mode='more';state.scope=scope;state.category=p.group;state.presetId=p.id;state.resultFilter='';
- document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode==='more';b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
- $('classification').hidden=false;$('typical-selection').hidden=true;$('general-note').hidden=true;populateGroups();
+ state.demoId='';updateModeUI();populateGroups();
 };
 window.motionCurrent=()=>({scope:physicalScope(),field:'group',value:state.category,presetId:state.presetId,mode:state.mode});
-function fmt(n,d=1){if(Math.abs(n)<0.00001)n=0;return Number(n).toFixed(d);}
+function fmt(n,d=1){const value=Number(n).toFixed(d);return Number(value)===0?Number(0).toFixed(d):value;}
+function signed(n){const value=fmt(n);return Number(value)===0?fmt(0):(n>0?'+':'')+value;}
 function nice(n){return Number(n.toFixed(2)).toString();}
 function paramRow(container,obj,key,label,lo,hi,step,allowBeyondSlider=false){
  const row=document.createElement('div');row.className='param-row';const id=`p-${obj}-${key}`;
@@ -95,11 +168,11 @@ function paramRow(container,obj,key,label,lo,hi,step,allowBeyondSlider=false){
  const num=document.createElement('input');num.type='number';num.id=id;num.step=step;num.value=state[obj][key];num.min=allowBeyondSlider?-10000:lo;num.max=allowBeyondSlider?10000:hi;num.setAttribute('aria-label',label);
  const range=document.createElement('input');range.type='range';range.min=lo;range.max=hi;range.step=step;range.value=state[obj][key];range.setAttribute('aria-label',label+'滑杆');
  row.append(text,num,range);container.append(row);
- function update(value){if(value===''||!Number.isFinite(Number(value)))return;const low=allowBeyondSlider?-10000:lo,high=allowBeyondSlider?10000:hi;const v=Math.max(low,Math.min(high,Number(value)));state[obj][key]=v;if(state.scope!=='general')state[obj].stop=state[obj].v*state[obj].a<0;num.value=v;range.value=v;state.time=0;state.playing=false;state.last=null;refresh();}
- range.addEventListener('input',()=>update(range.value));num.addEventListener('change',()=>{update(num.value);num.value=state[obj][key];});
+ function update(value,commit=true){if(value===''||!Number.isFinite(Number(value)))return;const low=allowBeyondSlider?-10000:lo,high=allowBeyondSlider?10000:hi;const v=Math.max(low,Math.min(high,Number(value)));state[obj][key]=v;if(state.scope!=='general')state[obj].stop=state[obj].v*state[obj].a<0;if(commit)num.value=v;range.value=v;state.time=0;state.playing=false;state.last=null;refresh();}
+ range.addEventListener('input',()=>update(range.value));num.addEventListener('input',()=>{if(num.value!==''&&num.validity.valid)update(num.value,false);});const commit=()=>{update(num.value);num.value=state[obj][key];};num.addEventListener('change',commit);num.addEventListener('blur',commit);
 }
 function renderParams(){
- const root=$('params');root.replaceChildren();const general=state.scope==='general';
+ const root=$('params');root.replaceChildren();if(state.mode==='typical')return;const general=state.scope==='general';
  const preset=all.find(p=>p.id===state.presetId);
  const kinds=!general&&preset?preset.group.replace(/相向$/,'').split(physicalScope()==='pursuit'?'追':'与'):[];
  if(!general){const box=document.createElement('div');box.className='param-group';const heading=document.createElement('div');heading.className='param-title';heading.textContent='初始位置';box.append(heading);paramRow(box,'B','x','两物体初始间距 d（m）',0,200,.1);root.append(box);}
@@ -114,172 +187,41 @@ function renderParams(){
   }
   root.append(group);
  }
- const row=document.createElement('div');row.className='param-row';row.innerHTML='<label for="duration-input">展示时间（s）</label><input id="duration-input" type="number" min="1" max="120" step="1" aria-label="展示时间">';root.append(row);const inp=$('duration-input');inp.value=state.duration;inp.addEventListener('change',()=>{state.duration=Math.max(1,Math.min(120,Number(inp.value)||18));inp.value=state.duration;state.time=Math.min(state.time,state.duration);state.playing=false;state.last=null;refresh();});
-}
-function canvasContext(canvas){const rect=canvas.getBoundingClientRect(), ratio=window.devicePixelRatio||1;const w=Math.max(rect.width,1),h=Math.max(rect.height,1);if(canvas.width!==Math.round(w*ratio)||canvas.height!==Math.round(h*ratio)){canvas.width=Math.round(w*ratio);canvas.height=Math.round(h*ratio);}const ctx=canvas.getContext('2d');ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,w,h);return {ctx,w,h};}
-function rrect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
-// Pick intervals from 1, 2 and 5 times powers of ten, and expand the
-// displayed domain to exact tick values. Physical values are never rounded.
-function niceAxis(low,high,target=4){
-  if(!Number.isFinite(low)||!Number.isFinite(high)){low=-1;high=1;}
-  if(low>high)[low,high]=[high,low];
-  if(low===high){const padding=Math.max(1,Math.abs(low)*.1);low-=padding;high+=padding;}
-  const rough=(high-low)/Math.max(1,target),power=10**Math.floor(Math.log10(rough));
-  const fraction=rough/power,unit=fraction<=1?1:fraction<=2?2:fraction<=5?5:10,step=unit*power;
-  const eps=step*1e-10;
-  let start=Math.floor((low+eps)/step)*step,end=Math.ceil((high-eps)/step)*step;
-  if(start>low+eps)start-=step;
-  if(end<high-eps)end+=step;
-  // Floating point multiplication can produce -0 or 0.30000000000000004.
-  const clean=n=>Math.abs(n)<eps?0:Number(n.toPrecision(14));
-  start=clean(start);end=clean(end);
-  const count=Math.round((end-start)/step),ticks=[];
-  for(let i=0;i<=count&&i<=30;i++)ticks.push(clean(start+i*step));
-  return {min:start,max:end,step,ticks};
-}
-function axisLabel(value,step){
-  const digits=Math.max(0,Math.min(15,-Math.floor(Math.log10(step)+1e-10)));
-  if(Math.abs(value)<step*1e-9)value=0;
-  return value.toLocaleString('en-US',{maximumFractionDigits:digits});
-}
-function canvasFontScale(){return typeof window.motionFontScale==='function'?window.motionFontScale():1;}
-function drawTrack(){
-  const {ctx:c,w,h}=canvasContext($('track'));
-  const bounds=P.bounds(state.A,state.B,state.duration), range=Math.max(15,bounds.max-bounds.min), pad=range*.11;
-  // The reference point is the marked front edge, not the block's centre.
-  const blockWidth=Math.min(116,Math.max(82,w*.2),Math.max(42,(w-32)/2)),margin=blockWidth+12;
-  const axisWidth=Math.max(1,w-2*margin),scale=canvasFontScale();
-  const min=bounds.min-pad,max=bounds.max+pad;
-  const axis=niceAxis(min,max,Math.max(2,Math.min(6,Math.floor(axisWidth/(100*scale)))));
-  const x=value=>margin+(value-min)/(max-min)*axisWidth;
-  const xa=x(P.position(state.A,state.time)), xb=x(P.position(state.B,state.time));
-  const frontDirection=o=>Math.sign(o.v)||Math.sign(o.a)||1;
-  const labelA=physicalScope()==='pursuit'?'A 追':'A', labelB=physicalScope()==='pursuit'?'B 被追':'B';
-  const blockHeight=Math.min(50,Math.max(38,h*.15));
-  const topA=Math.max(20,14+4*scale);
-  const axisY=h-Math.max(40,25+12*scale);
-  const topB=Math.max(topA+blockHeight+36,axisY-blockHeight-Math.max(22,10+10*scale));
-  const guideY=(topA+blockHeight+topB)/2;
-
-  // One shared scale for both objects over the full time window: arrows can
-  // be compared across objects and frames without changing the scale mid-play.
-  const maxSpeed=Math.max(...[state.A,state.B].flatMap(o=>[Math.abs(P.velocity(o,0)),Math.abs(P.velocity(o,state.duration))]));
-  // A and B occupy separate lanes even when their reference points coincide.
-  car(c,xa,topA,blockWidth,blockHeight,labelA,'#477fa8',frontDirection(state.A),P.velocity(state.A,state.time),maxSpeed,w);
-  car(c,xb,topB,blockWidth,blockHeight,labelB,'#795bb1',frontDirection(state.B),P.velocity(state.B,state.time),maxSpeed,w);
-
-  c.save();
-  c.setLineDash([3,4]);c.lineWidth=1;c.strokeStyle='#aab4a7';
-  c.beginPath();c.moveTo(xa,topA+blockHeight+2);c.lineTo(xa,guideY);c.moveTo(xb,guideY);c.lineTo(xb,topB-2);c.stroke();
-  c.setLineDash([]);c.strokeStyle='#869783';c.lineWidth=1.2;
-  c.beginPath();c.moveTo(xa,guideY);c.lineTo(xb,guideY);c.stroke();
-  for(const [point,color] of [[xa,'#477fa8'],[xb,'#795bb1']]){c.fillStyle=color;c.beginPath();c.arc(point,guideY,2.3,0,Math.PI*2);c.fill();}
-  const text=`车头间距 ${nice(Math.abs(P.position(state.B,state.time)-P.position(state.A,state.time)))} m`;
-  c.font=`600 ${13*scale}px -apple-system, BlinkMacSystemFont, sans-serif`;c.textAlign='center';
-  const textWidth=Math.min(w-8,c.measureText(text).width+12),mid=Math.max(textWidth/2+3,Math.min(w-textWidth/2-3,(xa+xb)/2));
-  c.fillStyle='#fbfaf5';c.fillRect(mid-textWidth/2,guideY-6-14*scale,textWidth,16*scale);
-  c.fillStyle='#4d5c50';c.fillText(text,mid,guideY-6,Math.max(40,w-8));
-  c.restore();
-
-  c.strokeStyle='#c5d0c2';c.lineWidth=1;c.beginPath();c.moveTo(margin,axisY);c.lineTo(w-margin,axisY);c.stroke();
-  c.fillStyle='#4d5c50';c.font=`600 ${12*scale}px -apple-system, sans-serif`;c.textAlign='center';
-  for(const tick of axis.ticks){if(tick<min-1e-9||tick>max+1e-9)continue;const xx=x(tick);c.beginPath();c.moveTo(xx,axisY);c.lineTo(xx,axisY+5);c.stroke();c.fillText(axisLabel(tick,axis.step),xx,axisY+7+12*scale);}
-  c.textAlign='right';c.fillText('位置 / m',w-8,axisY+20+12*scale);
-}
-function car(c,front,top,width,height,label,color,frontDirection,velocity,maxSpeed,canvasWidth){
-  const left=frontDirection>0?front-width:front, right=left+width, bottom=top+height;
-  c.save();c.fillStyle='#faf9f4';c.fillRect(left,top,width,height);
-  // Regular fine hatching and slightly doubled edges evoke a hand-drawn block.
-  c.save();c.beginPath();c.rect(left,top,width,height);c.clip();c.globalAlpha=.34;c.strokeStyle=color;c.lineWidth=.8;
-  for(let i=-height;i<width+height;i+=8){c.beginPath();c.moveTo(left+i,bottom+1);c.lineTo(left+i+height+1,top-1);c.stroke();}c.restore();
-  c.strokeStyle=color;c.lineWidth=1.8;c.lineJoin='round';
-  c.beginPath();c.moveTo(left+.4,top+.3);c.lineTo(right-.4,top);c.lineTo(right, bottom-.3);c.lineTo(left,bottom);c.closePath();c.stroke();
-  c.globalAlpha=.34;c.lineWidth=.65;c.beginPath();c.moveTo(left-1,top+1.4);c.lineTo(right+.5,top+.7);c.lineTo(right+1,bottom+.6);c.lineTo(left-.7,bottom-.4);c.closePath();c.stroke();c.globalAlpha=1;
-  // The thicker end remains attached to the same material point if velocity reverses.
-  c.lineWidth=5;c.beginPath();c.moveTo(front,top+1);c.lineTo(front,bottom-1);c.stroke();
-  c.fillStyle=color;c.font=`600 ${Math.min(17*canvasFontScale(),height*.62)}px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillText(label,(left+right)/2,top+height/2+1);
-  // The shaft's actual length is proportional to |v|, with a shared maximum
-  // of 54 px. Zero speed has no arrow; its direction is the sign of velocity.
-  const arrowLength=maxSpeed>0 ? (Math.abs(velocity)/maxSpeed)*Math.min(54,width*.6,Math.max(0,canvasWidth-8)) : 0;
-  if(arrowLength>0){
-    const direction=Math.sign(velocity),center=(left+right)/2,y=top-8;
-    // Translate the arrow when needed to keep both ends inside the canvas;
-    // never shorten it, so the displayed length remains comparable.
-    const start=direction>0?Math.max(4,Math.min(center,canvasWidth-4-arrowLength)):Math.max(4+arrowLength,Math.min(center,canvasWidth-4));
-    const tip=start+direction*arrowLength,head=Math.min(6,arrowLength*.35),halfHead=head*.65;
-    c.lineWidth=Math.min(1.8,Math.max(.15,arrowLength/2));c.beginPath();c.moveTo(start,y);c.lineTo(tip,y);
-    c.moveTo(tip-direction*head,y-halfHead);c.lineTo(tip,y);c.lineTo(tip-direction*head,y+halfHead);c.stroke();
+ const row = document.createElement('div');
+ row.className = 'param-row';
+ row.innerHTML = '<label for="duration-input">展示时间（s）</label><input id="duration-input" type="number" min="1" max="120" step="1" aria-label="展示时间">';
+ root.append(row);
+ const input = $('duration-input');
+ input.value = state.duration;
+ function updateDuration(commit) {
+  const value = Number(input.value);
+  if (input.value.trim() !== '' && Number.isFinite(value) && (commit || (value >= 1 && value <= 120))) {
+   state.duration = Math.max(1, Math.min(120, value));
   }
-  c.restore();
+  if (commit) input.value = state.duration;
+  state.time = Math.min(state.time, state.duration);
+  state.playing = false;
+  state.last = null;
+  refresh();
+ }
+ input.addEventListener('input', () => updateDuration(false));
+ input.addEventListener('change', () => updateDuration(true));
+ input.addEventListener('blur', () => updateDuration(true));
 }
-// Include zero in each vertical scale so the axes really intersect at (0, 0).
-// Only pad on sides containing nonzero data, avoiding artificial negative space.
-function plotLimits(type){
-  let low,high;
-  if(type==='x'){
-    const b=P.bounds(state.A,state.B,state.duration);low=b.min;high=b.max;
-  }else{
-    const values=[P.velocity(state.A,0),P.velocity(state.A,state.duration),P.velocity(state.B,0),P.velocity(state.B,state.duration)];
-    low=Math.min(...values);high=Math.max(...values);
-  }
-  low=Math.min(0,low);high=Math.max(0,high);
-  if(low===high)return [0,1];
-  const padding=(high-low)*.06;
-  return [low<0?low-padding:0,high>0?high+padding:0];
+let analysisKey = '', analysisEvents = null, resultsKey = '';
+function currentAnalysis() {
+ const key = JSON.stringify([state.A, state.B, state.duration]);
+ if (key !== analysisKey) {
+  analysisKey = key;
+  analysisEvents = P.events(state.A, state.B, state.duration);
+ }
+ return analysisEvents;
 }
-function plot(canvas,type){
-  const {ctx:c,w,h}=canvasContext(canvas),scale=canvasFontScale(),T=state.duration;
-  const fontSize=10*scale,top=Math.ceil(18+fontSize*.8),bottom=h-Math.ceil(18+fontSize),r=Math.ceil(Math.max(17,fontSize*1.6));
-  const [dataMin,dataMax]=plotLimits(type),ph=Math.max(1,bottom-top);
-  // Generate tidy tick labels separately from the view limits. Expanding to
-  // the next major tick can double unused space; data remain on a linear scale.
-  const yAxis=niceAxis(dataMin,dataMax,Math.max(4,Math.min(6,Math.floor(ph/(27*scale))))*1.5);
-  const visibleTicks=yAxis.ticks.filter(t=>t>=dataMin-yAxis.step*1e-9&&t<=dataMax+yAxis.step*1e-9);
-  c.font=`600 ${fontSize}px -apple-system, sans-serif`;
-  const labelWidth=Math.max(0,...visibleTicks.map(t=>c.measureText(axisLabel(t,yAxis.step)).width));
-  const l=Math.max(36,Math.ceil(labelWidth+13)),pw=Math.max(1,w-l-r);
-  const X=t=>l+t/T*pw,Y=v=>top+(dataMax-v)/(dataMax-dataMin)*ph;
-  const at=(o,t)=>type==='x'?P.position(o,t):P.velocity(o,t);
-  const zeroY=Y(0),axisColor='#68766a',tickLength=3;
-  c.lineWidth=1;c.textAlign='right';c.textBaseline='middle';
-  // Thin gridlines are guides; the zero line is the actual horizontal axis.
-  for(const tick of visibleTicks){
-    const yy=Y(tick);
-    if(Math.abs(tick)>yAxis.step*1e-9){c.strokeStyle='#edf0e8';c.beginPath();c.moveTo(l,yy);c.lineTo(w-r,yy);c.stroke();}
-    c.fillStyle='#4d5c50';c.fillText(axisLabel(tick,yAxis.step),l-6,yy);
-    c.strokeStyle=axisColor;c.beginPath();c.moveTo(l-tickLength,yy);c.lineTo(l,yy);c.stroke();
-  }
-  const timeAxis=niceAxis(0,T,Math.max(3,Math.min(6,Math.floor(pw/(65*scale)))));
-  c.textAlign='center';c.textBaseline='top';c.fillStyle='#4d5c50';
-  for(const tick of timeAxis.ticks){
-    if(tick<=0||tick>T+timeAxis.step*1e-9)continue;
-    const xx=X(tick);
-    c.strokeStyle=axisColor;c.beginPath();c.moveTo(xx,zeroY);c.lineTo(xx,zeroY+tickLength);c.stroke();
-    c.fillText(axisLabel(tick,timeAxis.step),xx,zeroY+tickLength+2);
-  }
-  // Standard x/v versus t axes with positive direction indicated by arrows.
-  c.strokeStyle=axisColor;c.lineWidth=1.1;c.setLineDash([]);c.beginPath();
-  c.moveTo(l,bottom);c.lineTo(l,top-5);c.lineTo(l-3.5,top);
-  c.moveTo(l,top-5);c.lineTo(l+3.5,top);
-  c.moveTo(l,zeroY);c.lineTo(w-r+5,zeroY);c.lineTo(w-r,zeroY-3.5);
-  c.moveTo(w-r+5,zeroY);c.lineTo(w-r,zeroY+3.5);c.stroke();
-  c.fillStyle='#4d5c50';c.textBaseline='alphabetic';c.textAlign='left';
-  c.fillText(type==='x'?'x / m':'v / (m/s)',l+5,top-10);
-  c.textAlign='right';c.fillText('t / s',w-2,Math.max(fontSize+1,zeroY-6));
-  for(const [obj,col,dashed] of [[state.A,'#477fa8',false],[state.B,'#795bb1',true]]){
-    c.strokeStyle=col;c.lineWidth=2.1;c.setLineDash(dashed?[6,3.5]:[]);c.beginPath();
-    for(let i=0;i<=160;i++){const t=T*i/160,px=X(t),py=Y(at(obj,t));if(i===0)c.moveTo(px,py);else c.lineTo(px,py);}c.stroke();
-    c.setLineDash([]);const px=X(state.time),py=Y(at(obj,state.time));c.fillStyle='#fbfaf5';c.beginPath();c.arc(px,py,4,0,Math.PI*2);c.fill();c.strokeStyle=col;c.lineWidth=2;c.stroke();
-  }
-  if(state.time>1e-9){c.strokeStyle='#bfc8b9';c.lineWidth=1;c.setLineDash([3,4]);c.beginPath();c.moveTo(X(state.time),top);c.lineTo(X(state.time),bottom);c.stroke();c.setLineDash([]);}
-  const ev=P.events(state.A,state.B,T);
-  for(const t of type==='x'?ev.meetings:ev.equalTimes){if(t<0||t>T)continue;const py=Y(at(state.A,t));c.fillStyle='#c28a55';c.beginPath();c.arc(X(t),py,3.3,0,Math.PI*2);c.fill();}
-  c.textBaseline='alphabetic';
-}
-function formatTimes(arr){return arr.map(t=>`${nice(t)} s`).join('、');}
+function formatTime(t){const ev=currentAnalysis();return preciseTime(t,[...ev.meetings,...ev.equalTimes]);}
+function formatTimes(arr){return arr.map(t=>`${formatTime(t)} s`).join('、');}
 // Distinguish genuine distance turns from a stretch of equal velocities.
 function timelineEvents(){
- const T=state.duration, ev=P.events(state.A,state.B,T), points=[];
+ const T=state.duration, ev=currentAnalysis(), points=[];
  const add=(t,label)=>{if(Number.isFinite(t)&&t>=0&&t<=T)points.push({t,label});};
  if(!ev.coincident)for(const t of ev.meetings)add(t,t===0?'初始同位':'相遇');
  for(const t of ev.equalTimes){
@@ -303,21 +245,22 @@ function timelineEvents(){
  return merged;
 }
 let timelineCache='', timelinePoints=[], timelineDragging=false;
-function timelineTime(t){
+function preciseTime(t,times){
  let digits=3;
  while(digits<12){
   const rounded=Number(t.toFixed(digits));
-  if((t===0||rounded!==0)&&!timelinePoints.some(p=>p.t!==t&&Number(p.t.toFixed(digits))===rounded))break;
+  if((t===0||rounded!==0)&&!times.some(other=>other!==t&&Number(other.toFixed(digits))===rounded))break;
   digits++;
  }
  const value=Number(t.toFixed(digits));
  return value===0&&t!==0?Number(t.toPrecision(3)).toString():value.toString();
 }
+function timelineTime(t){return preciseTime(t,timelinePoints.map(point=>point.t));}
 function renderTimeline(){
  const enabled=$('timeline-enabled').checked;
- const key=JSON.stringify([state.A,state.B,state.duration,enabled]);
+ const key=JSON.stringify([state.demoId,state.A,state.B,state.duration,enabled]);
  if(key!==timelineCache){
-  timelineCache=key; timelinePoints=enabled?timelineEvents():[];
+  timelineCache=key; timelinePoints=enabled?(isComparison()?window.MotionComparison.events():timelineEvents()):[];
   const marks=$('timeline-marks'), list=$('timeline-events');marks.replaceChildren();list.replaceChildren();
   for(const point of timelinePoints){
    const fraction=point.t/state.duration, marker=document.createElement('i');
@@ -333,7 +276,7 @@ function renderTimeline(){
  $('timeline').setAttribute('aria-valuetext',`${timelineTime(state.time)} 秒${at?'，'+at.labels.join('，'):''}`);
 }
 function renderResults(){
- const ev=P.events(state.A,state.B,state.duration),EPS=1e-8;
+ const ev=currentAnalysis(),EPS=1e-8;
  const initialSame=Math.abs(P.position(state.A,0)-P.position(state.B,0))<EPS;
  const laterMeetings=ev.meetings.filter(t=>t>EPS);
  const joinedAt=t=>{
@@ -349,13 +292,13 @@ function renderResults(){
    const laterJoined=laterMeetings.find(joinedAt);
    meetTitle=`之后相遇 ${laterMeetings.length} 次`;
    meetDetail=`初始位于同一位置；之后相遇时刻：${formatTimes(laterMeetings)}。`;
-   if(laterJoined!==undefined)meetDetail+=`${nice(laterJoined)} s 起有一段时间重合。`;
+   if(laterJoined!==undefined)meetDetail+=`${formatTime(laterJoined)} s 起有一段时间重合。`;
   }else{
    meetTitle='同一位置出发';
    meetDetail=joined===0?'初始位于同一位置，并有一段时间重合；之后没有再次相遇。':'初始位于同一位置；展示时间内没有再次相遇。';
   }
  }else if(joined!==undefined){
-  meetTitle='相遇后有一段时间重合';meetDetail=`${nice(joined)} s 起，两者有一段时间处在同一位置。`;
+  meetTitle='相遇后有一段时间重合';meetDetail=`${formatTime(joined)} s 起，两者有一段时间处在同一位置。`;
  }else if(ev.meetings.length){
   meetTitle=`${ev.meetings.length} 次相遇`;meetDetail=`相遇时刻：${formatTimes(ev.meetings)}。`;
  }else{
@@ -366,7 +309,7 @@ function renderResults(){
  if(eq.length){
   const t=eq[0],delta=Math.min(.01,Math.max(0,(state.duration-t)/2));
   const continues=delta>0&&Math.abs(P.velocity(state.A,t+delta)-P.velocity(state.B,t+delta))<1e-7;
-  $('equal-result').textContent=continues?(t<1e-7?'有一段时间共速':`${nice(t)} s 起有一段共速`):formatTimes(eq);
+  $('equal-result').textContent=continues?(t<1e-7?'有一段时间共速':`${formatTime(t)} s 起有一段共速`):formatTimes(eq);
   $('equal-detail').textContent='速度相同不代表位置相同；是否为距离极值还需看前后变化。';
  }else{
   $('equal-result').textContent='没有共速时刻';$('equal-detail').textContent='在当前展示时间内，两者速度没有相同。';
@@ -378,15 +321,183 @@ function renderResults(){
  const smallest=candidates.reduce((a,b)=>b.d<a.d?b:a),largest=candidates.reduce((a,b)=>b.d>a.d?b:a);
  $('rule-title').textContent='间距的最大与最小';
  const interval=initialSame?(laterMeetings.length?'再次相遇前（含相遇）':'当前展示时间内'):(ev.meetings.length?'首次相遇前（含相遇）':'当前展示时间内');
- $('rule-detail').textContent=`${interval}：最大 ${nice(largest.d)} m（${nice(largest.t)} s），最小 ${nice(smallest.d)} m（${nice(smallest.t)} s）。`;
+ $('rule-detail').textContent=`${interval}：最大 ${nice(largest.d)} m（${formatTime(largest.t)} s），最小 ${nice(smallest.d)} m（${formatTime(smallest.t)} s）。`;
 }
-function refresh(){renderTimeline();const t=state.time,shownTime=timelinePoints.some(p=>p.t===t)?timelineTime(t):fmt(t); $('time-readout').innerHTML=`${shownTime} <em>s</em>`;const relative=P.position(state.B,t)-P.position(state.A,t);$('distance-readout').innerHTML=`${fmt(Math.abs(relative))} <em>m</em>`;$('relative-readout').textContent=`位置差 xB − xA = ${relative>0?'+':''}${fmt(relative)} m` ;for(const key of ['A','B']){const obj=state[key],prefix=key.toLowerCase(),position=P.position(obj,t);const signed=value=>Math.abs(value)<.00001?fmt(0):(value>0?'+':'')+fmt(value);$(prefix+'-position').textContent=signed(position);$(prefix+'-displacement').textContent=signed(position-obj.x);$(prefix+'-velocity').textContent=signed(P.velocity(obj,t));} $('play').innerHTML=state.playing?'Ⅱ &nbsp;暂停':'▶ &nbsp;播放';$('timeline').max=state.duration;$('timeline').value=t;$('duration-label').textContent=`${fmt(t)} / ${nice(state.duration)} s`;drawTrack();plot($('position-chart'),'x');plot($('velocity-chart'),'v');renderResults();}
-$('params-reset').addEventListener('click',()=>{if(state.scope==='general')resetGeneral();else loadPreset();});
-document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
-document.querySelectorAll('[data-theme]').forEach(b=>b.addEventListener('click',()=>showTheme(b.dataset.theme)));
-document.querySelectorAll('[data-scope]').forEach(b=>b.addEventListener('click',()=>{state.scope=b.dataset.scope;state.category='';state.presetId='';state.resultFilter='';populateGroups();}));
-$('category').addEventListener('change',e=>{state.category=e.target.value;state.presetId='';state.resultFilter='';populateMoreExamples();});
-$('result-filter').addEventListener('change',e=>{state.resultFilter=e.target.value;state.presetId='';populateMoreExamples();});
-$('preset').addEventListener('change',e=>{state.presetId=e.target.value;loadPreset();});
-$('play').addEventListener('click',()=>{if(state.time>=state.duration)state.time=0;state.playing=!state.playing;state.last=null;refresh();});$('reset').addEventListener('click',()=>{state.time=0;state.playing=false;state.last=null;refresh();});$('timeline').addEventListener('pointerdown',()=>{timelineDragging=true;});window.addEventListener('pointerup',()=>{timelineDragging=false;});window.addEventListener('pointercancel',()=>{timelineDragging=false;});$('timeline').addEventListener('input',e=>{let time=Number(e.target.value);if(timelineDragging&&$('timeline-enabled').checked&&timelinePoints.length){const width=e.target.getBoundingClientRect().width,threshold=state.duration*Math.min(.025,12/Math.max(width-20,1));const nearest=timelinePoints.reduce((a,b)=>Math.abs(b.t-time)<Math.abs(a.t-time)?b:a);if(Math.abs(nearest.t-time)<=threshold)time=nearest.t;}state.time=time;state.playing=false;state.last=null;refresh();});$('timeline-enabled').addEventListener('change',refresh);$('show-uniform').checked=showUniform;$('show-uniform').addEventListener('change',e=>{showUniform=e.target.checked;try{localStorage.setItem('motion-show-uniform',String(showUniform));}catch(_){}if(state.mode==='more'){const oldId=state.presetId,oldA={...state.A},oldB={...state.B},oldTime=state.time,oldDuration=state.duration,oldPlaying=state.playing;populateGroups();if(state.presetId===oldId){state.A=oldA;state.B=oldB;state.time=oldTime;state.duration=oldDuration;state.playing=oldPlaying;state.last=null;renderParams();refresh();}}});$('settings-open').addEventListener('click',()=>$('settings-dialog').showModal());$('settings-dialog').addEventListener('click',e=>{if(e.target===$('settings-dialog'))$('settings-dialog').close();});let timer;window.addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(refresh,80);});function tick(now){if(state.playing){if(state.last!==null)state.time=Math.min(state.duration,state.time+(now-state.last)/1000);state.last=now;if(state.time>=state.duration){state.playing=false;state.last=null;}refresh();}requestAnimationFrame(tick);}selectMode('typical');requestAnimationFrame(tick);
+// Reserve each numeric slot from the entire trajectory, once per model.
+// Playback only replaces the digits; units and neighbouring readings stay put.
+let readoutKey = '';
+function reserveNumber(id, values, formatter) {
+ const characters = Math.max(...values.map(value => formatter(value).length));
+ $(id).style.setProperty('--number-width', `${characters + .5}ch`);
+ return characters;
+}
+function reserveReadouts() {
+ currentAnalysis();
+ if (readoutKey === analysisKey) return;
+ readoutKey = analysisKey;
+ const times = timelineEvents().map(point => point.t);
+ const timeCharacters = reserveNumber('time-value', [0, state.duration, ...times], time => {
+  const exact = preciseTime(time, times), ordinary = fmt(time);
+  return exact.length > ordinary.length ? exact : ordinary;
+ });
+ let widestReading = timeCharacters;
+ const bounds = P.bounds(state.A, state.B, state.duration);
+ const distanceBound = bounds.max - bounds.min;
+ widestReading = Math.max(widestReading, reserveNumber('distance-value', [0, distanceBound], fmt));
+ widestReading = Math.max(widestReading, reserveNumber('relative-value', [-distanceBound, 0, distanceBound], signed));
+ for (const key of ['A', 'B']) {
+  const object = state[key], prefix = key.toLowerCase();
+  const range = P.bounds(object, object, state.duration);
+  widestReading = Math.max(widestReading, reserveNumber(prefix + '-position', [range.min, 0, range.max], signed));
+  widestReading = Math.max(widestReading, reserveNumber(prefix + '-displacement', [range.min - object.x, 0, range.max - object.x], signed));
+  widestReading = Math.max(widestReading, reserveNumber(prefix + '-velocity', [P.velocity(object, 0), 0, P.velocity(object, state.duration)], signed));
+ }
+ // Long signed values also need the full-width reading layout. The choice
+ // stays fixed for the whole trajectory, so playback never moves the panels.
+ $('single-stage').querySelector('.status-row').classList.toggle('wide-time', widestReading > 6);
+ $('single-stage').classList.toggle('wide-readings', widestReading > 6);
+}
+function refresh() {
+ renderTimeline();
+ const time = state.time;
+ $('play').innerHTML = state.playing ? 'Ⅱ &nbsp;暂停' : '▶ &nbsp;播放';
+ const playbackTarget = isComparison() ? `全部${window.MotionComparison.cases.length === 4 ? '四' : '三'}组` : '演示';
+ $('play').setAttribute('aria-label', `${state.playing ? '暂停' : '播放'}${playbackTarget}`);
+ $('timeline').max = state.duration;
+ $('timeline').value = time;
+ $('duration-label').textContent = `${fmt(time)} / ${nice(state.duration)} s`;
+ if (isComparison()) {
+  window.MotionComparison.render(time);
+  return;
+ }
+ reserveReadouts();
+ const shownTime = timelinePoints.some(point => point.t === time) ? timelineTime(time) : fmt(time);
+ $('time-value').textContent = shownTime;
+ const relative = P.position(state.B, time) - P.position(state.A, time);
+ $('distance-value').textContent = fmt(Math.abs(relative));
+ $('relative-value').textContent = signed(relative);
+ for (const key of ['A', 'B']) {
+  const object = state[key], prefix = key.toLowerCase(), position = P.position(object, time);
+  $(prefix + '-position').textContent = signed(position);
+  $(prefix + '-displacement').textContent = signed(position - object.x);
+  $(prefix + '-velocity').textContent = signed(P.velocity(object, time));
+ }
+ const scene = {...state, scope: physicalScope(), events: currentAnalysis()};
+ window.MotionRenderer.track($('track'), scene);
+ window.MotionRenderer.plot($('position-chart'), 'x', scene);
+ window.MotionRenderer.plot($('velocity-chart'), 'v', scene);
+ if (resultsKey !== analysisKey) { renderResults(); resultsKey = analysisKey; }
+}
+
+$('params-reset').addEventListener('click', () => {
+ if (state.mode === 'typical') return;
+ if (state.scope === 'general') resetGeneral(); else loadPreset();
+});
+document.querySelectorAll('button[data-mode]').forEach(button => {
+ button.addEventListener('click', () => selectMode(button.dataset.mode));
+});
+document.querySelectorAll('button[data-theme]').forEach(button => {
+ button.addEventListener('click', () => showTheme(button.dataset.theme));
+});
+document.querySelectorAll('button[data-demo]').forEach(button => {
+ button.addEventListener('click', () => showComparison(button.dataset.demo));
+});
+document.querySelectorAll('button[data-scope]').forEach(button => {
+ button.addEventListener('click', () => {
+  state.scope = button.dataset.scope;
+  state.category = '';
+  state.presetId = '';
+  state.resultFilter = '';
+  populateGroups();
+ });
+});
+$('category').addEventListener('change', event => {
+ state.category = event.target.value;
+ state.presetId = '';
+ state.resultFilter = '';
+ populateMoreExamples();
+});
+$('result-filter').addEventListener('change', event => {
+ state.resultFilter = event.target.value;
+ state.presetId = '';
+ populateMoreExamples();
+});
+$('preset').addEventListener('change', event => { state.presetId = event.target.value; loadPreset(); });
+
+// Request frames only while playing; pause when the page becomes hidden.
+let animationFrame = null;
+function requestTick() {
+ if (state.playing && animationFrame === null) animationFrame = requestAnimationFrame(tick);
+}
+function tick(now) {
+ animationFrame = null;
+ if (!state.playing) return;
+ if (state.last !== null) state.time = Math.min(state.duration, state.time + (now - state.last) / 1000);
+ state.last = now;
+ if (state.time >= state.duration) { state.playing = false; state.last = null; }
+ refresh();
+ requestTick();
+}
+$('play').addEventListener('click', () => {
+ if (state.time >= state.duration) state.time = 0;
+ state.playing = !state.playing;
+ state.last = null;
+ refresh();
+ requestTick();
+});
+$('reset').addEventListener('click', () => {
+ state.time = 0;
+ state.playing = false;
+ state.last = null;
+ refresh();
+});
+$('timeline').addEventListener('pointerdown', () => { timelineDragging = true; });
+window.addEventListener('pointerup', () => { timelineDragging = false; });
+window.addEventListener('pointercancel', () => { timelineDragging = false; });
+$('timeline').addEventListener('input', event => {
+ let time = Number(event.target.value);
+ if (timelineDragging && $('timeline-enabled').checked && timelinePoints.length) {
+  const width = event.target.getBoundingClientRect().width;
+  const threshold = state.duration * Math.min(.025, 12 / Math.max(width - 20, 1));
+  const nearest = timelinePoints.reduce((a, b) => Math.abs(b.t - time) < Math.abs(a.t - time) ? b : a);
+  if (Math.abs(nearest.t - time) <= threshold) time = nearest.t;
+ }
+ state.time = time;
+ state.playing = false;
+ state.last = null;
+ refresh();
+});
+$('timeline-enabled').addEventListener('change', refresh);
+$('show-uniform').checked = showUniform;
+$('show-uniform').addEventListener('change', event => {
+ showUniform = event.target.checked;
+ try { localStorage.setItem('motion-show-uniform', String(showUniform)); } catch (_) {}
+ if (state.mode !== 'more') return;
+ const previous = {id: state.presetId, A: {...state.A}, B: {...state.B}, time: state.time, duration: state.duration, playing: state.playing};
+ populateGroups();
+ if (state.presetId === previous.id) {
+  Object.assign(state, {A: previous.A, B: previous.B, time: previous.time, duration: previous.duration, playing: previous.playing, last: null});
+  renderParams();
+  refresh();
+  requestTick();
+ }
+});
+$('settings-open').addEventListener('click', () => $('settings-dialog').showModal());
+$('settings-dialog').addEventListener('click', event => {
+ if (event.target === $('settings-dialog')) $('settings-dialog').close();
+});
+document.addEventListener('visibilitychange', () => {
+ if (document.hidden && state.playing) {
+  state.playing = false;
+  state.last = null;
+  refresh();
+ }
+});
+let resizeTimer;
+window.addEventListener('resize', () => {
+ clearTimeout(resizeTimer);
+ resizeTimer = setTimeout(() => { syncControlHeight(); refresh(); }, 80);
+});
+window.MotionComparison.mount($('comparison-cards'));
+selectMode('typical');
 })();

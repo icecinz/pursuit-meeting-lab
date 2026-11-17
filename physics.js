@@ -45,8 +45,11 @@
     }
     let discriminant = b * b - 4 * a * c;
     const scale = Math.max(1, b * b, Math.abs(4 * a * c));
-    if (discriminant < -EPS * scale) return [];
-    if (Math.abs(discriminant) <= EPS * scale) discriminant = 0;
+    // Only absorb floating-point round-off. A broad geometric epsilon can
+    // erase two distinct, closely spaced encounters in free exploration.
+    const roundoff = 64 * Number.EPSILON * scale;
+    if (discriminant < -roundoff) return [];
+    if (Math.abs(discriminant) <= roundoff) discriminant = 0;
     const sqrt = Math.sqrt(discriminant);
     if (sqrt === 0) return [-b / (2 * a)];
     // This form avoids cancellation for one root; the other follows from their product.
