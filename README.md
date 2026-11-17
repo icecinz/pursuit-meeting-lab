@@ -43,4 +43,4 @@ Windows 单文件需要 Python 3 和 [Zig 0.15.2](https://ziglang.org/download/)
 python3 windows/build_windows.py --zig /path/to/zig
 ```
 
-说明见 `windows/README.md`。`downloads/` 里的 EXE 和 HTML 是这次构建并核对过的文件，校验和在 `downloads/SHA256SUMS`。准备粘贴的 Release 说明在 `downloads/发布说明-1.1.md`。本仓库这次只提交文件，不打 `v1.1` 标签，也不发布 Release。
+说明见 `windows/README.md`。`downloads/` 里的 EXE 和 HTML 是这次构建并核对过的文件，校验和在 `downloads/SHA256SUMS`。准备粘贴的 Release 说明在 `downloads/发布说明-1.1.md`。
