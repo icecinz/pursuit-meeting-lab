@@ -1,68 +1,212 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f0eee6"><title>追及与相遇 · 直线运动实验室</title><style>
-:root{--font-scale:1;--paper:#f0eee6;--ink:#30362e;--muted:#697166;--line:#d8dacd;--white:#fbfaf5;--purple:#477fa8;--green:#795bb1;--soft-purple:#ede8f1;--soft-green:#e4ebe1;--serif:"Songti SC","STSong","Noto Serif CJK SC",serif;--sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:calc(14px * var(--font-scale));-webkit-font-smoothing:antialiased}.wrap{max-width:1510px;margin:auto;padding:0 clamp(18px,3.5vw,54px)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #859884;outline-offset:3px}.topbar{height:67px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #c6cbbf;color:#667061;font-size:calc(12px * var(--font-scale));letter-spacing:.1em}.identity{display:flex;align-items:center;gap:11px}.orb{width:21px;height:21px;border:1px solid #7d8b76;border-radius:50%;position:relative}.orb:after{content:"";position:absolute;background:#7d8b76;width:6px;height:6px;border-radius:50%;left:7px;top:7px}.settings-trigger{border:1px solid #d1d5c9;color:#596458;background:#f8f8f1;border-radius:3px;padding:8px 13px}.settings-trigger:hover{background:#e5eae0}.intro{display:flex;justify-content:space-between;align-items:end;gap:30px;padding:35px 0 31px}.eyebrow,.section-no{font-size:calc(10px * var(--font-scale));letter-spacing:.15em;color:#82907a}.eyebrow span{color:#c3c8bb}.intro h1{font:600 clamp(calc(33px * var(--font-scale)),calc(3.8vw * var(--font-scale)),calc(52px * var(--font-scale)))/1.25 var(--serif);letter-spacing:.08em;margin:9px 0 8px}.intro p{margin:0;color:#6b7568;font:calc(15px * var(--font-scale))/1.8 var(--serif)}.intro-note{border-left:1px solid #c7ccbf;padding:2px 0 2px 19px;margin-bottom:3px}.intro-note .note-index{font-size:calc(11px * var(--font-scale));letter-spacing:.1em;color:#909b89}.intro-note p{font:calc(12px * var(--font-scale))/1.8 var(--sans);margin-top:5px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 355px;gap:19px;align-items:start}.visuals{min-width:0}.panel{background:var(--white);border:1px solid #dadfd2;border-radius:4px}.stage{padding:22px 24px 0}.panel-heading,.insight-head,.controls-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.panel h2{font:600 calc(20px * var(--font-scale))/1.4 var(--serif);letter-spacing:.04em;margin:6px 0 0}.live-tag{font-size:calc(11px * var(--font-scale));color:#6e806a;background:#edf2e9;border:1px solid #dce5d8;border-radius:99px;padding:6px 10px;white-space:nowrap}.live-tag span{display:inline-block;width:6px;height:6px;background:#8ea888;border-radius:50%;margin-right:4px}.legend{display:flex;gap:18px;align-items:center;margin-top:23px;font-size:calc(12px * var(--font-scale));color:#697168}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}.purple{background:var(--purple)}.green{background:var(--green)}.direction{margin-left:auto;color:#8c9687;font-size:calc(11px * var(--font-scale))}canvas{display:block;width:100%}#track{height:193px;margin:0 auto}.status-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;border-top:1px solid #e6e9e0;padding:17px 0}.status-row>div:not(:first-child){border-left:1px solid #e5e9df;padding-left:15px}small{display:block;color:#8a9587;font-size:calc(11px * var(--font-scale))}.status-row strong{display:block;font-weight:500;font-size:calc(17px * var(--font-scale));margin-top:7px;font-variant-numeric:tabular-nums}.status-row strong em{font-size:calc(11px * var(--font-scale));font-style:normal;color:#889287}.status-row>div:nth-child(n+3) strong{font-size:calc(13px * var(--font-scale));margin-top:10px}.player{display:flex;gap:9px;align-items:center;border-top:1px solid #e6e9e0;padding:14px 0}.player button{border-radius:3px;padding:9px 13px;font-size:calc(12px * var(--font-scale));white-space:nowrap}.play-btn{background:#586e59;border:1px solid #586e59;color:#fff}.play-btn:hover{background:#465c48}.reset-btn{background:transparent;border:1px solid #d8ddd1;color:#657062}.player input{flex:1;min-width:50px;accent-color:#70866c}.player span{font-size:calc(11px * var(--font-scale));color:#8a9386;white-space:nowrap;font-variant-numeric:tabular-nums}.charts{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}.chart{padding:18px 18px 10px;min-width:0}.chart-heading{display:flex;align-items:end;justify-content:space-between;gap:6px}.chart h3{font:600 calc(17px * var(--font-scale))/1.3 var(--serif);margin:6px 0 0}.chart-heading>span{font-size:calc(11px * var(--font-scale));color:#929b8f}.chart canvas{height:190px;margin-top:5px}.insight{padding:20px 23px;margin-top:15px}.insight-head>span{font-size:calc(11px * var(--font-scale));color:#909a8e}.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:21px}.insight-grid>div{padding-right:16px}.insight-grid>div+div{border-left:1px solid #e6e9e0;padding-left:18px}.insight-grid strong{display:block;font:600 calc(17px * var(--font-scale))/1.5 var(--serif);margin:7px 0;color:#465744}.insight-grid p{margin:0;font-size:calc(12px * var(--font-scale));line-height:1.7;color:#788273}footer{display:flex;justify-content:space-between;font-size:calc(11px * var(--font-scale));letter-spacing:.05em;color:#9aa394;padding:21px 0 35px}footer span{letter-spacing:0}.controls{padding:22px 20px;position:sticky;top:16px}.controls-header{padding-bottom:21px}.control-icon{color:#869884;font-size:calc(22px * var(--font-scale))}.control-section{border-top:1px solid #e1e6db;padding:20px 0}.section-label{display:flex;gap:10px;align-items:baseline;margin-bottom:12px}.section-label span{font-size:calc(10px * var(--font-scale));color:#98a290}.section-label strong{font-size:calc(14px * var(--font-scale));font-weight:600}.scope-tabs{display:grid;grid-template-columns:repeat(3,1fr);background:#f2f3ed;padding:3px;border:1px solid #e6e9df;border-radius:4px;gap:2px}.scope-tabs button{padding:9px 2px;color:#6c7769;background:transparent;border:0;border-radius:3px;font-size:calc(12px * var(--font-scale))}.scope-tabs button.selected{background:#dfe9dc;color:#3d5c42;font-weight:600}.hint{font-size:calc(11px * var(--font-scale));color:#929b8e;line-height:1.65;margin:11px 0}.select-label{display:block;font-size:calc(11px * var(--font-scale));color:#778173;margin:13px 0 7px}select{width:100%;height:38px;border:1px solid #dfe4d8;border-radius:3px;background:#fdfdf9;color:#435043;padding:0 10px;font-size:calc(12px * var(--font-scale))}.preset-desc,.general-note{background:#f3f4ec;border-left:2px solid #a7b8a0;color:#75816f;font-size:calc(11px * var(--font-scale));line-height:1.7;padding:10px 12px;margin:13px 0 0}.general-note strong{font-size:calc(12px * var(--font-scale));color:#5f705b}.general-note p{margin:5px 0 0}.param-group{margin-top:16px}.param-title{font-size:calc(12px * var(--font-scale));font-weight:600;margin:0 0 9px;display:flex;align-items:center;gap:6px}.param-row{display:grid;grid-template-columns:1fr 71px;column-gap:8px;align-items:center;margin:11px 0}.param-row label{font-size:calc(11px * var(--font-scale));color:#707c6d}.param-row input[type=number]{width:100%;min-width:0;background:#f7f8f3;border:1px solid #e2e6dc;border-radius:3px;padding:6px 4px;text-align:right;font-size:calc(12px * var(--font-scale));color:#4c5c4c}.param-row input[type=range]{grid-column:1/-1;width:100%;height:15px;margin:5px 0 0;accent-color:#879b80}.model-note{font-size:calc(11px * var(--font-scale));line-height:1.7;color:#90998c;background:#f4f5ef;padding:9px 10px;margin:16px 0 0}.panel-bottom{border-top:1px solid #e2e7dc;display:flex;gap:13px;align-items:center;padding-top:16px;color:#8a9883}.panel-bottom span{font-size:calc(22px * var(--font-scale))}.panel-bottom p{font:calc(13px * var(--font-scale))/1.7 var(--serif);margin:0}dialog{border:1px solid #d6dccf;border-radius:4px;background:#fbfaf5;padding:24px;width:min(440px,calc(100vw - 32px));box-shadow:0 18px 60px #39473522;color:var(--ink)}dialog::backdrop{background:#30382d70}.dialog-head{display:flex;justify-content:space-between;align-items:start}.dialog-head h2{font:600 calc(25px * var(--font-scale)) var(--serif);margin:8px 0}.dialog-head button{font-size:calc(24px * var(--font-scale));background:none;border:0;color:#778272}.dialog-head+p{font-size:calc(12px * var(--font-scale));color:#869182}.setting-row{border:1px solid #e0e5da;padding:15px;margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}.setting-row strong{font-size:calc(13px * var(--font-scale))}.setting-row small{margin-top:7px}.setting-row input{position:absolute;opacity:0}.switch{width:36px;height:20px;flex:none;border-radius:20px;background:#cdd4c9;position:relative}.switch:after{content:"";width:14px;height:14px;position:absolute;top:3px;left:3px;background:white;border-radius:50%;transition:.15s}.setting-row input:checked+.switch{background:#7d9678}.setting-row input:checked+.switch:after{transform:translateX(16px)}.setting-row input:focus-visible+.switch{outline:2px solid #859884;outline-offset:3px}[hidden]{display:none!important}@media(max-width:1100px){.layout{grid-template-columns:minmax(0,1fr) 320px}.status-row{grid-template-columns:1fr 1fr}.status-row>div:nth-child(3){border-left:0;padding-left:0}.status-row>div:nth-child(n+3){padding-top:9px}.chart-heading{display:block}.chart-heading>span{display:block;margin-top:5px}}@media(max-width:760px){.intro{padding:30px 0 24px}.intro-note{display:none}.layout{display:flex;flex-direction:column-reverse}.controls{position:static;width:100%}.visuals{width:100%}.charts{grid-template-columns:1fr}.chart canvas{height:190px}.insight-grid{grid-template-columns:1fr;gap:15px}.insight-grid>div+div{border-left:0;border-top:1px solid #e6e9e0;padding:14px 0 0}.stage{padding:19px 16px 0}.player{flex-wrap:wrap}.player input{min-width:90px}.status-row strong{font-size:calc(15px * var(--font-scale))}.direction{font-size:calc(10px * var(--font-scale))}footer span{display:none}}
-
-@media(max-width:760px){.layout{display:grid;grid-template-columns:minmax(0,1fr)}.visuals{display:contents}.stage{order:1}.controls{order:2}.charts{order:3;margin-top:0}.insight{order:4;margin-top:0}footer{order:5}}
-
-/* 字号从当前基准放大，界面与演示同时使用同一档位。 */
-:root[data-font-size="medium"]{--font-scale:1.18}
-:root[data-font-size="large"]{--font-scale:1.35}
-select{min-height:calc(38px * var(--font-scale));height:auto}
-.font-setting{border:1px solid #e0e5da;margin:14px 0 0;padding:14px 15px 15px;min-width:0}
-.font-setting legend{padding:0 5px;color:#536150;font-size:calc(13px * var(--font-scale));font-weight:600}
-.font-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.font-choices label{position:relative;text-align:center;cursor:pointer}
-.font-choices input{position:absolute;opacity:0;inset:0}
-.font-choices span{display:block;padding:8px 5px;border:1px solid #dfe4d8;border-radius:3px;color:#667360;background:#fafbf7;font-size:calc(12px * var(--font-scale))}
-.font-choices input:checked+span{background:#dfe9dc;color:#3d5c42;border-color:#abbfa5;font-weight:600}
-.font-choices input:focus-visible+span{outline:2px solid #859884;outline-offset:3px}
-@media(max-width:760px){.legend{flex-wrap:wrap;row-gap:7px}.scope-tabs button{white-space:normal}}
-.topbar{min-height:67px;height:auto;padding-block:8px}
-@media(max-width:760px){.intro{flex-direction:column;align-items:stretch}.intro-note{display:block;margin-top:2px}footer{gap:12px}footer span{display:inline}}
-
-.chart-legend{display:flex;gap:18px;align-items:center;margin:9px 0 0;color:#69766c;font-size:calc(11px * var(--font-scale));line-height:1.5;flex-wrap:wrap}.chart-legend span:before{content:"";display:inline-block;width:20px;vertical-align:middle;margin-right:6px;border-top:2px solid #477fa8}.chart-legend .legend-b:before{border-top:2px dashed #795bb1}
-
-/* 方向、读数、图例与操作提示需要在课堂投屏时清晰可读。 */
-.direction{color:#405546;font-weight:600}
-.legend,.chart-legend{color:#4c5b4d}
-small,.status-row strong em,.player span,.chart-heading>span,.insight-head>span,.insight-grid p,.hint,.select-label,.param-row label,.preset-desc,.general-note,.model-note,.dialog-head+p{color:#526250}
-.section-no,.section-label span{color:#596859}
-.scope-tabs button,.font-choices span{color:#526250}
-
-/* 精简标题区与演示区的空白。 */
-.intro{padding:27px 0 24px}.intro h1{margin:0}.stage .legend{margin-top:0}.top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}
-
-/* 将 A、B 的位置、位移与速度分行，缩窄时间列。 */
-.status-row{grid-template-columns:minmax(62px,.52fr) minmax(126px,.95fr) minmax(145px,1.25fr) minmax(145px,1.25fr);align-items:start}
-.status-row>div{min-width:0}
-.status-row .gap-status #relative-readout{margin-top:5px;line-height:1.5;overflow-wrap:anywhere}
-.status-row .object-status>small{display:flex;align-items:center;gap:2px;font-weight:600;color:#465b4a}
-.status-row .object-status>small .dot{flex:none}
-.status-row .object-readings{display:grid;gap:6px;margin-top:9px}
-.status-row .object-readings>div{display:flex;gap:4px 9px;justify-content:space-between;align-items:baseline;flex-wrap:wrap;line-height:1.35;color:#526250;font-size:calc(11px * var(--font-scale))}
-.status-row .object-readings sub{font-size:.8em}
-.status-row>div.object-status:nth-child(n) strong{display:inline;margin:0;font-size:calc(12px * var(--font-scale));font-weight:500;color:#30362e;white-space:nowrap}
-.status-row .object-readings strong em{font-size:calc(10px * var(--font-scale));font-style:normal;color:#526250}
-@media(max-width:1100px){.status-row{grid-template-columns:minmax(70px,.65fr) minmax(0,1.35fr)}.status-row>div:nth-child(3){border-left:0;padding-left:0}.status-row>div:nth-child(n+3){padding-top:9px}}
-@media(max-width:400px){.status-row{gap:8px;grid-template-columns:minmax(65px,.75fr) minmax(0,1.25fr)}.status-row>div:not(:first-child){padding-left:9px}.status-row>div:nth-child(3){padding-left:0}.status-row .object-readings>div{gap:2px 5px}}
-/* 小屏上时间列保持紧凑，A、B 读数各占半行。 */
-@media(max-width:1100px){
- .status-row{grid-template-columns:repeat(4,minmax(0,1fr))}
- .status-row .time-status{grid-column:span 1}
- .status-row .gap-status{grid-column:span 3}
- .status-row .object-status{grid-column:span 2}
+/* Foundation: warm paper, quiet surfaces, and consistent classroom controls. */
+:root {
+  --font-scale: 1.3;
+  --ui-scale: .866667;
+  --control-height: calc(44px * var(--ui-scale));
+  --track-height: calc(232px * var(--ui-scale));
+  --chart-height: clamp(calc(190px * var(--ui-scale)), calc(30vh * var(--ui-scale)), calc(232px * var(--ui-scale)));
+  --comparison-track-height: max(108px, calc(146px * var(--ui-scale)));
+  --comparison-chart-height: calc(220px * var(--ui-scale));
+  --comparison-four-chart-height: calc(240px * var(--ui-scale));
+  --paper: #f0eee6;
+  --ink: #30382f;
+  --muted: #526250;
+  --line: #d9dfd2;
+  --white: #fbfaf5;
+  --purple: #477fa8;
+  --green: #795bb1;
+  --soft-purple: #ede8f1;
+  --soft-green: #e4ebe1;
+  --serif: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #f4f1e9, var(--paper) 65%);
+  color: var(--ink);
+  font: 600 calc(14px * var(--font-scale))/1.5 var(--sans);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+button, select, input[type="number"] { min-height: var(--control-height); }
+button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
+  outline: 2px solid #71886e;
+  outline-offset: 3px;
+}
+button { transition: background-color .15s, border-color .15s; }
+[hidden] { display: none !important; }
+.wrap { width: 100%; margin: auto; padding: 0 clamp(calc(12px * var(--ui-scale)), calc(1.4vw * var(--ui-scale)), calc(24px * var(--ui-scale))) calc(20px * var(--ui-scale)); }
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: calc(8px * var(--ui-scale)) calc(16px * var(--ui-scale));
+  min-height: calc(62px * var(--ui-scale));
+  padding-block: calc(8px * var(--ui-scale));
+  border-bottom: calc(1px * var(--ui-scale)) solid #cbd0c2;
+  color: #586652;
+  font-size: calc(12px * var(--font-scale));
+  letter-spacing: .06em;
+}
+.identity { display: flex; align-items: center; gap: calc(10px * var(--ui-scale)); white-space: nowrap; }
+.orb { width: calc(20px * var(--ui-scale)); height: calc(20px * var(--ui-scale)); border: 1px solid #7d8b76; border-radius: 50%; position: relative; }
+.orb:after { content: ""; position: absolute; width: calc(6px * var(--ui-scale)); height: calc(6px * var(--ui-scale)); top: calc(6px * var(--ui-scale)); left: calc(6px * var(--ui-scale)); background: #7d8b76; border-radius: 50%; }
+.top-actions { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: calc(8px * var(--ui-scale)); margin-left: auto; }
+.settings-trigger { padding: calc(7px * var(--ui-scale)) calc(12px * var(--ui-scale)); border: 1px solid #d1d8c9; border-radius: calc(5px * var(--ui-scale)); background: #f8f8f1; color: #50614e; }
+.settings-trigger:hover { background: #e8ede2; border-color: #b7c3ae; }
+.intro { padding: calc(8px * var(--ui-scale)) 0 calc(9px * var(--ui-scale)); }
+.intro h1 { margin: 0; font: 700 calc(24px * var(--font-scale))/1.2 var(--serif); letter-spacing: .07em; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) clamp(calc(288px * var(--ui-scale)), calc(18vw * var(--ui-scale)), calc(336px * var(--ui-scale))); align-items: start; gap: calc(12px * var(--ui-scale)); }
+.visuals, #single-view, .comparison-view { min-width: 0; }
+.panel { border: 1px solid var(--line); border-radius: calc(7px * var(--ui-scale)); background: var(--white); box-shadow: 0 1px 3px #34463105; }
+.stage { padding: calc(14px * var(--ui-scale)) calc(20px * var(--ui-scale)) 0; }
+canvas { display: block; width: 100%; }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: calc(7px * var(--ui-scale)) calc(18px * var(--ui-scale)); color: #4b5c4b; font-size: calc(12px * var(--font-scale)); }
+.dot { display: inline-block; width: calc(10px * var(--ui-scale)); height: calc(10px * var(--ui-scale)); flex: none; border-radius: 50%; margin-right: calc(6px * var(--ui-scale)); }
+.purple { background: var(--purple); }
+.green { background: var(--green); }
+.direction { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: calc(4px * var(--ui-scale)) calc(14px * var(--ui-scale)); max-width: 100%; margin-left: auto; color: #405546; font-size: calc(11px * var(--font-scale)); }
+.direction span { white-space: nowrap; }
+#track { height: var(--track-height); }
+small { display: block; color: var(--muted); font-size: calc(11px * var(--font-scale)); }
+/* Every changing number has a model-sized slot, independent of its current text. */
+.reading-number { display: inline-block; inline-size: var(--number-width, 5ch); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+.reading-unit { white-space: nowrap; font-style: normal; }
+.numeric-reading { display: inline-grid; grid-template-columns: max-content max-content; align-items: baseline; column-gap: .25em; white-space: nowrap; }
+.numeric-reading.labeled-reading { grid-template-columns: repeat(3, max-content); }
+.status-row { display: grid; grid-template-columns: minmax(min-content, .52fr) minmax(min-content, .95fr) minmax(min-content, 1.25fr) minmax(min-content, 1.25fr); align-items: start; gap: calc(6px * var(--ui-scale)) calc(12px * var(--ui-scale)); border-top: calc(1px * var(--ui-scale)) solid #e3e8dd; padding: calc(9px * var(--ui-scale)) 0; }
+.status-row > div { min-width: 0; }
+.status-row > div + div { border-left: calc(1px * var(--ui-scale)) solid #e3e8dd; padding-left: calc(12px * var(--ui-scale)); }
+.status-row strong { margin-top: calc(5px * var(--ui-scale)); font-size: calc(17px * var(--font-scale)); line-height: 1.25; font-variant-numeric: tabular-nums; }
+.status-row strong em { color: var(--muted); font-size: calc(11px * var(--font-scale)); font-style: normal; }
+#relative-readout { display: grid; grid-template-columns: max-content max-content; width: max-content; margin-top: calc(3px * var(--ui-scale)); column-gap: .25em; line-height: 1.5; }
+#relative-readout > :first-child { grid-column: 1/-1; }
+.object-status > small { display: flex; align-items: center; gap: calc(2px * var(--ui-scale)); color: #465b4a; font-weight: 700; }
+.object-readings { display: grid; grid-template-columns: max-content max-content; justify-content: start; gap: calc(2px * var(--ui-scale)) calc(10px * var(--ui-scale)); max-width: 100%; margin-top: calc(4px * var(--ui-scale)); }
+.object-readings > div { display: contents; }
+.object-readings > div > span:first-child { color: var(--muted); font-size: calc(11px * var(--font-scale)); white-space: nowrap; line-height: 1.35; }
+.object-readings sub { font-size: .8em; }
+.status-row .object-readings strong { display: inline-grid; grid-template-columns: max-content max-content; min-width: 0; margin: 0; text-align: right; white-space: nowrap; font-size: calc(12px * var(--font-scale)); line-height: 1.35; }
+.status-row .object-readings strong em { font-size: calc(10px * var(--font-scale)); }
+.status-row.wide-time { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.status-row.wide-time .time-status, .status-row.wide-time .gap-status, .status-row.wide-time .object-status { grid-column: span 2; }
+.status-row.wide-time .object-status { padding-top: calc(5px * var(--ui-scale)); }
+.status-row.wide-time .object-status:nth-child(3) { border-left: 0; padding-left: 0; }
+.playback { margin-top: calc(10px * var(--ui-scale)); padding-inline: calc(16px * var(--ui-scale)); }
+.player { display: flex; align-items: center; flex-wrap: wrap; gap: calc(9px * var(--ui-scale)); padding: calc(9px * var(--ui-scale)) 0; }
+.player button { padding: calc(8px * var(--ui-scale)) calc(12px * var(--ui-scale)); border-radius: calc(5px * var(--ui-scale)); font-size: calc(12px * var(--font-scale)); white-space: nowrap; }
+.player .play-btn { flex: 0 0 5em; background: #586e59; border: 1px solid #586e59; color: #fff; }
+.player .play-btn:hover { background: #465c48; border-color: #465c48; }
+.reset-btn { border: 1px solid #d3dccd; background: transparent; color: #53654f; }
+.reset-btn:hover { background: #edf1e8; }
+.player span { color: var(--muted); font-size: calc(11px * var(--font-scale)); font-variant-numeric: tabular-nums; }
+.player #duration-label { flex: 0 0 8.5em; min-width: 8.5em; text-align: right; white-space: nowrap; }
+.timeline-main { flex: 1 1 calc(260px * var(--ui-scale)); min-width: calc(150px * var(--ui-scale)); }
+.timeline-wrap { display: flex; align-items: center; position: relative; height: calc(34px * var(--ui-scale)); }
+.player #timeline { display: block; flex: 1; width: 100%; min-width: 0; height: calc(24px * var(--ui-scale)); margin: 0; appearance: none; -webkit-appearance: none; background: transparent; cursor: pointer; }
+.player #timeline::-webkit-slider-runnable-track { height: calc(6px * var(--ui-scale)); border: 1px solid #b7bdb3; border-radius: calc(4px * var(--ui-scale)); background: #e4e7df; }
+.player #timeline::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: calc(20px * var(--ui-scale)); height: calc(20px * var(--ui-scale)); margin-top: calc(-8px * var(--ui-scale)); border: 0; border-radius: 50%; background: #70866c; }
+.player #timeline::-moz-range-track { height: calc(6px * var(--ui-scale)); border: 1px solid #b7bdb3; border-radius: calc(4px * var(--ui-scale)); background: #e4e7df; box-sizing: border-box; }
+.player #timeline::-moz-range-thumb { width: calc(20px * var(--ui-scale)); height: calc(20px * var(--ui-scale)); border: 0; border-radius: 50%; background: #70866c; }
+#timeline-marks { position: absolute; inset: 0; pointer-events: none; }
+.timeline-mark { position: absolute; top: calc(1px * var(--ui-scale)); width: calc(3px * var(--ui-scale)); height: calc(13px * var(--ui-scale)); border-radius: calc(2px * var(--ui-scale)); background: #b36d36; transform: translateX(-50%); }
+.timeline-mark:before { content: ""; position: absolute; top: calc(-1px * var(--ui-scale)); left: 50%; width: calc(7px * var(--ui-scale)); height: calc(7px * var(--ui-scale)); border-radius: 50%; background: #b36d36; transform: translateX(-50%); }
+.timeline-events { display: flex; flex-wrap: wrap; align-items: center; gap: calc(4px * var(--ui-scale)) calc(8px * var(--ui-scale)); margin: 0 0 calc(2px * var(--ui-scale)); }
+.player .timeline-event { min-height: calc(44px * var(--ui-scale)); padding: calc(4px * var(--ui-scale)) calc(8px * var(--ui-scale)); border: 1px solid #e0d3c1; border-radius: calc(4px * var(--ui-scale)); background: #faf5ec; color: #76502f; font-size: calc(10px * var(--font-scale)); line-height: 1.25; }
+.player .timeline-event:hover, .player .timeline-event:focus-visible { background: #f0e3d2; border-color: #c6aa86; }
+.timeline-toggle { display: flex; align-items: center; gap: calc(5px * var(--ui-scale)); min-height: calc(44px * var(--ui-scale)); color: #465744; white-space: nowrap; font-size: calc(10px * var(--font-scale)); cursor: pointer; }
+.player .timeline-toggle input { flex: none; width: calc(20px * var(--ui-scale)); height: calc(20px * var(--ui-scale)); margin: 0; accent-color: #70866c; }
+/* The sidebar owns playback in every mode. Its timeline always spans the same width. */
+.controls .playback { margin: calc(9px * var(--ui-scale)) 0 calc(10px * var(--ui-scale)); padding: 0; border: 0; border-block: 1px solid #e2e7d9; border-radius: 0; background: transparent; box-shadow: none; }
+.controls .player { display: grid; grid-template-columns: 3.6em 3.6em minmax(0, 1fr); gap: calc(5px * var(--ui-scale)); padding: calc(9px * var(--ui-scale)) 0 calc(5px * var(--ui-scale)); font-size: calc(11px * var(--font-scale)); }
+.controls .player > .play-btn, .controls .player > .reset-btn { grid-row: 1; width: 3.6em; min-width: 0; padding: calc(6px * var(--ui-scale)) calc(3px * var(--ui-scale)); font-size: inherit; }
+.controls .player > .play-btn { grid-column: 1; }
+.controls .player > .reset-btn { grid-column: 2; }
+.controls .player #duration-label { grid-column: 3; grid-row: 1; justify-self: end; width: 6.8em; min-width: 6.8em; margin: 0; font-size: inherit; }
+.controls .timeline-main { grid-column: 1/-1; grid-row: 2; width: 100%; min-width: 0; }
+.controls .timeline-wrap { height: calc(38px * var(--ui-scale)); }
+.controls .timeline-events { gap: calc(4px * var(--ui-scale)); margin-bottom: 0; }
+.controls .player .timeline-event { max-width: 100%; padding: calc(5px * var(--ui-scale)) calc(7px * var(--ui-scale)); font-size: calc(10px * var(--font-scale)); white-space: normal; text-align: left; }
+.controls .timeline-toggle { grid-column: 1/-1; grid-row: 3; justify-self: end; margin: 0; min-height: calc(40px * var(--ui-scale)); font-size: calc(10px * var(--font-scale)); }
+.controls .timeline-toggle span { font-size: inherit; }
+#comparison-note, #demo-note { margin: calc(3px * var(--ui-scale)) 0 calc(9px * var(--ui-scale)); color: #53634f; font-size: calc(10.5px * var(--font-scale)); line-height: 1.45; }
 
-/* 读数对齐并靠近，给运动过程留出更多视觉空间。 */
-.status-row{gap:8px 12px;padding:13px 0}
-.status-row .time-status strong,.status-row .gap-status strong{margin-top:5px;line-height:1.25}
-.status-row .gap-status #relative-readout{margin-top:3px}
-.status-row .object-readings{grid-template-columns:max-content minmax(0,max-content);justify-content:start;gap:4px 10px;margin-top:7px;max-width:100%}
-.status-row .object-readings>div{display:contents}
-.status-row .object-readings>div>span:first-child{line-height:1.35;color:#526250;font-size:calc(11px * var(--font-scale));white-space:nowrap}
-.status-row>div.object-status:nth-child(n) .object-readings strong{line-height:1.35;white-space:normal;overflow-wrap:anywhere;min-width:0;text-align:right}
-@media(max-width:1100px){.status-row>div:nth-child(n+3){padding-top:5px}}
-@media(max-width:400px){.status-row .object-readings{column-gap:6px}}
+.charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(10px * var(--ui-scale)); margin-top: calc(10px * var(--ui-scale)); }
+.chart { min-width: 0; padding: calc(13px * var(--ui-scale)) calc(16px * var(--ui-scale)) calc(8px * var(--ui-scale)); }
+.chart-heading { display: flex; align-items: end; justify-content: space-between; gap: calc(6px * var(--ui-scale)); }
+.chart h3 { margin: 0; font: 700 calc(17px * var(--font-scale))/1.3 var(--serif); }
+.chart canvas { height: var(--chart-height); margin-top: calc(5px * var(--ui-scale)); }
+.chart-legend { display: flex; flex-wrap: wrap; align-items: center; gap: calc(4px * var(--ui-scale)) calc(18px * var(--ui-scale)); margin: calc(5px * var(--ui-scale)) 0 0; color: #4c5b4d; font-size: calc(11px * var(--font-scale)); line-height: 1.5; }
+.chart-legend span:before { content: ""; display: inline-block; width: calc(20px * var(--ui-scale)); margin-right: calc(6px * var(--ui-scale)); border-top: calc(2px * var(--ui-scale)) solid var(--purple); vertical-align: middle; }
+.chart-legend .legend-b:before { border-top: calc(2px * var(--ui-scale)) dashed var(--green); }
+.insight { margin-top: calc(10px * var(--ui-scale)); padding: calc(18px * var(--ui-scale)) calc(20px * var(--ui-scale)); }
+.insight-head, .controls-header, .dialog-head { display: flex; align-items: start; justify-content: space-between; gap: calc(12px * var(--ui-scale)); }
+.panel h2 { margin: 0; font: 700 calc(20px * var(--font-scale))/1.4 var(--serif); letter-spacing: .04em; }
+.section-no { color: #596859; font-size: calc(10px * var(--font-scale)); letter-spacing: .1em; }
+.insight-head > span { color: var(--muted); font-size: calc(11px * var(--font-scale)); }
+.insight-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: calc(16px * var(--ui-scale)); }
+.insight-grid > div { padding-right: calc(16px * var(--ui-scale)); }
+.insight-grid > div + div { border-left: calc(1px * var(--ui-scale)) solid #e3e8dd; padding-left: calc(18px * var(--ui-scale)); }
+.insight-grid strong { display: block; margin: calc(7px * var(--ui-scale)) 0; color: #465744; font: 700 calc(17px * var(--font-scale))/1.5 var(--serif); }
+.insight-grid p { margin: 0; color: var(--muted); font-size: calc(12px * var(--font-scale)); line-height: 1.65; }
+.controls { position: sticky; top: calc(12px * var(--ui-scale)); max-height: calc(100vh - var(--controls-origin, calc(140px * var(--ui-scale))) - calc(24px * var(--ui-scale))); padding: calc(14px * var(--ui-scale)) calc(16px * var(--ui-scale)); overflow: auto; overscroll-behavior: contain; }
+.controls-header { padding-bottom: calc(10px * var(--ui-scale)); }
+.control-section { border-top: calc(1px * var(--ui-scale)) solid #dfe5d8; padding: calc(11px * var(--ui-scale)) 0; }
+.control-section:last-child { padding-bottom: 0; }
+.section-label { display: flex; align-items: baseline; gap: calc(10px * var(--ui-scale)); margin-bottom: calc(7px * var(--ui-scale)); }
+.section-label > span { color: #596859; font-size: calc(10px * var(--font-scale)); }
+.section-label strong { font-size: calc(14px * var(--font-scale)); font-weight: 700; }
+.scope-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(3px * var(--ui-scale)); padding: calc(3px * var(--ui-scale)); border: 1px solid #e2e7db; border-radius: calc(6px * var(--ui-scale)); background: #f1f3eb; }
+.scope-tabs button { padding: calc(8px * var(--ui-scale)) calc(3px * var(--ui-scale)); border: 0; border-radius: calc(4px * var(--ui-scale)); color: #526250; background: transparent; font-size: calc(12px * var(--font-scale)); overflow-wrap: anywhere; }
+.scope-tabs button:hover { background: #e8ede2; }
+.scope-tabs button.selected { color: #354f39; background: #dfe9dc; box-shadow: 0 1px 2px #3f593010; }
+.select-label { display: block; margin: calc(7px * var(--ui-scale)) 0 calc(4px * var(--ui-scale)); color: var(--muted); font-size: calc(11px * var(--font-scale)); }
+select { width: 100%; min-height: var(--control-height); padding: calc(7px * var(--ui-scale)) calc(10px * var(--ui-scale)); border: 1px solid #d9e1d2; border-radius: calc(4px * var(--ui-scale)); color: #435043; background: #fdfdf9; font-size: calc(12px * var(--font-scale)); }
+.preset-desc, .general-note, .model-note { margin: calc(8px * var(--ui-scale)) 0 0; padding: calc(7px * var(--ui-scale)) calc(9px * var(--ui-scale)); border-radius: calc(3px * var(--ui-scale)); color: var(--muted); background: #f2f4eb; font-size: calc(11px * var(--font-scale)); line-height: 1.45; }
+.preset-desc, .general-note { border-left: calc(2px * var(--ui-scale)) solid #a7b8a0; }
+.preset-desc #preset-selected, .preset-desc #preset-description { display: block; }
+.preset-desc #preset-selected { color: #344c38; font-weight: 700; overflow-wrap: anywhere; }
+.preset-desc #preset-description { margin-top: calc(3px * var(--ui-scale)); }
+.general-note strong { color: #4c6348; font-size: calc(12px * var(--font-scale)); }
+.general-note p { margin: calc(4px * var(--ui-scale)) 0 0; }
+.param-group { margin-top: calc(9px * var(--ui-scale)); }
+.param-title { display: flex; align-items: center; gap: calc(6px * var(--ui-scale)); margin-bottom: calc(5px * var(--ui-scale)); font-size: calc(12px * var(--font-scale)); }
+.param-row { display: grid; grid-template-columns: minmax(0, 1fr) calc(78px * var(--ui-scale)); align-items: center; gap: 0 calc(8px * var(--ui-scale)); margin: calc(6px * var(--ui-scale)) 0; }
+.param-row label { color: var(--muted); font-size: calc(11px * var(--font-scale)); }
+.param-row input[type="number"] { width: 100%; min-width: 0; padding: calc(6px * var(--ui-scale)) calc(4px * var(--ui-scale)); border: 1px solid #dce4d5; border-radius: calc(4px * var(--ui-scale)); background: #f7f8f1; color: #40563f; font-size: calc(12px * var(--font-scale)); text-align: right; }
+.param-row input[type="range"] { grid-column: 1/-1; width: 100%; height: calc(24px * var(--ui-scale)); margin: calc(2px * var(--ui-scale)) 0 0; accent-color: #7f9679; cursor: pointer; }
+.section-label .params-reset { margin-left: auto; padding: calc(5px * var(--ui-scale)) calc(9px * var(--ui-scale)); border: 1px solid #d4decd; border-radius: calc(4px * var(--ui-scale)); color: #536551; background: transparent; font-size: calc(11px * var(--font-scale)); white-space: nowrap; }
+.section-label .params-reset:hover { background: #e9eee5; }
+dialog { width: min(calc(440px * var(--ui-scale)), calc(100vw - calc(32px * var(--ui-scale)))); padding: calc(22px * var(--ui-scale)); border: 1px solid #cfd9c7; border-radius: calc(8px * var(--ui-scale)); background: var(--white); color: var(--ink); box-shadow: 0 18px 60px #39473530; }
+dialog::backdrop { background: #30382d70; }
+#settings-dialog { max-height: calc(100vh - calc(32px * var(--ui-scale))); overflow: auto; }
+.dialog-head h2 { margin: calc(8px * var(--ui-scale)) 0; font: 700 calc(25px * var(--font-scale))/1.3 var(--serif); }
+.dialog-head button { min-width: calc(44px * var(--ui-scale)); padding: 0; border: 0; background: transparent; color: #526250; font-size: calc(24px * var(--font-scale)); }
+.dialog-head + p { color: var(--muted); font-size: calc(12px * var(--font-scale)); }
+.setting-row { display: flex; align-items: center; justify-content: space-between; gap: calc(12px * var(--ui-scale)); margin-top: calc(18px * var(--ui-scale)); padding: calc(14px * var(--ui-scale)); border: 1px solid #dfe6d7; border-radius: calc(4px * var(--ui-scale)); cursor: pointer; }
+.setting-row strong { font-size: calc(13px * var(--font-scale)); }
+.setting-row small { margin-top: calc(6px * var(--ui-scale)); }
+.setting-row input { position: absolute; opacity: 0; }
+.switch { position: relative; flex: none; width: calc(36px * var(--ui-scale)); height: calc(20px * var(--ui-scale)); border-radius: calc(20px * var(--ui-scale)); background: #cdd4c9; }
+.switch:after { content: ""; position: absolute; top: calc(3px * var(--ui-scale)); left: calc(3px * var(--ui-scale)); width: calc(14px * var(--ui-scale)); height: calc(14px * var(--ui-scale)); border-radius: 50%; background: white; transition: transform .15s; }
+.setting-row input:checked + .switch { background: #7d9678; }
+.setting-row input:checked + .switch:after { transform: translateX(calc(16px * var(--ui-scale))); }
+.setting-row input:focus-visible + .switch { outline: 2px solid #71886e; outline-offset: 3px; }
+/* Frequent display-size controls stay next to Settings in the top bar. */
+.display-settings { display: flex; align-items: center; gap: calc(8px * var(--ui-scale)); }
+.display-size-switch { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(2px * var(--ui-scale)); padding: calc(2px * var(--ui-scale)); border: 1px solid #d1d8c9; border-radius: calc(5px * var(--ui-scale)); background: #e9ede3; }
+.display-size-switch label { position: relative; text-align: center; cursor: pointer; }
+.display-size-switch input { position: absolute; inset: 0; margin: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.display-size-switch span { display: flex; justify-content: center; align-items: center; min-width: calc(36px * var(--ui-scale)); min-height: calc(38px * var(--ui-scale)); padding: 0 calc(7px * var(--ui-scale)); border: 1px solid transparent; border-radius: calc(3px * var(--ui-scale)); color: #526250; font-size: calc(12px * var(--font-scale)); line-height: 1; }
+.display-size-switch label:hover span { background: #f0f3eb; }
+.display-size-switch input:checked + span { color: #354f39; border-color: #b7c8ae; background: #fbfcf7; box-shadow: 0 1px 2px #3f593015; }
+.display-size-switch input:focus-visible + span { outline: 2px solid #71886e; outline-offset: 2px; }
 
 </style><style>
 /* 分类图谱：根节点 → 情境 → 分类线索 → 具体分类。 */
@@ -111,177 +255,325 @@ small,.status-row strong em,.player span,.chart-heading>span,.insight-head>span,
 @media(max-width:620px){.classification-map{width:calc(100vw - 20px);max-height:90vh}.map-top{padding:18px 17px 15px}.map-content{padding:18px 15px 23px}.map-tree{margin-top:21px;padding-left:15px}.map-tree:before{left:2px}.map-scope:before,.map-general:before{left:-13px;width:12px}.map-scope-summary{padding:12px 11px;gap:8px}.map-scope-note{display:block}.map-scope-count{white-space:normal;text-align:right}.map-dimensions{padding-left:22px;padding-right:10px}.map-dimension-note{display:none}.map-dimension-summary{padding:10px}.map-leaves{padding-left:10px}.map-leaf{flex:1 1 140px;justify-content:space-between}.map-general{padding:12px}.map-general-action{align-self:center}}
 
 </style><style>
-/* 投屏阅读：各档均在原字号基础上放大，文字与图表使用同一比例。 */
-:root,:root[data-font-size="small"]{--font-scale:1.5}
-:root[data-font-size="medium"]{--font-scale:1.7}
-:root[data-font-size="large"]{--font-scale:1.9}
-body,button,input,select,small,.legend,.chart-legend,.direction,.eyebrow,.section-no,
-.section-label span,.hint,.select-label,.param-row label,.preset-desc,.general-note,
-.model-note,.chart-heading>span,.insight-head>span,.insight-grid p,.player span,
-.status-row .object-readings>div,.status-row .object-readings>div>span:first-child,
-.status-row strong,.status-row>div.object-status:nth-child(n) strong,
-.font-choices span,.classification-map,.classification-map p,
-.classification-map summary,.classification-map button,.classification-map span{
-  font-weight:600;
+/* Display size changes text, canvases, controls, and spacing together. */
+:root, :root[data-font-size="medium"] { --font-scale: 1.3; --ui-scale: .866667; --workspace-fill: .96; }
+:root[data-font-size="small"] { --font-scale: 1.1; --ui-scale: .733333; --workspace-fill: .84; }
+:root[data-font-size="large"] { --font-scale: 1.5; --ui-scale: 1; --workspace-fill: 1; }
+h1, h2, h3, strong, .classification-map strong { font-weight: 700; }
+.classification-map, .classification-map p, .classification-map summary, .classification-map button, .classification-map span { font-weight: 600; }
+
+/* The three entry points share one predictable selection language. */
+.theme-group { margin-top: calc(12px * var(--ui-scale)); }
+.theme-heading { margin-bottom: calc(5px * var(--ui-scale)); color: #536551; font-size: calc(11px * var(--font-scale)); font-weight: 700; }
+.theme-list { display: grid; gap: calc(5px * var(--ui-scale)); }
+.theme-button, .variant-button, .preset-example, .more-scope button, .demo-button {
+  border: 1px solid #dbe3d3;
+  border-radius: calc(5px * var(--ui-scale));
+  background: #f9faf4;
+  color: #405741;
+  font-size: calc(11px * var(--font-scale));
+  font-weight: 600;
+  line-height: 1.4;
 }
-h1,h2,h3,.section-label strong,.status-row .object-status>small,
-.status-row>div.object-status:nth-child(n) .object-readings strong,
-.classification-map strong{font-weight:700}
-button,select,.param-row input[type=number]{min-height:44px}
-.param-row input[type=range]{height:22px;cursor:pointer}
-.scope-tabs button{padding-inline:3px;overflow-wrap:anywhere}
-#settings-dialog{max-height:calc(100vh - 32px);overflow:auto}
-.chart canvas{height:clamp(230px,calc(155px * var(--font-scale)),310px)}
-.dot{width:10px;height:10px}
-@media(min-width:1001px){.layout{grid-template-columns:minmax(0,1fr) clamp(350px,27vw,385px)}}
-@media(max-width:1000px){
- .layout{display:grid;grid-template-columns:minmax(0,1fr)}
- .visuals{display:contents}.stage{order:1}.controls{order:2;position:static;width:100%}
- .charts{order:3;margin-top:0}.insight{order:4;margin-top:0}
- .chart canvas{height:clamp(230px,calc(155px * var(--font-scale)),310px)}
+.theme-button { display: block; width: 100%; padding: calc(7px * var(--ui-scale)) calc(10px * var(--ui-scale)); text-align: left; }
+.theme-button:hover, .variant-button:hover, .preset-example:hover, .more-scope button:hover, .demo-button:hover { background: #ebf0e5; border-color: #b8c9ae; }
+.theme-button.selected, .variant-button.selected, .preset-example.selected, .more-scope button.selected, .demo-button.selected { background: #e2ecdc; border-color: #a0b695; color: #314f36; }
+.theme-variants { display: flex; flex-wrap: wrap; gap: calc(5px * var(--ui-scale)); padding: calc(5px * var(--ui-scale)) 0 calc(3px * var(--ui-scale)); }
+.variant-button { padding: calc(6px * var(--ui-scale)) calc(8px * var(--ui-scale)); font-size: calc(10px * var(--font-scale)); }
+.theme-example { padding: calc(2px * var(--ui-scale)) calc(4px * var(--ui-scale)); color: #536551; font-size: calc(10px * var(--font-scale)); }
+.demo-section { margin-top: calc(16px * var(--ui-scale)); padding-top: calc(13px * var(--ui-scale)); border-top: calc(1px * var(--ui-scale)) solid #e1e7da; }
+.demo-section > .section-label { margin-bottom: calc(7px * var(--ui-scale)); }
+.demo-section .theme-heading { margin-bottom: calc(7px * var(--ui-scale)); }
+.demo-button { position: relative; width: 100%; padding: calc(11px * var(--ui-scale)) calc(12px * var(--ui-scale)) calc(11px * var(--ui-scale)) calc(40px * var(--ui-scale)); text-align: left; }
+.demo-button + .demo-button { margin-top: calc(5px * var(--ui-scale)); }
+.demo-button:before { content: ""; position: absolute; left: calc(13px * var(--ui-scale)); top: 50%; width: calc(15px * var(--ui-scale)); height: calc(15px * var(--ui-scale)); border: 1.5px solid currentColor; border-radius: calc(2px * var(--ui-scale)); transform: translateY(-50%); background: linear-gradient(currentColor, currentColor) 50% 50%/1px 100% no-repeat, linear-gradient(currentColor, currentColor) 50% 50%/100% 1px no-repeat; opacity: .7; }
+.more-scope { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(5px * var(--ui-scale)); margin-top: calc(12px * var(--ui-scale)); }
+.more-scope button { padding: calc(7px * var(--ui-scale)); }
+.result-filter { margin: calc(9px * var(--ui-scale)) 0; color: #536551; }
+.result-filter summary { display: flex; align-items: center; gap: calc(6px * var(--ui-scale)); min-height: calc(44px * var(--ui-scale)); font-size: calc(10px * var(--font-scale)); cursor: pointer; }
+.result-filter summary:before { content: '▸'; font-size: .8em; }
+.result-filter[open] summary:before { content: '▾'; }
+.preset-examples { display: flex; flex-wrap: wrap; gap: calc(5px * var(--ui-scale)); }
+.preset-example { max-width: 100%; padding: calc(6px * var(--ui-scale)) calc(9px * var(--ui-scale)); text-align: left; font-size: calc(10px * var(--font-scale)); overflow-wrap: anywhere; }
+
+/* Four fixed cases use one spatial and time scale, with compact shared readings. */
+.comparison-heading { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: calc(3px * var(--ui-scale)) calc(15px * var(--ui-scale)); margin-bottom: calc(8px * var(--ui-scale)); }
+.comparison-heading h2 { margin: 0; color: #344c38; font: 700 calc(16px * var(--font-scale))/1.25 var(--serif); }
+.comparison-heading p { margin: 0; color: #526250; font-size: calc(10.5px * var(--font-scale)); line-height: 1.4; }
+.comparison-heading p span { display: inline-block; white-space: nowrap; }
+.comparison-heading .chart-legend { margin: 0; font-size: calc(10px * var(--font-scale)); }
+.comparison-heading .chart-legend span:not(.legend-a):not(.legend-b):before { display: none; }
+.comparison-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(10px * var(--ui-scale)); }
+.comparison-grid[data-count="3"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 1280px) { .comparison-grid[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1280px) {
+  .comparison-grid[data-count="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .comparison-grid[data-count="4"] .comparison-chart { height: var(--comparison-four-chart-height); }
 }
-@media(max-width:480px){
- :root[data-font-size="large"] .status-row .object-status{grid-column:span 4}
- :root[data-font-size="large"] .status-row .object-status:nth-child(4){border-left:0;border-top:1px solid #e5e9df;padding-left:0;padding-top:10px}
+.comparison-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-content: start; container: comparison-card / inline-size; min-width: 0; padding: calc(8px * var(--ui-scale)) calc(12px * var(--ui-scale)) calc(6px * var(--ui-scale)); overflow: hidden; }
+.comparison-card-head { display: flex; align-items: baseline; gap: calc(8px * var(--ui-scale)); grid-column: 1/-1; grid-row: 1; min-width: 0; }
+.comparison-number { flex: none; color: #6b7a62; font-size: calc(10px * var(--font-scale)); font-variant-numeric: tabular-nums; }
+.comparison-card h3 { margin: 0; color: #344b37; font: 700 calc(15px * var(--font-scale))/1.25 var(--serif); }
+.comparison-condition { grid-column: 1/-1; grid-row: 2; margin: calc(2px * var(--ui-scale)) 0 0; color: #586952; font-size: calc(10px * var(--font-scale)); line-height: 1.4; font-variant-numeric: tabular-nums; }
+.comparison-track { grid-column: 1/-1; grid-row: 3; height: var(--comparison-track-height); }
+.comparison-readings { grid-column: 1/-1; grid-row: 4; display: grid; grid-template-columns: max-content 5em; align-items: baseline; justify-content: start; gap: calc(3px * var(--ui-scale)) calc(12px * var(--ui-scale)); min-width: 0; padding: calc(1px * var(--ui-scale)) 0 calc(3px * var(--ui-scale)); color: #435b43; font-size: calc(10px * var(--font-scale)); line-height: 1.4; font-variant-numeric: tabular-nums; }
+.comparison-gap { color: #344b37; font-weight: 700; }
+.comparison-phase { width: 5em; min-width: 5em; color: #697459; text-align: left; white-space: nowrap; }
+.comparison-chart { grid-column: 1/-1; grid-row: 5; justify-self: center; width: min(100%, calc(430px * var(--ui-scale))); max-width: calc(430px * var(--ui-scale)); height: var(--comparison-chart-height); border-top: calc(1px * var(--ui-scale)) solid #e8ebdf; }
+.comparison-speeds { grid-column: 1/-1; grid-row: 6; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: baseline; gap: calc(4px * var(--ui-scale)) calc(14px * var(--ui-scale)); margin-top: calc(2px * var(--ui-scale)); font-size: calc(10px * var(--font-scale)); line-height: 1.5; font-variant-numeric: tabular-nums; }
+.comparison-speed-a { color: #3e7197; }
+.comparison-speed-b { color: #7253a7; }
+@container comparison-card (min-width: 420px) {
+  .comparison-card-head { grid-column: 1; grid-row: 1; }
+  .comparison-condition { grid-column: 2; grid-row: 1; align-self: baseline; max-width: calc(220px * var(--ui-scale)); margin: 0 0 0 calc(10px * var(--ui-scale)); text-align: right; }
+  .comparison-track { grid-row: 2; }
+  .comparison-readings { grid-column: 1/-1; grid-row: 3; }
+  .comparison-speeds { grid-column: 1/-1; grid-row: 5; }
+  .comparison-chart { grid-row: 4; }
 }
-@media(max-width:400px){
- :root[data-font-size="medium"] .status-row .object-status{grid-column:span 4}
- :root[data-font-size="medium"] .status-row .object-status:nth-child(4){border-left:0;border-top:1px solid #e5e9df;padding-left:0;padding-top:10px}
+@container comparison-card (min-width: 470px) {
+  .comparison-readings { grid-column: 1; grid-row: 3; gap: calc(3px * var(--ui-scale)) calc(9px * var(--ui-scale)); padding-right: calc(8px * var(--ui-scale)); }
+  .comparison-speeds { grid-column: 2; grid-row: 3; grid-template-columns: max-content max-content; justify-content: end; gap: calc(4px * var(--ui-scale)) calc(10px * var(--ui-scale)); margin: 0; }
 }
 
-/* 扩大运动画面，让运动轨道成为卡片的视觉主体。 */
-#track{height:clamp(260px,22vw,330px)}
-/* 更窄的屏幕保持每个物体的读数完整，不把数字压碎。 */
-@media(max-width:400px){
- .status-row .object-status{grid-column:span 4}
- .status-row .object-status:nth-child(4){border-left:0;border-top:1px solid #e5e9df;padding-left:0;padding-top:10px}
+/* Narrow four-column cards preserve fixed labels and numerical slots on separate lines. */
+@container comparison-card (max-width: 220px) {
+  .comparison-readings { grid-template-columns: max-content; row-gap: calc(1px * var(--ui-scale)); }
+  .comparison-phase { grid-column: 1; }
+  .comparison-speeds { grid-template-columns: max-content; row-gap: calc(1px * var(--ui-scale)); }
+}
+.map-top { padding: calc(22px * var(--ui-scale)) calc(26px * var(--ui-scale)) calc(19px * var(--ui-scale)); }
+.map-content { padding: calc(22px * var(--ui-scale)) calc(26px * var(--ui-scale)) calc(26px * var(--ui-scale)); }
+
+/* Reflow keeps complete numerical readings, including large-font and narrow-screen use. */
+@media (max-width: 1200px) {
+  .status-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .status-row .time-status { grid-column: span 1; }
+  .status-row .gap-status { grid-column: span 3; }
+  .status-row .object-status { grid-column: span 2; padding-top: calc(5px * var(--ui-scale)); }
+  .status-row .object-status:nth-child(3) { border-left: 0; padding-left: 0; }
+  .status-row.wide-time .time-status, .status-row.wide-time .gap-status { grid-column: span 2; }
+}
+@media (max-width: 1300px) {
+  .chart-heading { display: block; }
+}
+@media (max-width: 1100px) and (min-width: 1001px) {
+  .comparison-grid, .comparison-grid[data-count="3"] { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 1000px) {
+  .layout { display: flex; flex-direction: column; gap: calc(12px * var(--ui-scale)); }
+  .controls { position: static; width: 100%; max-height: none; overflow: visible; overscroll-behavior: auto; order: -1; }
+  .visuals { width: 100%; }
+  .theme-list { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .theme-variants { grid-column: 1/-1; }
+  .controls-header { padding-bottom: calc(7px * var(--ui-scale)); }
+  .comparison-grid, .comparison-grid[data-count="3"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 800px) {
+  .comparison-grid, .comparison-grid[data-count="3"] { grid-template-columns: minmax(0, 1fr); }
+  .comparison-card { padding-inline: calc(12px * var(--ui-scale)); }
+  .charts { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .stage { padding-inline: calc(16px * var(--ui-scale)); }
+  .topbar { gap: calc(7px * var(--ui-scale)); }
+  .top-actions { gap: calc(6px * var(--ui-scale)); }
+  .settings-trigger { padding-inline: calc(9px * var(--ui-scale)); }
+  .intro h1 { font-size: calc(24px * var(--font-scale)); }
+  .direction { margin-left: 0; justify-content: flex-start; }
+  .timeline-main { order: 3; flex-basis: 100%; min-width: 0; }
+  .timeline-toggle { order: 2; }
+  .player #duration-label { order: 1; }
+  .player .play-btn, .player .reset-btn { order: 0; }
+  .insight-grid { grid-template-columns: minmax(0, 1fr); gap: calc(14px * var(--ui-scale)); }
+  .insight-grid > div { padding-right: 0; }
+  .insight-grid > div + div { border-left: 0; border-top: calc(1px * var(--ui-scale)) solid #e3e8dd; padding: calc(13px * var(--ui-scale)) 0 0; }
+  .insight-head { display: block; }
+  .insight-head > span { display: block; margin-top: calc(6px * var(--ui-scale)); }
+}
+@media (max-width: 700px) {
+  .status-row .time-status, .status-row .gap-status { grid-column: span 2; }
+  .status-row .object-status, .status-row.wide-time .object-status { grid-column: span 4; }
+  .status-row .object-status:nth-child(4) { border-left: 0; border-top: calc(1px * var(--ui-scale)) solid #e3e8dd; padding-top: calc(9px * var(--ui-scale)); padding-left: 0; }
+}
+@media (max-width: 600px) {
+  .status-row .time-status, .status-row .gap-status,
+  .status-row.wide-time .time-status, .status-row.wide-time .gap-status { grid-column: span 4; }
+  .status-row .time-status, .status-row .gap-status { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 calc(12px * var(--ui-scale)); }
+  .status-row .gap-status { border-left: 0; border-top: calc(1px * var(--ui-scale)) solid #e3e8dd; padding-top: calc(6px * var(--ui-scale)); padding-left: 0; }
+  .status-row #relative-readout { flex-basis: 100%; }
+}
+@media (max-width: 480px) {
+  .top-actions { width: 100%; justify-content: flex-end; }
+  .controls { padding-inline: calc(12px * var(--ui-scale)); }
+  .theme-list { grid-template-columns: minmax(0, 1fr); }
+  .comparison-heading .chart-legend { gap: calc(4px * var(--ui-scale)) calc(13px * var(--ui-scale)); }
+  .object-readings { column-gap: calc(6px * var(--ui-scale)); }
+  .player #duration-label { margin-left: auto; }
+  .playback { padding-inline: calc(12px * var(--ui-scale)); }
+  .timeline-toggle { margin-left: auto; }
+}
+/* A landscape classroom view keeps the track and both graphs in view. */
+@media (min-width: 1280px) {
+  #single-stage:not(.wide-readings) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(calc(380px * var(--ui-scale)), 1fr);
+    column-gap: calc(14px * var(--ui-scale));
+    padding-bottom: calc(12px * var(--ui-scale));
+  }
+  #single-stage:not(.wide-readings) > .legend { grid-column: 1/-1; }
+  #single-stage:not(.wide-readings) > #track { grid-column: 1; grid-row: 2; }
+  #single-stage:not(.wide-readings) > .status-row:not(.wide-time) {
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-self: center;
+    gap: calc(8px * var(--ui-scale)) calc(10px * var(--ui-scale));
+    padding: 0 0 0 calc(12px * var(--ui-scale));
+    border-top: 0;
+    border-left: 1px solid #e3e8dd;
+  }
+  #single-stage:not(.wide-readings) > .status-row:not(.wide-time) > .time-status,
+  #single-stage:not(.wide-readings) > .status-row:not(.wide-time) > .gap-status,
+  #single-stage:not(.wide-readings) > .status-row:not(.wide-time) > .object-status { grid-column: span 1; }
+  #single-stage:not(.wide-readings) > .status-row:not(.wide-time) > .object-status { padding-top: calc(7px * var(--ui-scale)); border-top: 1px solid #e3e8dd; }
+  #single-stage:not(.wide-readings) > .status-row:not(.wide-time) > .object-status:nth-child(3) { padding-left: 0; border-left: 0; }
 }
 
-/* 文字变大后，保持方向提示和页眉完整。 */
-.direction{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 14px;max-width:100%}
-.direction span,.identity{white-space:nowrap}
-.topbar{flex-wrap:wrap;row-gap:10px}.top-actions{margin-left:auto}
-@media(max-width:400px){.status-row .time-status,.status-row .gap-status{grid-column:span 2}}
-
-/* 完整展示较长的情境名称，便于触屏和投屏阅读。 */
-.preset-desc #preset-selected,.preset-desc #preset-description{display:block}
-.preset-desc #preset-selected{color:#344c38;font-weight:700;line-height:1.5;overflow-wrap:anywhere}
-.preset-desc #preset-description{margin-top:6px;line-height:1.6}
-@media(max-width:480px){
- .scope-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
- .scope-tabs button:last-child{grid-column:1/-1}
- .player input{flex:1 1 65%}
- .insight-head{display:block}.insight-head>span{display:block;margin-top:8px}
+/* The narrow desktop sidebar keeps its frequently used choices together. */
+@media (min-width: 1001px) {
+  .controls-header { padding-bottom: calc(4px * var(--ui-scale)); }
+  .controls-header + .control-section { padding-top: calc(6px * var(--ui-scale)); }
+  body[data-motion-mode="typical"] .controls-header + .control-section { padding-bottom: 0; }
+  .controls-header + .control-section > .section-label { position: absolute; top: calc(19px * var(--ui-scale)); right: calc(16px * var(--ui-scale)); margin: 0; }
+  .controls .playback { margin-top: calc(6px * var(--ui-scale)); margin-bottom: calc(6px * var(--ui-scale)); }
+  .controls .player { row-gap: calc(3px * var(--ui-scale)); padding-top: calc(6px * var(--ui-scale)); padding-bottom: calc(3px * var(--ui-scale)); }
+  .controls .timeline-events { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(4px * var(--ui-scale)); align-items: stretch; }
+  .controls .player .timeline-event { width: 100%; height: 100%; padding: calc(4px * var(--ui-scale)); text-align: center; overflow-wrap: anywhere; }
+  #comparison-note, #demo-note { margin-top: calc(2px * var(--ui-scale)); margin-bottom: calc(6px * var(--ui-scale)); line-height: 1.35; }
+  .demo-section { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(4px * var(--ui-scale)); margin-top: calc(8px * var(--ui-scale)); padding-top: calc(7px * var(--ui-scale)); }
+  .demo-section > .theme-heading, .demo-section > .section-label { grid-column: 1/-1; margin-bottom: 0; }
+  .demo-section .demo-button { height: 100%; padding: calc(6px * var(--ui-scale)) calc(4px * var(--ui-scale)); line-height: 1.3; text-align: center; }
+  .demo-section .demo-button + .demo-button { margin-top: 0; }
+  .demo-section .demo-button:before { display: none; }
+  .theme-group { margin-top: calc(8px * var(--ui-scale)); }
+  .theme-heading { margin-bottom: calc(3px * var(--ui-scale)); }
+  .theme-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(4px * var(--ui-scale)); align-items: start; }
+  .theme-button { padding: calc(4px * var(--ui-scale)) calc(5px * var(--ui-scale)); line-height: 1.3; }
+  .theme-variants { gap: calc(4px * var(--ui-scale)); padding-top: calc(4px * var(--ui-scale)); padding-bottom: 0; }
 }
-.panel-bottom p{font-weight:600;color:#526250}
 
-/* 课堂屏幕：减少纵向留白，让演示和下面的图表同时露出更多。 */
-.wrap{max-width:none;width:100%;padding-inline:clamp(12px,1.4vw,24px)}
-.intro{padding:12px 0 14px}
-.stage{padding:14px 20px 0}
-#track{height:calc(160px + 48px * var(--font-scale))}
-.status-row{padding:9px 0;gap:6px 12px}
-.status-row .object-readings{gap:2px 10px;margin-top:4px}
-.player{padding:9px 0}
-.charts{margin-top:10px;gap:10px}
-.chart{padding:13px 16px 8px}
-.chart-legend{margin-top:5px}
-.controls{padding:14px 16px}
-.controls-header{padding-bottom:10px}
-.control-section{padding:11px 0}
-.section-label{margin-bottom:7px}
-.select-label{margin:7px 0 4px}
-select{min-height:max(44px,calc(28px * var(--font-scale)))}
-.preset-desc,.general-note{padding:6px 9px;margin-top:8px;line-height:1.4}
-.preset-desc #preset-selected,.preset-desc #preset-description{line-height:1.4}
-.preset-desc #preset-description{margin-top:3px}
-.hint{margin:6px 0;line-height:1.4}
-.param-group{margin-top:9px}
-.param-title{margin-bottom:5px}
-.param-row{margin:6px 0}
-.param-row input[type=range]{margin-top:2px}
-.model-note{margin-top:9px;padding:7px 9px;line-height:1.4}
-.panel-bottom{padding-top:9px}
-@media(min-width:1001px){.layout{grid-template-columns:minmax(0,1fr) clamp(350px,26vw,500px);gap:12px}}
-@media(max-width:760px){.stage{padding-inline:16px}.charts{gap:10px}}
+/* Wide classroom windows devote their remaining height to the diagrams.
+   Four comparisons pair motion and readings with a larger adjacent v–t plot. */
+@media (min-width: 1280px) {
+  .layout { --workspace-height: calc((100vh - var(--controls-origin, 110px) - calc(24px * var(--ui-scale))) * var(--workspace-fill)); }
+  .comparison-view { display: grid; grid-template-rows: auto minmax(0, 1fr); height: var(--workspace-height); }
+  #comparison-cards { min-height: 0; }
+  .comparison-grid { height: 100%; min-height: 0; }
+  .comparison-grid[data-count="4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); }
+  .comparison-grid[data-count="4"] .comparison-card {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr);
+    grid-template-rows: auto auto minmax(var(--comparison-track-height), 1fr) auto auto;
+    column-gap: calc(12px * var(--ui-scale));
+    min-height: calc(260px * var(--ui-scale));
+  }
+  .comparison-grid[data-count="4"] .comparison-card-head { grid-column: 1; grid-row: 1; }
+  .comparison-grid[data-count="4"] .comparison-condition { grid-column: 1; grid-row: 2; margin: calc(2px * var(--ui-scale)) 0 0; max-width: none; text-align: left; }
+  .comparison-grid[data-count="4"] .comparison-track { grid-column: 1; grid-row: 3; align-self: center; }
+  .comparison-grid[data-count="4"] .comparison-readings { grid-column: 1; grid-row: 4; gap: calc(3px * var(--ui-scale)) calc(7px * var(--ui-scale)); padding-right: 0; }
+  .comparison-grid[data-count="4"] .comparison-speeds { grid-column: 1; grid-row: 5; grid-template-columns: repeat(2, minmax(0, 1fr)); justify-content: start; gap: calc(4px * var(--ui-scale)) calc(7px * var(--ui-scale)); margin-top: calc(2px * var(--ui-scale)); }
+  .comparison-grid[data-count="4"] .comparison-chart { grid-column: 2; grid-row: 1 / 6; align-self: stretch; justify-self: stretch; width: 100%; max-width: none; height: 100%; min-height: 0; border-top: 0; border-left: 1px solid #e8ebdf; }
 
-/* 时间轴标记与关键时刻：文字按钮也可直接跳转。 */
-/* 固定进度读数宽度，拖到精确事件时滑条不会伸缩。 */
-.player #duration-label{flex:0 0 8.5em;min-width:8.5em;text-align:right;font-variant-numeric:tabular-nums}
-.player .play-btn{flex:0 0 5em}
-.timeline-main{flex:1 1 260px;min-width:0}
-.timeline-wrap{height:34px;display:flex;align-items:center;position:relative}
-.player #timeline{display:block;width:100%;min-width:0;margin:0;flex:1;cursor:pointer}
-.player #timeline{-webkit-appearance:none;appearance:none;background:transparent;height:24px}
-.player #timeline::-webkit-slider-runnable-track{height:6px;border:1px solid #b7bdb3;border-radius:4px;background:#e4e7df}
-.player #timeline::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;margin-top:-8px;border:0;border-radius:50%;background:#70866c}
-.player #timeline::-moz-range-track{height:6px;border:1px solid #b7bdb3;border-radius:4px;background:#e4e7df;box-sizing:border-box}
-.player #timeline::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:#70866c}
-#timeline-marks{position:absolute;inset:0;pointer-events:none}
-.timeline-mark{position:absolute;top:1px;width:3px;height:13px;background:#b36d36;border-radius:2px;transform:translateX(-50%)}
-.timeline-mark:before{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#b36d36;left:50%;top:-1px;transform:translateX(-50%)}
-.timeline-events{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin:0 0 2px}
-.player .timeline-event{min-height:36px;padding:3px 8px;border:1px solid #e0d3c1;border-radius:4px;background:#faf5ec;color:#76502f;font-size:calc(10px * var(--font-scale));line-height:1.25}
-.player .timeline-event:hover,.player .timeline-event:focus-visible{background:#f0e3d2}
-.timeline-toggle{display:flex;align-items:center;gap:5px;min-height:44px;white-space:nowrap;cursor:pointer;color:#465744;font-size:calc(10px * var(--font-scale))}
-.player .timeline-toggle input{flex:none;min-width:0;width:20px;height:20px;margin:0;accent-color:#70866c}
-@media(max-width:760px){.timeline-main{flex-basis:100%;order:3}.timeline-toggle{order:2}.player #duration-label{order:1}.player .play-btn,.player .reset-btn{order:0}}
-/* 恢复当前情境参数，与播放区的时间重置区分。 */
-.section-label .params-reset{margin-left:auto;padding:5px 10px;border:1px solid #d8ddd1;border-radius:3px;background:transparent;color:#536551;font-size:calc(11px * var(--font-scale));white-space:nowrap}
-.section-label .params-reset:hover{background:#e9eee5}
+  .comparison-grid[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); }
+  .comparison-grid[data-count="3"] .comparison-card { grid-template-rows: auto auto var(--comparison-track-height) auto minmax(calc(180px * var(--ui-scale)), 1fr) auto; }
+  .comparison-grid[data-count="3"] .comparison-card-head { grid-column: 1/-1; grid-row: 1; }
+  .comparison-grid[data-count="3"] .comparison-condition { grid-column: 1/-1; grid-row: 2; margin: calc(2px * var(--ui-scale)) 0 0; max-width: none; text-align: left; }
+  .comparison-grid[data-count="3"] .comparison-track { grid-column: 1/-1; grid-row: 3; }
+  .comparison-grid[data-count="3"] .comparison-readings { grid-column: 1/-1; grid-row: 4; padding-right: 0; }
+  .comparison-grid[data-count="3"] .comparison-chart { grid-column: 1/-1; grid-row: 5; height: 100%; min-height: 0; width: 100%; max-width: none; align-self: stretch; }
+  .comparison-grid[data-count="3"] .comparison-speeds { grid-column: 1/-1; grid-row: 6; grid-template-columns: repeat(2, minmax(0, 1fr)); justify-content: start; margin-top: calc(2px * var(--ui-scale)); }
+  #single-view { --chart-height: max(calc(175px * var(--ui-scale)), calc(var(--workspace-height) - calc(401px * var(--ui-scale)))); }
+  #single-stage.wide-readings + .charts { --chart-height: clamp(calc(190px * var(--ui-scale)), calc(30vh * var(--ui-scale)), calc(232px * var(--ui-scale))); }
+}
 
-/* 四个入口在大字号下保持清晰、易于点击。 */
-.scope-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
-@media(max-width:480px){.scope-tabs button:last-child{grid-column:auto}}
-@media(min-width:1700px){.scope-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}}
-
-/* 常用主题直达，更多情境沿同一条运动方式路径选择。 */
-.scope-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
-@media(min-width:1700px){.scope-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.theme-group{margin-top:12px}.theme-heading{font-size:calc(11px * var(--font-scale));font-weight:700;color:#536551;margin-bottom:5px}
-.theme-list{display:grid;gap:4px}.theme-button{display:block;width:100%;text-align:left;border:1px solid #dfe5d9;border-radius:3px;background:#fbfcf8;color:#405143;padding:5px 10px;font-size:calc(11px * var(--font-scale));font-weight:600;min-height:44px}
-.theme-button.selected{background:#e3ecdf;border-color:#aabb9f;color:#334d38}.theme-button:hover,.variant-button:hover{background:#e9efe5}
-.theme-variants{display:flex;flex-wrap:wrap;gap:5px;padding:5px 0 3px}.theme-variants[hidden]{display:none}
-.variant-button{border:1px solid #d9e2d6;border-radius:3px;background:#f8faf5;color:#455b48;padding:5px 8px;font-size:calc(10px * var(--font-scale));font-weight:600;min-height:44px}
-.variant-button.selected{background:#dce9d9;border-color:#8fa88b;color:#324d38}.theme-example{font-size:calc(10px * var(--font-scale));color:#536551;font-weight:600;padding:2px 4px}
-.more-scope{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin-top:12px}.more-scope button{min-height:44px;border:1px solid #dfe5d9;border-radius:3px;background:#f7f8f3;color:#536551;font-size:calc(11px * var(--font-scale));font-weight:600}.more-scope button.selected{background:#dfe9dc;border-color:#aabb9f;color:#3d5c42}
-.result-filter{margin:9px 0;color:#536551}.result-filter summary{cursor:pointer;font-size:calc(10px * var(--font-scale));font-weight:600;min-height:36px;display:flex;align-items:center;gap:5px}.result-filter summary:before{content:'▸';font-size:.8em}.result-filter[open] summary:before{content:'▾'}
-.preset-examples{display:flex;flex-wrap:wrap;gap:5px}.preset-example{min-height:44px;max-width:100%;padding:5px 9px;text-align:left;border:1px solid #d9e2d6;border-radius:3px;background:#f8faf5;color:#455b48;font-size:calc(10px * var(--font-scale));font-weight:600;line-height:1.35;overflow-wrap:anywhere}.preset-example.selected{background:#dce9d9;border-color:#8fa88b;color:#324d38}.preset-example:hover{background:#e9efe5}
+@media (prefers-reduced-motion: reduce) {
+  button, .switch:after { transition: none; }
+}
 
 </style></head>
-<body><div class="wrap"><header class="topbar"><div class="identity"><span class="orb"></span><span>高一物理组</span></div><div class="top-actions"><button class="settings-trigger" id="map-open">分类图谱</button><button class="settings-trigger" id="settings-open" aria-label="打开设置">⚙ <span>设置</span></button></div></header>
-<section class="intro"><div><h1>追及与相遇</h1></div></section>
-<main class="layout"><div class="visuals"><section class="panel stage"><div class="legend"><span><i class="dot purple"></i>A 物体</span><span><i class="dot green"></i>B 物体</span><span class="direction"><span>箭头长度 ∝ 速度大小</span><span>向右为正 →</span></span></div><canvas id="track" aria-label="两物体车头位置与间距演示"></canvas><div class="status-row">
-<div class="time-status"><small>经过时间</small><strong id="time-readout">0.0 <em>s</em></strong></div>
-<div class="gap-status"><small>两车头间距</small><strong id="distance-readout">0.0 <em>m</em></strong><small id="relative-readout">位置差 xB − xA = 0.0 m</small></div>
-<div class="object-status"><small><i class="dot purple"></i>A 物体</small><div class="object-readings"><div><span>位置 x<sub>A</sub> =</span><strong><span id="a-position">0.0</span> <em>m</em></strong></div><div><span>位移 Δx<sub>A</sub> =</span><strong><span id="a-displacement">0.0</span> <em>m</em></strong></div><div><span>速度 v<sub>A</sub> =</span><strong><span id="a-velocity">0.0</span> <em>m/s</em></strong></div></div></div>
-<div class="object-status"><small><i class="dot green"></i>B 物体</small><div class="object-readings"><div><span>位置 x<sub>B</sub> =</span><strong><span id="b-position">0.0</span> <em>m</em></strong></div><div><span>位移 Δx<sub>B</sub> =</span><strong><span id="b-displacement">0.0</span> <em>m</em></strong></div><div><span>速度 v<sub>B</sub> =</span><strong><span id="b-velocity">0.0</span> <em>m/s</em></strong></div></div></div>
-</div><div class="player"><button class="play-btn" id="play">▶ &nbsp;播放</button><button class="reset-btn" id="reset">↺ &nbsp;重置</button><div class="timeline-main"><div class="timeline-wrap"><input id="timeline" aria-label="演示进度" type="range" min="0" max="20" step="any" value="0"><div id="timeline-marks" aria-hidden="true"></div></div><div id="timeline-events" class="timeline-events" aria-label="关键时刻"></div></div><span id="duration-label">0 / 20 s</span><label class="timeline-toggle"><input id="timeline-enabled" type="checkbox" checked><span>关键时刻吸附</span></label></div></section>
-<div class="charts"><section class="panel chart"><div class="chart-heading"><div><h3>位置—时间图</h3></div></div><div class="chart-legend" aria-label="曲线图例"><span class="legend-a">A 物体 · 实线</span><span class="legend-b">B 物体 · 虚线</span></div><canvas id="position-chart" aria-label="位置时间图"></canvas></section><section class="panel chart"><div class="chart-heading"><div><h3>速度—时间图</h3></div></div><div class="chart-legend" aria-label="曲线图例"><span class="legend-a">A 物体 · 实线</span><span class="legend-b">B 物体 · 虚线</span></div><canvas id="velocity-chart" aria-label="速度时间图"></canvas></section></div>
-<section class="panel insight"><div class="insight-head"><div><span class="section-no">04 / 观察与思考</span><h2>这个过程里，发生了什么？</h2></div><span>在当前展示时间内</span></div><div class="insight-grid"><div><small>相遇时刻</small><strong id="meeting-result">—</strong><p id="meeting-detail">调整参数，观察两者的位置。</p></div><div><small>速度相等时刻</small><strong id="equal-result">—</strong><p id="equal-detail">速度相等时，两者不一定相遇。</p></div><div><small>运动规律</small><strong id="rule-title">直线运动</strong><p id="rule-detail">位置由初始位置、速度和加速度共同决定。</p></div></div></section></div>
-<aside class="panel controls"><div class="controls-header"><div><h2>设置</h2></div><span class="control-icon">↗</span></div><div class="control-section"><div class="section-label"><span>01</span><strong>选择情境</strong></div><div class="scope-tabs" role="group" aria-label="情境入口"><button type="button" data-mode="typical" class="selected">常用预设</button><button type="button" data-mode="more">更多情境</button><button type="button" data-mode="general">自由设置</button></div>
-<div id="typical-selection"><div class="theme-group"><div class="theme-heading">同向追及</div><div class="theme-list"><div class="theme-item"><button type="button" class="theme-button" data-theme="accelerate">加速追匀速</button><div class="theme-variants" data-variants="accelerate" hidden></div></div><div class="theme-item"><button type="button" class="theme-button" data-theme="decelerate">减速追匀速</button><div class="theme-variants" data-variants="decelerate" hidden></div></div></div></div><div class="theme-group"><div class="theme-heading">相向相遇</div><div class="theme-list"><div class="theme-item"><button type="button" class="theme-button" data-theme="opposite-uniform">两车匀速相向</button></div><div class="theme-item"><button type="button" class="theme-button" data-theme="opposite-mixed">一车匀速、一车减速</button><div class="theme-variants" data-variants="opposite-mixed" hidden></div></div><div class="theme-item"><button type="button" class="theme-button" data-theme="opposite-slow">两车减速相向</button><div class="theme-variants" data-variants="opposite-slow" hidden></div></div></div></div></div>
+<body><div class="wrap"><header class="topbar"><div class="identity"><span class="orb"></span><span>高一物理组</span></div><div class="top-actions"><button class="settings-trigger" id="map-open">分类图谱</button><div class="display-settings"><div class="display-size-switch" role="radiogroup" aria-label="显示大小" title="图像、文字和间距一起调整"><label><input type="radio" name="font-size" value="small"><span>小</span></label><label><input type="radio" name="font-size" value="medium" checked><span>中</span></label><label><input type="radio" name="font-size" value="large"><span>大</span></label></div><button class="settings-trigger" id="settings-open" aria-label="打开设置">⚙ <span>设置</span></button></div></div></header>
+
+<section class="intro"><div><h1>追及与相遇</h1></div>
+</section>
+
+<main class="layout"><div class="visuals">
+
+<section id="comparison-view" class="comparison-view" hidden aria-labelledby="comparison-title">
+  <div class="comparison-heading">
+    <h2 id="comparison-title">初速度小追初速度大的</h2>
+    <p id="comparison-summary"><span>A 在后、B 在前</span> · <span>初速度 7 / 9 m/s</span> · <span>初始间距 3.75 m</span></p>
+    <div class="chart-legend" aria-label="四图共用图例"><span class="legend-a">A · 实线</span><span class="legend-b">B · 虚线</span><span id="comparison-scale-note">四组同刻度 · 向右为正 →</span></div>
+  </div>
+  <div id="comparison-cards"></div>
+
+</section>
+<div id="single-view">
+
+<section id="single-stage" class="panel stage"><div class="legend"><span><i class="dot purple"></i>A 物体</span><span><i class="dot green"></i>B 物体</span><span class="direction"><span>箭头长度 ∝ 速度大小</span><span>向右为正 →</span></span></div><canvas id="track" aria-label="两物体车头位置与间距演示"></canvas><div class="status-row">
+<div class="time-status"><small>经过时间</small><strong id="time-readout" class="numeric-reading"><span id="time-value" class="reading-number">0.0</span><em class="reading-unit">s</em></strong></div>
+<div class="gap-status"><small>两车头间距</small><strong id="distance-readout" class="numeric-reading"><span id="distance-value" class="reading-number">0.0</span><em class="reading-unit">m</em></strong><small id="relative-readout" class="numeric-reading labeled-reading"><span>位置差 x<sub>B</sub> − x<sub>A</sub> =</span><span id="relative-value" class="reading-number">0.0</span><em class="reading-unit">m</em></small></div>
+<div class="object-status"><small><i class="dot purple"></i>A 物体</small><div class="object-readings"><div><span>位置 x<sub>A</sub> =</span><strong class="numeric-reading"><span id="a-position" class="reading-number">0.0</span><em class="reading-unit">m</em></strong></div><div><span>位移 Δx<sub>A</sub> =</span><strong class="numeric-reading"><span id="a-displacement" class="reading-number">0.0</span><em class="reading-unit">m</em></strong></div><div><span>速度 v<sub>A</sub> =</span><strong class="numeric-reading"><span id="a-velocity" class="reading-number">0.0</span><em class="reading-unit">m/s</em></strong></div></div></div>
+<div class="object-status"><small><i class="dot green"></i>B 物体</small><div class="object-readings"><div><span>位置 x<sub>B</sub> =</span><strong class="numeric-reading"><span id="b-position" class="reading-number">0.0</span><em class="reading-unit">m</em></strong></div><div><span>位移 Δx<sub>B</sub> =</span><strong class="numeric-reading"><span id="b-displacement" class="reading-number">0.0</span><em class="reading-unit">m</em></strong></div><div><span>速度 v<sub>B</sub> =</span><strong class="numeric-reading"><span id="b-velocity" class="reading-number">0.0</span><em class="reading-unit">m/s</em></strong></div></div></div>
+</div>
+</section>
+
+
+<div class="charts">
+<section class="panel chart"><div class="chart-heading"><div><h3>位置—时间图</h3></div></div><div class="chart-legend" aria-label="曲线图例"><span class="legend-a">A 物体 · 实线</span><span class="legend-b">B 物体 · 虚线</span></div><canvas id="position-chart" aria-label="位置时间图"></canvas>
+</section>
+<section class="panel chart"><div class="chart-heading"><div><h3>速度—时间图</h3></div></div><div class="chart-legend" aria-label="曲线图例"><span class="legend-a">A 物体 · 实线</span><span class="legend-b">B 物体 · 虚线</span></div><canvas id="velocity-chart" aria-label="速度时间图"></canvas>
+</section></div>
+
+<section class="panel insight"><div class="insight-head"><div><h2>这个过程里，发生了什么？</h2></div><span>在当前展示时间内</span></div><div class="insight-grid"><div><small>相遇时刻</small><strong id="meeting-result">—</strong><p id="meeting-detail">调整参数，观察两者的位置。</p></div><div><small>速度相等时刻</small><strong id="equal-result">—</strong><p id="equal-detail">速度相等时，两者不一定相遇。</p></div><div><small>运动规律</small><strong id="rule-title">直线运动</strong><p id="rule-detail">位置由初始位置、速度和加速度共同决定。</p></div></div>
+</section></div></div>
+
+<aside class="panel controls"><div class="controls-header"><div><h2>设置</h2></div></div><div class="control-section"><div class="section-label"><strong>选择情境</strong></div><div class="scope-tabs" role="group" aria-label="情境入口"><button type="button" data-mode="typical" class="selected">典例</button><button type="button" data-mode="more">更多情境</button><button type="button" data-mode="general">自由设置</button></div>
+<section id="playback" class="panel playback" aria-label="播放控制"><div class="player"><button class="play-btn" id="play">▶ &nbsp;播放</button><button class="reset-btn" id="reset">↺ &nbsp;重置</button><div class="timeline-main"><div class="timeline-wrap"><input id="timeline" aria-label="演示进度" type="range" min="0" max="5" step="any" value="0"><div id="timeline-marks" aria-hidden="true"></div></div><div id="timeline-events" class="timeline-events" aria-label="关键时刻"></div></div><span id="duration-label">0.0 / 5 s</span><label class="timeline-toggle"><input id="timeline-enabled" type="checkbox" checked><span>关键时刻吸附</span></label></div>
+</section>
+<p id="comparison-note" class="comparison-note" hidden></p>
+<div id="typical-selection">
+<div class="demo-section"><div class="theme-heading">对比演示</div><button type="button" class="demo-button" data-demo="slow-start" aria-pressed="false"><span class="demo-symbol" aria-hidden="true"></span><span>初速度小追初速度大的</span></button>
+<button type="button" class="demo-button" data-demo="braking-pursuit" aria-pressed="false"><span class="demo-symbol" aria-hidden="true"></span><span>减速追匀速的三种结果</span></button>
+<button type="button" class="demo-button" data-demo="braking-meeting" aria-pressed="false"><span class="demo-symbol" aria-hidden="true"></span><span>相向减速的临界情况</span></button></div>
+<div class="theme-group"><div class="theme-heading">同向追及</div><div class="theme-list"><div class="theme-item"><button type="button" class="theme-button" data-theme="accelerate">加速追匀速</button><div class="theme-variants" data-variants="accelerate" hidden></div></div><div class="theme-item"><button type="button" class="theme-button" data-theme="decelerate">减速追匀速</button><div class="theme-variants" data-variants="decelerate" hidden></div></div></div></div><div class="theme-group"><div class="theme-heading">相向相遇</div><div class="theme-list"><div class="theme-item"><button type="button" class="theme-button" data-theme="opposite-uniform">两车匀速相向</button></div><div class="theme-item"><button type="button" class="theme-button" data-theme="opposite-mixed">一车匀速、一车减速</button><div class="theme-variants" data-variants="opposite-mixed" hidden></div></div><div class="theme-item"><button type="button" class="theme-button" data-theme="opposite-slow">两车减速相向</button><div class="theme-variants" data-variants="opposite-slow" hidden></div></div></div></div></div>
 <div id="classification" hidden><div class="more-scope" role="group" aria-label="运动方向"><button type="button" data-scope="pursuit">同向追及</button><button type="button" data-scope="meeting">相向相遇</button></div><label class="select-label" for="category">两车的运动方式</label><select id="category"></select><details class="result-filter"><summary>按相遇结果筛选</summary><label class="select-label" for="result-filter">相遇结果</label><select id="result-filter"></select></details><div class="select-label">选择具体例子</div><select id="preset" hidden tabindex="-1" aria-hidden="true"></select><div id="preset-examples" class="preset-examples" role="group" aria-label="选择具体例子"></div><div class="preset-desc"><strong id="preset-selected" hidden></strong><span id="preset-description"></span></div></div><div id="general-note" class="general-note" hidden><strong>自由探索</strong><p>独立调整两物体车头的初始位置、速度和加速度。向右为正，负数表示向左。</p></div></div>
-<div class="control-section"><div class="section-label"><span>02</span><strong>调整参数</strong><button type="button" id="params-reset" class="params-reset" aria-label="恢复当前情境的默认参数">↺ 重置</button></div><div id="params"></div><p class="model-note" id="model-note"></p></div></aside></main></div>
-<dialog id="settings-dialog"><form method="dialog"><div class="dialog-head"><div><span class="section-no">PREFERENCES</span><h2>设置</h2></div><button class="dialog-close" aria-label="关闭">×</button></div><p>调整显示选项。</p><label class="setting-row"><span><strong>显示「匀速追匀速」</strong><small>在同向追及的分类中显示这一基础情境</small></span><input id="show-uniform" type="checkbox"><span class="switch" aria-hidden="true"></span></label><fieldset class="font-setting"><legend>字体大小</legend><div class="font-choices" role="radiogroup" aria-label="字体大小"><label><input type="radio" name="font-size" value="small" checked><span>小</span></label><label><input type="radio" name="font-size" value="medium"><span>中</span></label><label><input type="radio" name="font-size" value="large"><span>大</span></label></div></fieldset></form></dialog>
+<div id="parameter-section" class="control-section"><div class="section-label"><strong>调整参数</strong><button type="button" id="params-reset" class="params-reset" aria-label="恢复当前情境的默认参数">↺ 重置</button></div><div id="params"></div><p class="model-note" id="model-note"></p></div>
+</aside>
+</main></div>
+
+<dialog id="settings-dialog" aria-labelledby="settings-title"><form method="dialog"><div class="dialog-head"><div><h2 id="settings-title">设置</h2></div><button class="dialog-close" aria-label="关闭">×</button></div><label class="setting-row"><span><strong>显示「匀速追匀速」</strong><small>在同向追及的分类中显示这一基础情境</small></span><input id="show-uniform" type="checkbox"><span class="switch" aria-hidden="true"></span></label></form>
+</dialog>
+
 <script>
-/* Font selection is kept on this device, with a safe default if storage is unavailable. */
+/* The display preset scales text, drawings and spacing together. */
 (() => {
   'use strict';
-  const options = {small: 1.5, medium: 1.7, large: 1.9};
-  let size = 'small';
+  const options = {small: 1.1, medium: 1.3, large: 1.5};
+  const storageKey = 'motion-display-size';
+  let size = 'medium';
   try {
-    const saved = localStorage.getItem('motion-font-size');
+    const saved = localStorage.getItem(storageKey);
     if (Object.hasOwn(options, saved)) size = saved;
   } catch (_) {}
   window.motionFontScale = () => options[size];
+  window.motionUIScale = () => options[size] / 1.5;
   function apply(next, save) {
-    size = Object.hasOwn(options, next) ? next : 'small';
+    size = Object.hasOwn(options, next) ? next : 'medium';
     document.documentElement.dataset.fontSize = size;
     const choice = document.querySelector(`input[name="font-size"][value="${size}"]`);
     if (choice) choice.checked = true;
     if (save) {
-      try { localStorage.setItem('motion-font-size', size); } catch (_) {}
+      try { localStorage.setItem(storageKey, size); } catch (_) {}
       window.dispatchEvent(new Event('resize'));
     }
   }
@@ -291,7 +583,8 @@ select{min-height:max(44px,calc(28px * var(--font-scale)))}
   });
 })();
 
-</script><script>
+</script>
+<script>
 /* One-dimensional motion. Positive values point to the right. */
 (function (root) {
   'use strict';
@@ -339,8 +632,11 @@ select{min-height:max(44px,calc(28px * var(--font-scale)))}
     }
     let discriminant = b * b - 4 * a * c;
     const scale = Math.max(1, b * b, Math.abs(4 * a * c));
-    if (discriminant < -EPS * scale) return [];
-    if (Math.abs(discriminant) <= EPS * scale) discriminant = 0;
+    // Only absorb floating-point round-off. A broad geometric epsilon can
+    // erase two distinct, closely spaced encounters in free exploration.
+    const roundoff = 64 * Number.EPSILON * scale;
+    if (discriminant < -roundoff) return [];
+    if (Math.abs(discriminant) <= roundoff) discriminant = 0;
     const sqrt = Math.sqrt(discriminant);
     if (sqrt === 0) return [-b / (2 * a)];
     // This form avoids cancellation for one root; the other follows from their product.
@@ -432,7 +728,8 @@ select{min-height:max(44px,calc(28px * var(--font-scale)))}
   root.Physics = { position, velocity, events, bounds };
 })(typeof window !== 'undefined' ? window : globalThis);
 
-</script><script>
+</script>
+<script>
 /* 同一组物理情境可从多种分类入口访问。无外部依赖，可离线使用。 */
 (function () {
   'use strict';
@@ -761,22 +1058,617 @@ select{min-height:max(44px,calc(28px * var(--font-scale)))}
   };
 })();
 
-</script><script>
+</script>
+<script>
+/* Shared, physically scaled canvas drawing for single and comparison scenes. */
+(() => {
+  'use strict';
+  const P = window.Physics;
+  const A_COLOR = '#477fa8', B_COLOR = '#795bb1';
+  const PAPER = '#fbfaf5', INK = '#4d5c50';
+  const modelCache = new Map();
+  const fontScale = () => typeof window.motionFontScale === 'function' ? window.motionFontScale() : 1;
+  const uiScale = () => Math.max(.1, typeof window.motionUIScale === 'function' ? window.motionUIScale() : fontScale() / 1.5);
+
+  function context(canvas) {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 1 || rect.height < 1) return null;
+    const ratio = window.devicePixelRatio || 1;
+    const w = rect.width, h = rect.height;
+    const width = Math.round(w * ratio), height = Math.round(h * ratio);
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    return {ctx, w, h};
+  }
+
+  function model(scene) {
+    const key = JSON.stringify([scene.A, scene.B, scene.duration]);
+    let cached = modelCache.get(key);
+    if (!cached) {
+      const times = [0, scene.duration];
+      for (const obj of [scene.A, scene.B]) {
+        const turn = obj.a ? -obj.v / obj.a : Infinity;
+        if (turn > 0 && turn < scene.duration) times.push(turn);
+      }
+      cached = {
+        bounds: scene.bounds || P.bounds(scene.A, scene.B, scene.duration),
+        events: scene.events || P.events(scene.A, scene.B, scene.duration),
+        maxSpeed: Math.max(...[scene.A, scene.B].flatMap(obj => [
+          Math.abs(P.velocity(obj, 0)), Math.abs(P.velocity(obj, scene.duration))
+        ])),
+        // Exact breakpoints keep the vertex of a stopping v–t graph sharp.
+        velocityTimes: [...new Set(times)].sort((a, b) => a - b),
+        positionTimes: [...new Set(times.concat(Array.from({length: 161}, (_, i) => scene.duration * i / 160)))].sort((a, b) => a - b)
+      };
+      if (modelCache.size >= 64) modelCache.delete(modelCache.keys().next().value);
+      modelCache.set(key, cached);
+    }
+    return cached;
+  }
+
+  function niceAxis(low, high, target = 4) {
+    if (!Number.isFinite(low) || !Number.isFinite(high)) { low = -1; high = 1; }
+    if (low > high) [low, high] = [high, low];
+    if (low === high) {
+      const padding = Math.max(1, Math.abs(low) * .1);
+      low -= padding; high += padding;
+    }
+    const rough = (high - low) / Math.max(1, target);
+    const power = 10 ** Math.floor(Math.log10(rough));
+    const fraction = rough / power;
+    const unit = fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 5 ? 5 : 10;
+    const step = unit * power, eps = step * 1e-10;
+    let start = Math.floor((low + eps) / step) * step;
+    let end = Math.ceil((high - eps) / step) * step;
+    if (start > low + eps) start -= step;
+    if (end < high - eps) end += step;
+    const clean = value => Math.abs(value) < eps ? 0 : Number(value.toPrecision(14));
+    start = clean(start); end = clean(end);
+    const count = Math.round((end - start) / step), ticks = [];
+    for (let i = 0; i <= count && i <= 30; i++) ticks.push(clean(start + i * step));
+    return {min: start, max: end, step, ticks};
+  }
+
+  function axisLabel(value, step) {
+    const digits = Math.max(0, Math.min(15, -Math.floor(Math.log10(step) + 1e-10)));
+    if (Math.abs(value) < step * 1e-9) value = 0;
+    return value.toLocaleString('en-US', {maximumFractionDigits: digits});
+  }
+
+  function block(c, front, top, width, height, label, color, direction, velocity, maxSpeed, canvasWidth, compact, arrowY = top - 8, textScale = fontScale()) {
+    const left = direction > 0 ? front - width : front;
+    const right = left + width, bottom = top + height;
+    c.save();
+    c.fillStyle = '#faf9f4';
+    c.fillRect(left, top, width, height);
+    c.save(); c.beginPath(); c.rect(left, top, width, height); c.clip();
+    c.globalAlpha = .34; c.strokeStyle = color; c.lineWidth = .8;
+    for (let i = -height; i < width + height; i += 8) {
+      c.beginPath(); c.moveTo(left + i, bottom + 1);
+      c.lineTo(left + i + height + 1, top - 1); c.stroke();
+    }
+    c.restore();
+    c.strokeStyle = color; c.lineWidth = 1.8; c.lineJoin = 'round';
+    c.beginPath(); c.moveTo(left + .4, top + .3); c.lineTo(right - .4, top);
+    c.lineTo(right, bottom - .3); c.lineTo(left, bottom); c.closePath(); c.stroke();
+    c.globalAlpha = .34; c.lineWidth = .65;
+    c.beginPath(); c.moveTo(left - 1, top + 1.4); c.lineTo(right + .5, top + .7);
+    c.lineTo(right + 1, bottom + .6); c.lineTo(left - .7, bottom - .4); c.closePath(); c.stroke();
+    c.globalAlpha = 1;
+    // The reference edge stays on the same material point after a reversal.
+    c.lineWidth = compact ? 3.5 : 5;
+    c.beginPath(); c.moveTo(front, top + 1); c.lineTo(front, bottom - 1); c.stroke();
+    c.fillStyle = color;
+    c.font = `600 ${Math.min(17 * textScale, height * .62)}px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif`;
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(label, (left + right) / 2, top + height / 2 + 1);
+    const arrowLimit = compact ? 34.8 : Math.min(54, width * .6);
+    const length = maxSpeed > 0 ? Math.abs(velocity) / maxSpeed * Math.min(arrowLimit, Math.max(0, canvasWidth - 8)) : 0;
+    if (length > 0) {
+      const sign = Math.sign(velocity), center = (left + right) / 2, y = arrowY;
+      // Translate, never shorten, an arrow close to the canvas edge.
+      const start = sign > 0
+        ? Math.max(4, Math.min(center, canvasWidth - 4 - length))
+        : Math.max(4 + length, Math.min(center, canvasWidth - 4));
+      const tip = start + sign * length, head = Math.min(6, length * .35), halfHead = head * .65;
+      c.lineWidth = Math.min(1.8, Math.max(.15, length / 2));
+      c.beginPath(); c.moveTo(start, y); c.lineTo(tip, y);
+      c.moveTo(tip - sign * head, y - halfHead); c.lineTo(tip, y);
+      c.lineTo(tip - sign * head, y + halfHead); c.stroke();
+    }
+    c.restore();
+  }
+
+  function track(canvas, scene, options = {}) {
+    const surface = context(canvas);
+    if (!surface) return;
+    const c = surface.ctx, ui = uiScale(), compact = options.compact === true;
+    const w = surface.w / ui, h = surface.h / ui, scale = fontScale() / ui;
+    // Draw the whole track in one logical coordinate system. Fonts are
+    // divided by the same factor so this transform scales them only once.
+    c.save(); c.scale(ui, ui);
+    const data = model(scene), bounds = options.bounds || scene.bounds || data.bounds;
+    const range = Math.max(15, bounds.max - bounds.min), pad = range * .11;
+    const min = bounds.min - pad, max = bounds.max + pad;
+    const blockWidth = compact
+      ? Math.min(58, Math.max(36, w * .17))
+      : Math.min(116, Math.max(82, w * .2), Math.max(42, (w - 32) / 2));
+    const margin = blockWidth + (compact ? 8 : 12), axisWidth = Math.max(1, w - 2 * margin);
+    const x = value => margin + (value - min) / (max - min) * axisWidth;
+    const xa = x(P.position(scene.A, scene.time)), xb = x(P.position(scene.B, scene.time));
+    const frontDirection = obj => Math.sign(obj.v) || Math.sign(obj.a) || 1;
+    const blockHeight = compact ? Math.min(22, Math.max(16, (h - 96) / 2)) : Math.min(50, Math.max(38, h * .15));
+    const axisFontSize = (compact ? 9 : 12) * scale;
+    const topA = compact ? 20 : Math.max(20, 14 + 4 * scale);
+    const axisY = compact ? h - axisFontSize - 10 : h - Math.max(40, 25 + 12 * scale);
+    const topB = compact
+      ? topA + blockHeight + 28
+      : Math.max(topA + blockHeight + 36, axisY - blockHeight - Math.max(22, 10 + 10 * scale));
+    const guideY = (topA + blockHeight + topB) / 2;
+    const maxSpeed = options.maxSpeed ?? data.maxSpeed;
+    const labels = !compact && scene.scope === 'pursuit' ? ['A 追', 'B 被追'] : ['A', 'B'];
+    block(c, xa, topA, blockWidth, blockHeight, labels[0], A_COLOR, frontDirection(scene.A), P.velocity(scene.A, scene.time), maxSpeed, w, compact, undefined, scale);
+    // The distance guide stays between the objects. The second speed arrow
+    // belongs below B, away from both that guide and the position axis.
+    const bArrowY = compact ? Math.min(topB + blockHeight + 10, axisY - 14) : undefined;
+    block(c, xb, topB, blockWidth, blockHeight, labels[1], B_COLOR, frontDirection(scene.B), P.velocity(scene.B, scene.time), maxSpeed, w, compact, bArrowY, scale);
+    c.save();
+    c.setLineDash([3, 4]); c.lineWidth = 1; c.strokeStyle = '#aab4a7';
+    c.beginPath(); c.moveTo(xa, topA + blockHeight + 2); c.lineTo(xa, guideY);
+    c.moveTo(xb, guideY); c.lineTo(xb, topB - 2); c.stroke();
+    c.setLineDash([]); c.strokeStyle = '#869783'; c.lineWidth = 1.2;
+    c.beginPath(); c.moveTo(xa, guideY); c.lineTo(xb, guideY); c.stroke();
+    for (const [point, color] of [[xa, A_COLOR], [xb, B_COLOR]]) {
+      c.fillStyle = color; c.beginPath(); c.arc(point, guideY, 2.3, 0, Math.PI * 2); c.fill();
+    }
+    if (!compact) {
+      // Reserve a fixed label, number and unit from the whole trajectory.
+      // Only the physical midpoint follows the objects; digit length cannot
+      // change the caption's anchor, unit position or edge clamping.
+      const size = 13 * scale, spacing = 5;
+      const textFont = `600 ${size}px -apple-system, BlinkMacSystemFont, sans-serif`;
+      const numberFont = `600 ${size}px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`;
+      const value = Math.abs(P.position(scene.B, scene.time) - P.position(scene.A, scene.time)).toFixed(2);
+      c.font = textFont;
+      const labelWidth = c.measureText('车头间距').width, unitWidth = c.measureText('m').width;
+      c.font = numberFont;
+      const digits = Math.max(4, (bounds.max - bounds.min).toFixed(2).length);
+      const numberWidth = c.measureText('0'.repeat(digits)).width;
+      const reservedWidth = labelWidth + numberWidth + unitWidth + spacing * 2 + 12;
+      const boxWidth = Math.min(w - 8, reservedWidth), compression = boxWidth / reservedWidth;
+      const mid = Math.max(boxWidth / 2 + 3, Math.min(w - boxWidth / 2 - 3, (xa + xb) / 2));
+      c.fillStyle = PAPER;
+      c.fillRect(mid - boxWidth / 2, guideY - 9 - size, boxWidth, size + 7);
+      c.translate(mid - boxWidth / 2, guideY - 6);
+      c.scale(compression, 1);
+      c.fillStyle = INK; c.textBaseline = 'alphabetic'; c.textAlign = 'left'; c.font = textFont;
+      c.fillText('车头间距', 6, 0);
+      c.font = numberFont; c.textAlign = 'right';
+      c.fillText(value, 6 + labelWidth + spacing + numberWidth, 0);
+      c.font = textFont; c.textAlign = 'left';
+      c.fillText('m', 6 + labelWidth + spacing * 2 + numberWidth, 0);
+    }
+    c.restore();
+    c.strokeStyle = '#c5d0c2'; c.lineWidth = 1;
+    c.beginPath(); c.moveTo(margin, axisY); c.lineTo(w - margin, axisY); c.stroke();
+    c.fillStyle = INK; c.font = `600 ${axisFontSize}px -apple-system, sans-serif`;
+    c.textAlign = 'center';
+    const axis = niceAxis(min, max, Math.max(2, Math.min(6, Math.floor(axisWidth / ((compact ? 65 : 100) * scale)))));
+    for (const tick of axis.ticks) {
+      if (tick < min - 1e-9 || tick > max + 1e-9) continue;
+      const xx = x(tick);
+      c.beginPath(); c.moveTo(xx, axisY); c.lineTo(xx, axisY + 5); c.stroke();
+      c.fillText(axisLabel(tick, axis.step), xx, axisY + 7 + axisFontSize);
+    }
+    c.textAlign = 'right';
+    c.fillText(compact ? 'x / m' : '位置 / m', w - (compact ? 2 : 8), compact ? axisY + 7 + axisFontSize : axisY + 20 + axisFontSize);
+    c.restore();
+  }
+
+  function limits(type, scene, options, data) {
+    if (type === 'v' && options.velocityLimits) return options.velocityLimits;
+    let low, high;
+    if (type === 'x') {
+      const bounds = options.bounds || scene.bounds || data.bounds;
+      low = bounds.min; high = bounds.max;
+    } else {
+      const values = [scene.A, scene.B].flatMap(obj => [P.velocity(obj, 0), P.velocity(obj, scene.duration)]);
+      low = Math.min(...values); high = Math.max(...values);
+    }
+    low = Math.min(0, low); high = Math.max(0, high);
+    if (low === high) return [0, 1];
+    const padding = (high - low) * .06;
+    return [low < 0 ? low - padding : 0, high > 0 ? high + padding : 0];
+  }
+
+  function equalAreaGeometry(scene, config, data) {
+    const te = config.speedTime, td = config.displacementTime;
+    if (!Number.isFinite(te) || !Number.isFinite(td) || te <= 0 || td <= te || td > scene.duration) return null;
+    const key = `${te}:${td}`;
+    if (!data.equalAreas) data.equalAreas = new Map();
+    if (data.equalAreas.has(key)) return data.equalAreas.get(key);
+    const equalVelocity = P.velocity(scene.A, te);
+    const close = (a, b) => Math.abs(a - b) <= 1e-8 * Math.max(1, Math.abs(a), Math.abs(b));
+    const first = [[0, P.velocity(scene.A, 0)], [0, P.velocity(scene.B, 0)], [te, equalVelocity]];
+    const second = [[te, equalVelocity], [td, P.velocity(scene.A, td)], [td, P.velocity(scene.B, td)]];
+    const turnsInside = [scene.A, scene.B].some(obj => obj.stop && obj.v * obj.a < 0 && -obj.v / obj.a < td);
+    // These are differences between the two v–t curves, not areas to the
+    // zero axis. A half-turn about their intersection matches all vertices.
+    const congruent = first.every(([t, v]) => second.some(([s, u]) => close(2 * te - t, s) && close(2 * equalVelocity - v, u)));
+    const displacementA = P.position(scene.A, td) - scene.A.x;
+    const displacementB = P.position(scene.B, td) - scene.B.x;
+    const area = Math.abs(first[1][1] - first[0][1]) * te / 2;
+    const valid = !turnsInside && area > 1e-10 && close(equalVelocity, P.velocity(scene.B, te)) && close(displacementA, displacementB) && congruent;
+    const geometry = valid ? {triangles: [first, second], area} : null;
+    data.equalAreas.set(key, geometry);
+    return geometry;
+  }
+
+  function areaRegions(c, geometry, X, Y, plotBox) {
+    const colors = [B_COLOR, A_COLOR], fills = ['#795bb132', '#477fa835'];
+    c.save();
+    c.beginPath(); c.rect(plotBox.left, plotBox.top, plotBox.width, plotBox.height); c.clip();
+    geometry.triangles.forEach((triangle, i) => {
+      c.beginPath();
+      triangle.forEach(([t, v], j) => { if (j === 0) c.moveTo(X(t), Y(v)); else c.lineTo(X(t), Y(v)); });
+      c.closePath(); c.fillStyle = fills[i]; c.fill();
+      c.setLineDash([]); c.strokeStyle = colors[i]; c.lineWidth = 1.25; c.stroke();
+    });
+    c.restore();
+  }
+
+  function areaLabels(c, geometry, X, Y, fontSize, plotBox) {
+    c.save();
+    c.font = `600 ${fontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    geometry.triangles.forEach((triangle, i) => {
+      const centerX = triangle.reduce((sum, [t]) => sum + X(t), 0) / 3;
+      const centerY = triangle.reduce((sum, [, v]) => sum + Y(v), 0) / 3;
+      const offset = Math.max(18, fontSize * 1.4) * (i === 0 ? 1 : -1);
+      const label = i === 0 ? 'S₁' : 'S₂';
+      const width = c.measureText(label).width + 8, height = fontSize * 1.2;
+      const x = Math.max(plotBox.left + width / 2 + 3, Math.min(plotBox.right - width / 2 - 3, centerX));
+      const y = Math.max(plotBox.top + height / 2 + 2, Math.min(plotBox.bottom - height / 2 - 2, centerY + offset));
+      c.strokeStyle = i === 0 ? B_COLOR : A_COLOR; c.lineWidth = 1; c.setLineDash([]);
+      c.beginPath(); c.moveTo(centerX, centerY); c.lineTo(x, y); c.stroke();
+      c.fillStyle = PAPER; c.fillRect(x - width / 2, y - height / 2, width, height);
+      c.fillStyle = i === 0 ? '#6d4b9b' : '#366b92'; c.fillText(label, x, y);
+    });
+    // Use the spare heading space, never the thin triangles themselves.
+    const areaText = Number(geometry.area.toFixed(3)).toString();
+    const complete = `S₁ = S₂ = ${areaText} m`, short = 'S₁ = S₂';
+    const available = plotBox.right - (plotBox.left + 5 + c.measureText('v / (m/s)').width + 12);
+    const equation = c.measureText(complete).width <= available ? complete : c.measureText(short).width <= available ? short : '';
+    if (equation) {
+      c.textAlign = 'right'; c.textBaseline = 'alphabetic'; c.fillStyle = '#596452';
+      c.fillText(equation, plotBox.right, plotBox.top - 10);
+    }
+    c.restore();
+  }
+
+  function plot(canvas, type, scene, options = {}) {
+    const surface = context(canvas);
+    if (!surface) return;
+    const {ctx: c, w, h} = surface, scale = fontScale(), compact = options.compact === true;
+    const T = scene.duration, data = model(scene);
+    const fontSize = 10 * scale;
+    const top = Math.ceil((compact ? 10 : 18) + fontSize * .8);
+    const bottom = h - Math.ceil((compact ? 12 : 18) + fontSize);
+    const r = Math.ceil(Math.max(17, fontSize * 1.6));
+    const [dataMin, dataMax] = limits(type, scene, options, data), ph = Math.max(1, bottom - top);
+    const yTarget = compact ? Math.max(3, Math.min(5, Math.floor(ph / (19 * scale)))) : Math.max(4, Math.min(6, Math.floor(ph / (27 * scale)))) * 1.5;
+    const yAxis = niceAxis(dataMin, dataMax, yTarget);
+    const visibleTicks = yAxis.ticks.filter(value => value >= dataMin - yAxis.step * 1e-9 && value <= dataMax + yAxis.step * 1e-9);
+    c.font = `600 ${fontSize}px -apple-system, sans-serif`;
+    const labelWidth = Math.max(0, ...visibleTicks.map(value => c.measureText(axisLabel(value, yAxis.step)).width));
+    const l = Math.max(36, Math.ceil(labelWidth + 13)), pw = Math.max(1, w - l - r);
+    const X = t => l + t / T * pw, Y = value => top + (dataMax - value) / (dataMax - dataMin) * ph;
+    const at = (obj, t) => type === 'x' ? P.position(obj, t) : P.velocity(obj, t);
+    const zeroY = Y(0), axisColor = '#68766a', tickLength = 3;
+    const area = type === 'v' && options.areaComparison && scene.time + 1e-9 >= options.areaComparison.displacementTime
+      ? equalAreaGeometry(scene, options.areaComparison, data) : null;
+    const plotBox = {left: l, right: w - r, top, bottom, width: pw, height: ph};
+    c.lineWidth = 1; c.textAlign = 'right'; c.textBaseline = 'middle';
+    for (const tick of visibleTicks) {
+      const yy = Y(tick);
+      if (Math.abs(tick) > yAxis.step * 1e-9) {
+        c.strokeStyle = '#e7ebe1'; c.beginPath(); c.moveTo(l, yy); c.lineTo(w - r, yy); c.stroke();
+      }
+      c.fillStyle = INK; c.fillText(axisLabel(tick, yAxis.step), l - 6, yy);
+      c.strokeStyle = axisColor; c.beginPath(); c.moveTo(l - tickLength, yy); c.lineTo(l, yy); c.stroke();
+    }
+    const timeAxis = niceAxis(0, T, Math.max(3, Math.min(6, Math.floor(pw / ((compact ? 45 : 65) * scale)))));
+    c.textAlign = 'center'; c.textBaseline = 'top'; c.fillStyle = INK;
+    for (const tick of timeAxis.ticks) {
+      if (tick <= 0 || tick > T + timeAxis.step * 1e-9) continue;
+      const xx = X(tick);
+      c.strokeStyle = axisColor; c.beginPath(); c.moveTo(xx, zeroY); c.lineTo(xx, zeroY + tickLength); c.stroke();
+      c.fillText(axisLabel(tick, timeAxis.step), xx, zeroY + tickLength + 2);
+    }
+    if (area) areaRegions(c, area, X, Y, plotBox);
+    c.strokeStyle = axisColor; c.lineWidth = 1.1; c.setLineDash([]); c.beginPath();
+    c.moveTo(l, bottom); c.lineTo(l, top - 5); c.lineTo(l - 3.5, top);
+    c.moveTo(l, top - 5); c.lineTo(l + 3.5, top);
+    c.moveTo(l, zeroY); c.lineTo(w - r + 5, zeroY); c.lineTo(w - r, zeroY - 3.5);
+    c.moveTo(w - r + 5, zeroY); c.lineTo(w - r, zeroY + 3.5); c.stroke();
+    c.fillStyle = INK; c.textBaseline = 'alphabetic'; c.textAlign = 'left';
+    c.fillText(type === 'x' ? 'x / m' : 'v / (m/s)', l + 5, top - 10);
+    c.textAlign = 'right'; c.fillText('t / s', w - 2, Math.max(fontSize + 1, zeroY - 6));
+    const times = type === 'v' ? data.velocityTimes : data.positionTimes;
+    for (const [obj, color, dashed] of [[scene.A, A_COLOR, false], [scene.B, B_COLOR, true]]) {
+      c.strokeStyle = color; c.lineWidth = 2.1; c.setLineDash(dashed ? [6, 3.5] : []); c.beginPath();
+      for (let i = 0; i < times.length; i++) {
+        const t = times[i], px = X(t), py = Y(at(obj, t));
+        if (i === 0) c.moveTo(px, py); else c.lineTo(px, py);
+      }
+      c.stroke(); c.setLineDash([]);
+      const px = X(scene.time), py = Y(at(obj, scene.time));
+      c.fillStyle = PAPER; c.beginPath(); c.arc(px, py, 4, 0, Math.PI * 2); c.fill();
+      c.strokeStyle = color; c.lineWidth = 2; c.stroke();
+    }
+    if (scene.time > 1e-9) {
+      c.strokeStyle = '#bfc8b9'; c.lineWidth = 1; c.setLineDash([3, 4]);
+      c.beginPath(); c.moveTo(X(scene.time), top); c.lineTo(X(scene.time), bottom); c.stroke(); c.setLineDash([]);
+    }
+    const events = scene.events || data.events;
+    for (const t of type === 'x' ? events.meetings : events.equalTimes) {
+      if (t < 0 || t > T) continue;
+      c.fillStyle = '#b87a43'; c.beginPath(); c.arc(X(t), Y(at(scene.A, t)), 3.3, 0, Math.PI * 2); c.fill();
+    }
+    if (area) areaLabels(c, area, X, Y, fontSize, plotBox);
+    c.textBaseline = 'alphabetic';
+  }
+
+  window.MotionRenderer = Object.freeze({track, plot});
+})();
+
+</script>
+<script>
+/* Fixed teaching comparisons share one clock and one physical scale per demo. */
+(() => {
+  'use strict';
+  const P = window.Physics, R = window.MotionRenderer, duration = 5;
+  const EPS = 1e-8;
+  const sameTime = (a, b) => Math.abs(a - b) <= EPS;
+  const format = value => (Math.abs(value) < .005 ? 0 : value).toFixed(2);
+  const freezeEvents = events => Object.freeze({
+    meetings: Object.freeze([...events.meetings]),
+    equalTimes: Object.freeze([...events.equalTimes]),
+    coincident: events.coincident
+  });
+
+  function scene(id, title, scope, initialA, initialB, compareAreas = false) {
+    const A = Object.freeze({...initialA}), B = Object.freeze({...initialB});
+    const events = freezeEvents(P.events(A, B, duration));
+    // Equal displacements are encounters after rebasing each starting point to zero.
+    const displacementEvents = freezeEvents(P.events({...A, x: 0}, {...B, x: 0}, duration));
+    const bounds = Object.freeze(P.bounds(A, B, duration));
+    const speedExtrema = Object.freeze(events.equalTimes.map(t => {
+      const dt = Math.min(.0001, t / 2, (duration - t) / 2);
+      const gap = time => Math.abs(P.position(B, time) - P.position(A, time));
+      const center = gap(t), before = gap(t - dt), after = gap(t + dt);
+      const label = dt > 0 && center > before && center > after ? '间距最大'
+        : dt > 0 && center < before && center < after ? '间距最小' : '速度相等';
+      return Object.freeze({t, label});
+    }));
+    let areaComparison;
+    if (compareAreas) {
+      const speedTime = events.equalTimes.find(t => t > EPS);
+      const displacementTime = displacementEvents.meetings.find(t => t > EPS);
+      const area = .5 * speedTime * Math.abs(B.v - A.v);
+      areaComparison = Object.freeze({speedTime, displacementTime, area});
+    }
+    return Object.freeze({id, title, scope, A, B, duration, events, bounds,
+      displacementEvents, speedExtrema, areaComparison});
+  }
+
+  function mergePoints(points) {
+    const merged = [];
+    for (const point of points.filter(p => Number.isFinite(p.t) && p.t >= 0 && p.t <= duration).sort((a, b) => a.t - b.t)) {
+      const previous = merged[merged.length - 1];
+      const tolerance = 64 * Number.EPSILON * Math.max(1, Math.abs(point.t), Math.abs(previous?.t || 0));
+      if (previous && Math.abs(previous.t - point.t) <= tolerance) {
+        if (!previous.labels.includes(point.label)) previous.labels.push(point.label);
+      } else merged.push({t: point.t, labels: [point.label]});
+    }
+    return Object.freeze(merged.map(point => Object.freeze({t: point.t, labels: Object.freeze(point.labels)})));
+  }
+
+  function commonTimes(cases, read) {
+    return read(cases[0]).filter(t => t > EPS && cases.every(item => read(item).some(other => sameTime(t, other))));
+  }
+
+  function demo(id, title, description, summary, cases, velocityLimits, points) {
+    const bounds = Object.freeze({
+      min: Math.min(...cases.map(item => item.bounds.min)),
+      max: Math.max(...cases.map(item => item.bounds.max))
+    });
+    const velocities = cases.flatMap(item => [item.A, item.B].flatMap(obj => [
+      P.velocity(obj, 0), P.velocity(obj, duration)
+    ]));
+    const maxSpeed = Math.max(...velocities.map(Math.abs));
+    const options = Object.freeze({compact: true, bounds, maxSpeed, velocityLimits: Object.freeze(velocityLimits)});
+    return Object.freeze({id, title, description, summary, duration, cases: Object.freeze(cases),
+      bounds, maxSpeed, options, points: mergePoints(points),
+      gapWidth: format(bounds.max - bounds.min).length + .5,
+      speedWidth: Math.max(...velocities.map(value => format(value).length)) + .5});
+  }
+
+  const slowCases = [
+    ['accelerate-uniform', '加速追匀速', 1.6, 0],
+    ['uniform-decelerate', '匀速追减速', 0, -1.6],
+    ['accelerate-decelerate', '加速追减速', .8, -.8],
+    ['accelerate-accelerate', '加速追加速', 2.4, .8]
+  ].map(([id, title, aA, aB]) => scene(id, title, 'pursuit',
+    {x: 0, v: 7, a: aA, stop: aA < 0}, {x: 3.75, v: 9, a: aB, stop: aB < 0}, true));
+  const slowPoints = [
+    ...commonTimes(slowCases, item => item.events.equalTimes).map(t => ({t, label: '四组等速'})),
+    ...commonTimes(slowCases, item => item.displacementEvents.meetings).map(t => ({t, label: '四组位移相同'})),
+    ...commonTimes(slowCases, item => item.events.meetings).map(t => ({t, label: '四组相遇'}))
+  ];
+
+  const pursuitCases = [
+    ['not-caught', '未追上', 7],
+    ['just-caught', '恰好追上', 5],
+    ['twice-caught', '两次相遇', 3.2]
+  ].map(([id, title, distance]) => scene(id, title, 'pursuit',
+    {x: 0, v: 9, a: -1.6, stop: true}, {x: distance, v: 5, a: 0, stop: false}));
+  const pursuitPoints = commonTimes(pursuitCases, item => item.events.equalTimes).map(t => ({t, label: '三组等速'}));
+  for (const item of pursuitCases) item.events.meetings.forEach((t, i) => {
+    pursuitPoints.push({t, label: item.events.meetings.length > 1 ? `${item.title} · ${i === 0 ? '首次' : '再次'}` : item.title});
+  });
+
+  const meetingCases = [
+    ['before-stopping', '停车前相遇', 32],
+    ['at-stopping', '恰好停下时相遇', 36],
+    ['no-meeting', '停下仍未相遇', 40]
+  ].map(([id, title, distance]) => scene(id, title, 'meeting',
+    {x: 0, v: 12, a: -4, stop: true}, {x: distance, v: -12, a: 4, stop: true}));
+  const stoppedAt = item => [item.A, item.B].map(obj => obj.stop && obj.v * obj.a < 0 ? -obj.v / obj.a : Infinity);
+  const meetingPoints = commonTimes(meetingCases, stoppedAt).map(t => ({t, label: '三组停车'}));
+  meetingCases.forEach((item, i) => item.events.meetings.forEach(t => {
+    meetingPoints.push({t, label: i === 0 ? '首组相遇' : '临界相遇'});
+  }));
+
+  const demos = Object.freeze([
+    demo('slow-start', '初速度小追初速度大的',
+      '2.5 s 时位移相同，位置仍差 3.75 m；两块阴影三角形全等。',
+      'A 在后、B 在前 · 初速度 7 / 9 m/s · 初始间距 3.75 m', slowCases, [0, 20], slowPoints),
+    demo('braking-pursuit', '减速追匀速的三种结果',
+      '只改变初始间距，比较未追上、恰好追上和两次相遇。',
+      'A 初速度 9 m/s，加速度 −1.6 m/s² · B 匀速 5 m/s · 初始间距 7 / 5 / 3.2 m', pursuitCases, [0, 10], pursuitPoints),
+    demo('braking-meeting', '相向减速的临界情况',
+      '只改变初始间距；两物体均在 3 s 停下，比较相遇与停车的先后。',
+      '初速度 12 / −12 m/s · 加速度 −4 / 4 m/s² · 初始间距 32 / 36 / 40 m', meetingCases, [-15, 15], meetingPoints)
+  ]);
+  const list = Object.freeze(demos.map(({id, title, description, summary}) => Object.freeze({id, title, description, summary})));
+  let active = demos[0], boundRoot = null, cards = [];
+
+  const node = (tag, className, text) => {
+    const element = document.createElement(tag);
+    element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  };
+  function reading(className, label, unit, width) {
+    const wrapper = node('span', `${className} numeric-reading labeled-reading`);
+    const value = node('span', 'reading-number', '0.00');
+    value.style.setProperty('--number-width', `${width}ch`);
+    wrapper.append(node('span', 'reading-label', label), value, node('span', 'reading-unit', unit));
+    return {wrapper, value};
+  }
+
+  function mount(root) {
+    boundRoot = root;
+    const grid = root.classList.contains('comparison-grid') ? root : node('div', 'comparison-grid');
+    grid.dataset.count = String(active.cases.length);
+    grid.replaceChildren();
+    if (grid !== root) root.replaceChildren(grid);
+    // Reserve the whole model domain, including negative speeds, before playback.
+    cards = active.cases.map((item, i) => {
+      const card = node('section', 'comparison-card panel');
+      const heading = node('header', 'comparison-card-head');
+      const title = node('h3', '', item.title);
+      title.id = `comparison-title-${active.id}-${item.id}`;
+      card.setAttribute('aria-labelledby', title.id);
+      heading.append(node('span', 'comparison-number', String(i + 1).padStart(2, '0')), title);
+      const condition = node('p', 'comparison-condition');
+      condition.innerHTML = active.id === 'slow-start'
+        ? `a<sub>A</sub> = ${item.A.a}，a<sub>B</sub> = ${item.B.a} m/s²`
+        : `初始间距 d = ${format(item.B.x - item.A.x)} m`;
+      const track = node('canvas', 'comparison-track');
+      track.setAttribute('aria-label', `${item.title}，两物体的运动与车头位置`);
+      const readings = node('div', 'comparison-readings');
+      const gap = reading('comparison-gap', '间距', 'm', active.gapWidth);
+      const phase = node('span', 'comparison-phase');
+      readings.append(gap.wrapper, phase);
+      const chart = node('canvas', 'comparison-chart');
+      chart.setAttribute('aria-label', `${item.title}的速度—时间图，A为实线，B为虚线`);
+      const speeds = node('div', 'comparison-speeds');
+      const speedA = reading('comparison-speed-a', 'A', 'm/s', active.speedWidth);
+      const speedB = reading('comparison-speed-b', 'B', 'm/s', active.speedWidth);
+      speeds.append(speedA.wrapper, speedB.wrapper);
+      card.append(heading, condition, track, readings, chart, speeds);
+      grid.append(card);
+      return {scene: item, track, chart, gap: gap.value, phase, speedA: speedA.value, speedB: speedB.value};
+    });
+  }
+
+  function phaseAt(item, t, relative, vA, vB) {
+    const met = item.events.meetings.some(time => time <= t + EPS);
+    if (item.scope === 'meeting') {
+      const stopped = Math.abs(vA) < EPS && Math.abs(vB) < EPS;
+      if (Math.abs(relative) < EPS) return stopped ? (item.events.meetings.some(time => sameTime(time, t)) ? '同位停下' : '保持重合') : '相遇';
+      if (stopped) return met ? '相遇后停下' : '停下未相遇';
+      return met ? '已相遇' : '正在靠近';
+    }
+    if (item.areaComparison && sameTime(t, item.areaComparison.displacementTime)) return '位移相同';
+    if (Math.abs(relative) < EPS) {
+      if (Math.abs(vA - vB) < EPS) return '恰好追上';
+      const index = item.events.meetings.findIndex(time => sameTime(time, t));
+      return item.events.meetings.length > 1 ? (index > 0 ? '再次相遇' : '首次相遇') : '相遇';
+    }
+    if (relative < 0) return '已追上';
+    const extremum = item.speedExtrema.find(point => sameTime(point.t, t));
+    return extremum ? extremum.label : vA < vB ? '正在远离' : '正在靠近';
+  }
+
+  function render(time) {
+    const t = Number.isFinite(time) ? Math.max(0, Math.min(active.duration, time)) : 0;
+    for (const card of cards) {
+      const item = card.scene, current = {...item, time: t};
+      const vA = P.velocity(item.A, t), vB = P.velocity(item.B, t);
+      const relative = P.position(item.B, t) - P.position(item.A, t);
+      card.gap.textContent = format(Math.abs(relative));
+      card.phase.textContent = phaseAt(item, t, relative, vA, vB);
+      card.phase.dataset.phase = item.events.meetings.some(at => at <= t + EPS) ? 'caught' : 'before';
+      card.speedA.textContent = format(vA);
+      card.speedB.textContent = format(vB);
+      R.track(card.track, current, active.options);
+      R.plot(card.chart, 'v', current, item.areaComparison ? {...active.options, areaComparison: item.areaComparison} : active.options);
+    }
+  }
+
+  function select(id) {
+    const next = demos.find(item => item.id === id);
+    if (!next) return false;
+    if (next === active) return true;
+    active = next;
+    if (boundRoot) mount(boundRoot);
+    return true;
+  }
+
+  window.MotionComparison = Object.freeze({
+    list, select, mount, render, events: () => active.points,
+    get id() { return active.id; }, get title() { return active.title; },
+    get description() { return active.description; }, get summary() { return active.summary; },
+    get duration() { return active.duration; }, get cases() { return active.cases; },
+    get bounds() { return active.bounds; }, get maxSpeed() { return active.maxSpeed; }
+  });
+})();
+
+</script>
+<script>
 (() => {
 'use strict';
 const $ = id => document.getElementById(id);
 const P = window.Physics, all = window.Presets.list;
-const fields = window.Presets.labels.fields;
-// A short teaching pathway through the same verified motion presets.
+// Fixed teaching examples share the verified motion model with editable scenarios.
 const typicalCases = [
  {id:'p-10-fast-0-6',label:'后车加速追上匀速',A:{v:9,a:1.6},B:{x:15,v:5}},
- {id:'p-10-slow-0-6',label:'加速追匀速：先远离后追上',A:{v:5,a:2.4},B:{x:4.2,v:8}},
+ {id:'p-10-slow-0-6',label:'加速追匀速：先远离后追上',A:{v:7,a:1.6},B:{x:3.75,v:9}},
  {id:'p-20-fast-0-6',label:'后车减速追匀速：两次相遇',A:{v:9,a:-1.6},B:{x:3.2,v:5}},
  {id:'p-20-fast-0-8',label:'后车减速追匀速：恰好追上',A:{v:9,a:-1.6},B:{x:5,v:5}},
  {id:'p-20-fast-0-12',label:'后车减速追匀速：未追上',A:{v:9,a:-1.6},B:{x:7,v:5}},
  {id:'m-00-0-8',label:'两车匀速相向相遇'},
- {id:'m-02-0-72',label:'匀速与减速相向：停下后相遇',A:{v:6},B:{x:19.5,v:-6,a:4}},
- {id:'m-22-0-36',label:'两车减速相向：停下未相遇',A:{v:8,a:-4},B:{x:20,v:-8,a:4}}
+ {id:'m-02-0-72',label:'匀速与减速相向：停下后相遇',A:{v:6},B:{x:24,v:-6,a:3}},
+ {id:'m-22-0-36',label:'两车减速相向：停下未相遇',A:{v:10,a:-4},B:{x:30,v:-10,a:4}}
 ];
 const themes = {
  accelerate: { variants: [['一直靠近并追上','p-10-fast-0-6'],['先远离后追上','p-10-slow-0-6']] },
@@ -785,10 +1677,11 @@ const themes = {
  'opposite-mixed': { variants: [['一方停下后相遇','m-02-0-72']] },
  'opposite-slow': { variants: [['双方停下仍未相遇','m-22-0-36']] }
 };
-const physicalScope = () => state.scope==='typical' ? (all.find(p=>p.id===state.presetId)?.scope || 'pursuit') : state.scope;
+const isComparison = () => state.mode === 'typical' && !!state.demoId;
+const physicalScope = () => isComparison() ? (window.MotionComparison.cases[0]?.scope || 'pursuit') : state.scope==='typical' ? (all.find(p=>p.id===state.presetId)?.scope || 'pursuit') : state.scope;
 let showUniform = false;
 try { showUniform = localStorage.getItem('motion-show-uniform') === 'true'; } catch (_) {}
-let state = {mode:'typical',scope:'typical',theme:'accelerate',category:'',resultFilter:'',presetId:'', A:{x:0,v:8,a:0,stop:false}, B:{x:6,v:4,a:1,stop:false}, duration:18, time:0, playing:false, last:null};
+let state = {mode:'typical',scope:'typical',theme:'accelerate',demoId:'slow-start',category:'',resultFilter:'',presetId:'', A:{x:0,v:8,a:0,stop:false}, B:{x:6,v:4,a:1,stop:false}, duration:5, time:0, playing:false, last:null};
 function baseList(){return all.filter(p=>p.scope===state.scope && (showUniform || !(p.scope==='pursuit' && p.group==='匀速追匀速')));}
 function options(select,items,value,display=x=>x){select.replaceChildren(...items.map(x=>{const op=document.createElement('option');op.value=x;op.textContent=display(x);return op;}));select.value=items.includes(value)?value:(items[0]||'');return select.value;}
 function shortLabel(p){
@@ -810,7 +1703,7 @@ function exampleNames(items){
 function populateGroups(){
  const list=baseList(), groups=[...new Set(list.map(p=>p.group))];
  state.category=options($('category'),groups,state.category);
- document.querySelectorAll('[data-scope]').forEach(b=>b.classList.toggle('selected',b.dataset.scope===state.scope));
+ document.querySelectorAll('button[data-scope]').forEach(b=>{const active=b.dataset.scope===state.scope;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
  populateMoreExamples();
 }
 function populateMoreExamples(){
@@ -827,31 +1720,104 @@ function presetExplanation(p){
  if(p.scope==='pursuit')return `预设初速：${p.initial}；${p.advantage}。${p.result==='没有相遇'?'展示时间内':'首次相遇前'}，${process}。`;
  return `预设：${p.advantage}；${p.phase}。`;
 }
-function loadPreset(){const p=all.find(p=>p.id===state.presetId);if(!p)return;const example=state.scope==='typical'?typicalCases.find(c=>c.id===p.id):null;state.A={...p.A,...example?.A};state.B={...p.B,...example?.B};state.duration=p.duration;state.time=0;state.playing=false;state.last=null;if(state.mode==='more'){$('preset-selected').textContent=$('preset').selectedOptions[0]?.textContent||p.title;$('preset-description').textContent=presetExplanation(p);}$('model-note').textContent=state.scope==='typical'?'调整参数后，运动结果可能改变；减速物体到零后停住。':'以上说明对应预设；调整参数后结果可能改变。减速物体到零后停住。';renderParams();refresh();}
+function loadPreset(){const p=all.find(p=>p.id===state.presetId);if(!p)return;const example=state.scope==='typical'?typicalCases.find(c=>c.id===p.id):null;state.A={...p.A,...example?.A};state.B={...p.B,...example?.B};state.duration=p.duration;state.time=0;state.playing=false;state.last=null;if(state.mode==='more'){$('preset-selected').textContent=$('preset').selectedOptions[0]?.textContent||p.title;$('preset-description').textContent=presetExplanation(p);}$('model-note').textContent='说明对应预设；调整后结果可能改变。减速物体到零后停住。';renderParams();refresh();}
 function resetGeneral(){state.A={x:0,v:8,a:0,stop:false};state.B={x:30,v:-4,a:0,stop:false};state.duration=5;state.time=0;state.playing=false;state.last=null;$('model-note').textContent='自由设置持续按匀变速直线运动计算：速度经过零后可反向，不会自动停车。';renderParams();refresh();}
 function showTheme(theme,id){
- state.scope='typical';state.theme=theme;const def=themes[theme]; if(!def)return;
+ state.scope='typical';state.demoId='';state.theme=theme;const def=themes[theme]; if(!def)return;
+ updateModeUI();
  state.presetId=id&&def.variants.some(v=>v[1]===id)?id:def.variants[0][1];
- document.querySelectorAll('[data-theme]').forEach(b=>{const active=b.dataset.theme===theme;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
+ document.querySelectorAll('button[data-theme]').forEach(b=>{const active=b.dataset.theme===theme;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
  document.querySelectorAll('[data-variants]').forEach(el=>{const active=el.dataset.variants===theme&&(def.variants.length>1||!!def.variants[0][0]);el.hidden=!active;el.replaceChildren();if(active&&def.variants.length===1){const note=document.createElement('span');note.className='theme-example';note.textContent=def.variants[0][0];el.append(note);}else if(active)for(const [label,value] of def.variants){const b=document.createElement('button');b.type='button';b.className='variant-button';b.textContent=label;b.classList.toggle('selected',value===state.presetId);b.setAttribute('aria-pressed',String(value===state.presetId));b.addEventListener('click',()=>showTheme(theme,value));el.append(b);}});
  loadPreset();
 }
-function selectMode(mode){
- state.mode=mode;state.time=0;state.playing=false;state.last=null;
- document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
- $('classification').hidden=mode!=='more';$('typical-selection').hidden=mode!=='typical';$('general-note').hidden=mode!=='general';
- if(mode==='general'){state.scope='general';resetGeneral();}else if(mode==='typical')showTheme('accelerate');else{state.scope='pursuit';state.category='';state.presetId='';state.resultFilter='';populateGroups();}
+function syncControlHeight() {
+ const layout = document.querySelector('.layout');
+ const origin = Math.ceil(layout.getBoundingClientRect().top + window.scrollY);
+ layout.style.setProperty('--controls-origin', `${origin}px`);
+}
+function updateModeUI() {
+ const comparison = isComparison();
+ document.querySelectorAll('button[data-mode]').forEach(button => {
+  const active = button.dataset.mode === state.mode;
+  button.classList.toggle('selected', active);
+  button.setAttribute('aria-pressed', String(active));
+ });
+ document.querySelectorAll('button[data-demo]').forEach(button => {
+  const active = comparison && button.dataset.demo === state.demoId;
+  button.classList.toggle('selected', active);
+  button.setAttribute('aria-pressed', String(active));
+ });
+ $('classification').hidden = state.mode !== 'more';
+ $('typical-selection').hidden = state.mode !== 'typical';
+ $('general-note').hidden = state.mode !== 'general';
+ $('parameter-section').hidden = state.mode === 'typical';
+ $('comparison-view').hidden = !comparison;
+ $('single-view').hidden = comparison;
+ document.querySelector('.layout').classList.toggle('is-comparison', comparison);
+ document.body.dataset.motionMode = state.mode;
+ $('comparison-note').hidden = !comparison;
+ syncControlHeight();
+}
+function showComparison(id) {
+ const demo = window.MotionComparison;
+ if (!demo.select(id)) return;
+ state.mode = 'typical';
+ state.scope = 'typical';
+ state.demoId = id;
+ state.presetId = '';
+ state.duration = demo.duration;
+ $('comparison-title').textContent = demo.title;
+ const summary = $('comparison-summary');
+ summary.replaceChildren();
+ demo.summary.split(/\s*·\s*/).forEach((part, index) => {
+  if (index) summary.append(document.createTextNode(' · '));
+  const span = document.createElement('span');
+  span.textContent = part;
+  summary.append(span);
+ });
+ $('comparison-scale-note').textContent = `${demo.cases.length === 4 ? '四' : '三'}组同刻度 · 向右为正 →`;
+ document.querySelector('.comparison-heading .chart-legend').setAttribute('aria-label', `${demo.cases.length}图共用图例`);
+ $('comparison-note').textContent = demo.description;
+ $('comparison-view').dataset.activeDemo = demo.id;
+ state.time = 0;
+ state.playing = false;
+ state.last = null;
+ document.querySelectorAll('button[data-theme]').forEach(button => {
+  button.classList.remove('selected');
+  button.setAttribute('aria-pressed', 'false');
+ });
+ document.querySelectorAll('[data-variants]').forEach(element => { element.hidden = true; });
+ updateModeUI();
+ renderParams();
+ refresh();
+}
+function selectMode(mode) {
+ state.mode = mode;
+ state.time = 0;
+ state.playing = false;
+ state.last = null;
+ if (mode === 'typical') { showComparison('slow-start'); return; }
+ state.demoId = '';
+ updateModeUI();
+ if (mode === 'general') { state.scope = 'general'; resetGeneral(); }
+ else {
+  state.scope = 'pursuit';
+  state.category = '';
+  state.presetId = '';
+  state.resultFilter = '';
+  populateGroups();
+ }
 }
 window.motionNavigate=({scope,group,presetId,field,value}={})=>{
  if(scope==='general'){selectMode('general');return;}
  const allowed=all.filter(p=>p.scope===scope&&(showUniform||!(p.scope==='pursuit'&&p.group==='匀速追匀速')));
  const p=allowed.find(p=>p.id===presetId)||allowed.find(p=>group&&p.group===group)||allowed.find(p=>field&&p[field]===value)||allowed[0];
  if(!p)return;state.mode='more';state.scope=scope;state.category=p.group;state.presetId=p.id;state.resultFilter='';
- document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode==='more';b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
- $('classification').hidden=false;$('typical-selection').hidden=true;$('general-note').hidden=true;populateGroups();
+ state.demoId='';updateModeUI();populateGroups();
 };
 window.motionCurrent=()=>({scope:physicalScope(),field:'group',value:state.category,presetId:state.presetId,mode:state.mode});
-function fmt(n,d=1){if(Math.abs(n)<0.00001)n=0;return Number(n).toFixed(d);}
+function fmt(n,d=1){const value=Number(n).toFixed(d);return Number(value)===0?Number(0).toFixed(d):value;}
+function signed(n){const value=fmt(n);return Number(value)===0?fmt(0):(n>0?'+':'')+value;}
 function nice(n){return Number(n.toFixed(2)).toString();}
 function paramRow(container,obj,key,label,lo,hi,step,allowBeyondSlider=false){
  const row=document.createElement('div');row.className='param-row';const id=`p-${obj}-${key}`;
@@ -859,11 +1825,11 @@ function paramRow(container,obj,key,label,lo,hi,step,allowBeyondSlider=false){
  const num=document.createElement('input');num.type='number';num.id=id;num.step=step;num.value=state[obj][key];num.min=allowBeyondSlider?-10000:lo;num.max=allowBeyondSlider?10000:hi;num.setAttribute('aria-label',label);
  const range=document.createElement('input');range.type='range';range.min=lo;range.max=hi;range.step=step;range.value=state[obj][key];range.setAttribute('aria-label',label+'滑杆');
  row.append(text,num,range);container.append(row);
- function update(value){if(value===''||!Number.isFinite(Number(value)))return;const low=allowBeyondSlider?-10000:lo,high=allowBeyondSlider?10000:hi;const v=Math.max(low,Math.min(high,Number(value)));state[obj][key]=v;if(state.scope!=='general')state[obj].stop=state[obj].v*state[obj].a<0;num.value=v;range.value=v;state.time=0;state.playing=false;state.last=null;refresh();}
- range.addEventListener('input',()=>update(range.value));num.addEventListener('change',()=>{update(num.value);num.value=state[obj][key];});
+ function update(value,commit=true){if(value===''||!Number.isFinite(Number(value)))return;const low=allowBeyondSlider?-10000:lo,high=allowBeyondSlider?10000:hi;const v=Math.max(low,Math.min(high,Number(value)));state[obj][key]=v;if(state.scope!=='general')state[obj].stop=state[obj].v*state[obj].a<0;if(commit)num.value=v;range.value=v;state.time=0;state.playing=false;state.last=null;refresh();}
+ range.addEventListener('input',()=>update(range.value));num.addEventListener('input',()=>{if(num.value!==''&&num.validity.valid)update(num.value,false);});const commit=()=>{update(num.value);num.value=state[obj][key];};num.addEventListener('change',commit);num.addEventListener('blur',commit);
 }
 function renderParams(){
- const root=$('params');root.replaceChildren();const general=state.scope==='general';
+ const root=$('params');root.replaceChildren();if(state.mode==='typical')return;const general=state.scope==='general';
  const preset=all.find(p=>p.id===state.presetId);
  const kinds=!general&&preset?preset.group.replace(/相向$/,'').split(physicalScope()==='pursuit'?'追':'与'):[];
  if(!general){const box=document.createElement('div');box.className='param-group';const heading=document.createElement('div');heading.className='param-title';heading.textContent='初始位置';box.append(heading);paramRow(box,'B','x','两物体初始间距 d（m）',0,200,.1);root.append(box);}
@@ -878,172 +1844,41 @@ function renderParams(){
   }
   root.append(group);
  }
- const row=document.createElement('div');row.className='param-row';row.innerHTML='<label for="duration-input">展示时间（s）</label><input id="duration-input" type="number" min="1" max="120" step="1" aria-label="展示时间">';root.append(row);const inp=$('duration-input');inp.value=state.duration;inp.addEventListener('change',()=>{state.duration=Math.max(1,Math.min(120,Number(inp.value)||18));inp.value=state.duration;state.time=Math.min(state.time,state.duration);state.playing=false;state.last=null;refresh();});
-}
-function canvasContext(canvas){const rect=canvas.getBoundingClientRect(), ratio=window.devicePixelRatio||1;const w=Math.max(rect.width,1),h=Math.max(rect.height,1);if(canvas.width!==Math.round(w*ratio)||canvas.height!==Math.round(h*ratio)){canvas.width=Math.round(w*ratio);canvas.height=Math.round(h*ratio);}const ctx=canvas.getContext('2d');ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,w,h);return {ctx,w,h};}
-function rrect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
-// Pick intervals from 1, 2 and 5 times powers of ten, and expand the
-// displayed domain to exact tick values. Physical values are never rounded.
-function niceAxis(low,high,target=4){
-  if(!Number.isFinite(low)||!Number.isFinite(high)){low=-1;high=1;}
-  if(low>high)[low,high]=[high,low];
-  if(low===high){const padding=Math.max(1,Math.abs(low)*.1);low-=padding;high+=padding;}
-  const rough=(high-low)/Math.max(1,target),power=10**Math.floor(Math.log10(rough));
-  const fraction=rough/power,unit=fraction<=1?1:fraction<=2?2:fraction<=5?5:10,step=unit*power;
-  const eps=step*1e-10;
-  let start=Math.floor((low+eps)/step)*step,end=Math.ceil((high-eps)/step)*step;
-  if(start>low+eps)start-=step;
-  if(end<high-eps)end+=step;
-  // Floating point multiplication can produce -0 or 0.30000000000000004.
-  const clean=n=>Math.abs(n)<eps?0:Number(n.toPrecision(14));
-  start=clean(start);end=clean(end);
-  const count=Math.round((end-start)/step),ticks=[];
-  for(let i=0;i<=count&&i<=30;i++)ticks.push(clean(start+i*step));
-  return {min:start,max:end,step,ticks};
-}
-function axisLabel(value,step){
-  const digits=Math.max(0,Math.min(15,-Math.floor(Math.log10(step)+1e-10)));
-  if(Math.abs(value)<step*1e-9)value=0;
-  return value.toLocaleString('en-US',{maximumFractionDigits:digits});
-}
-function canvasFontScale(){return typeof window.motionFontScale==='function'?window.motionFontScale():1;}
-function drawTrack(){
-  const {ctx:c,w,h}=canvasContext($('track'));
-  const bounds=P.bounds(state.A,state.B,state.duration), range=Math.max(15,bounds.max-bounds.min), pad=range*.11;
-  // The reference point is the marked front edge, not the block's centre.
-  const blockWidth=Math.min(116,Math.max(82,w*.2),Math.max(42,(w-32)/2)),margin=blockWidth+12;
-  const axisWidth=Math.max(1,w-2*margin),scale=canvasFontScale();
-  const min=bounds.min-pad,max=bounds.max+pad;
-  const axis=niceAxis(min,max,Math.max(2,Math.min(6,Math.floor(axisWidth/(100*scale)))));
-  const x=value=>margin+(value-min)/(max-min)*axisWidth;
-  const xa=x(P.position(state.A,state.time)), xb=x(P.position(state.B,state.time));
-  const frontDirection=o=>Math.sign(o.v)||Math.sign(o.a)||1;
-  const labelA=physicalScope()==='pursuit'?'A 追':'A', labelB=physicalScope()==='pursuit'?'B 被追':'B';
-  const blockHeight=Math.min(50,Math.max(38,h*.15));
-  const topA=Math.max(20,14+4*scale);
-  const axisY=h-Math.max(40,25+12*scale);
-  const topB=Math.max(topA+blockHeight+36,axisY-blockHeight-Math.max(22,10+10*scale));
-  const guideY=(topA+blockHeight+topB)/2;
-
-  // One shared scale for both objects over the full time window: arrows can
-  // be compared across objects and frames without changing the scale mid-play.
-  const maxSpeed=Math.max(...[state.A,state.B].flatMap(o=>[Math.abs(P.velocity(o,0)),Math.abs(P.velocity(o,state.duration))]));
-  // A and B occupy separate lanes even when their reference points coincide.
-  car(c,xa,topA,blockWidth,blockHeight,labelA,'#477fa8',frontDirection(state.A),P.velocity(state.A,state.time),maxSpeed,w);
-  car(c,xb,topB,blockWidth,blockHeight,labelB,'#795bb1',frontDirection(state.B),P.velocity(state.B,state.time),maxSpeed,w);
-
-  c.save();
-  c.setLineDash([3,4]);c.lineWidth=1;c.strokeStyle='#aab4a7';
-  c.beginPath();c.moveTo(xa,topA+blockHeight+2);c.lineTo(xa,guideY);c.moveTo(xb,guideY);c.lineTo(xb,topB-2);c.stroke();
-  c.setLineDash([]);c.strokeStyle='#869783';c.lineWidth=1.2;
-  c.beginPath();c.moveTo(xa,guideY);c.lineTo(xb,guideY);c.stroke();
-  for(const [point,color] of [[xa,'#477fa8'],[xb,'#795bb1']]){c.fillStyle=color;c.beginPath();c.arc(point,guideY,2.3,0,Math.PI*2);c.fill();}
-  const text=`车头间距 ${nice(Math.abs(P.position(state.B,state.time)-P.position(state.A,state.time)))} m`;
-  c.font=`600 ${13*scale}px -apple-system, BlinkMacSystemFont, sans-serif`;c.textAlign='center';
-  const textWidth=Math.min(w-8,c.measureText(text).width+12),mid=Math.max(textWidth/2+3,Math.min(w-textWidth/2-3,(xa+xb)/2));
-  c.fillStyle='#fbfaf5';c.fillRect(mid-textWidth/2,guideY-6-14*scale,textWidth,16*scale);
-  c.fillStyle='#4d5c50';c.fillText(text,mid,guideY-6,Math.max(40,w-8));
-  c.restore();
-
-  c.strokeStyle='#c5d0c2';c.lineWidth=1;c.beginPath();c.moveTo(margin,axisY);c.lineTo(w-margin,axisY);c.stroke();
-  c.fillStyle='#4d5c50';c.font=`600 ${12*scale}px -apple-system, sans-serif`;c.textAlign='center';
-  for(const tick of axis.ticks){if(tick<min-1e-9||tick>max+1e-9)continue;const xx=x(tick);c.beginPath();c.moveTo(xx,axisY);c.lineTo(xx,axisY+5);c.stroke();c.fillText(axisLabel(tick,axis.step),xx,axisY+7+12*scale);}
-  c.textAlign='right';c.fillText('位置 / m',w-8,axisY+20+12*scale);
-}
-function car(c,front,top,width,height,label,color,frontDirection,velocity,maxSpeed,canvasWidth){
-  const left=frontDirection>0?front-width:front, right=left+width, bottom=top+height;
-  c.save();c.fillStyle='#faf9f4';c.fillRect(left,top,width,height);
-  // Regular fine hatching and slightly doubled edges evoke a hand-drawn block.
-  c.save();c.beginPath();c.rect(left,top,width,height);c.clip();c.globalAlpha=.34;c.strokeStyle=color;c.lineWidth=.8;
-  for(let i=-height;i<width+height;i+=8){c.beginPath();c.moveTo(left+i,bottom+1);c.lineTo(left+i+height+1,top-1);c.stroke();}c.restore();
-  c.strokeStyle=color;c.lineWidth=1.8;c.lineJoin='round';
-  c.beginPath();c.moveTo(left+.4,top+.3);c.lineTo(right-.4,top);c.lineTo(right, bottom-.3);c.lineTo(left,bottom);c.closePath();c.stroke();
-  c.globalAlpha=.34;c.lineWidth=.65;c.beginPath();c.moveTo(left-1,top+1.4);c.lineTo(right+.5,top+.7);c.lineTo(right+1,bottom+.6);c.lineTo(left-.7,bottom-.4);c.closePath();c.stroke();c.globalAlpha=1;
-  // The thicker end remains attached to the same material point if velocity reverses.
-  c.lineWidth=5;c.beginPath();c.moveTo(front,top+1);c.lineTo(front,bottom-1);c.stroke();
-  c.fillStyle=color;c.font=`600 ${Math.min(17*canvasFontScale(),height*.62)}px -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillText(label,(left+right)/2,top+height/2+1);
-  // The shaft's actual length is proportional to |v|, with a shared maximum
-  // of 54 px. Zero speed has no arrow; its direction is the sign of velocity.
-  const arrowLength=maxSpeed>0 ? (Math.abs(velocity)/maxSpeed)*Math.min(54,width*.6,Math.max(0,canvasWidth-8)) : 0;
-  if(arrowLength>0){
-    const direction=Math.sign(velocity),center=(left+right)/2,y=top-8;
-    // Translate the arrow when needed to keep both ends inside the canvas;
-    // never shorten it, so the displayed length remains comparable.
-    const start=direction>0?Math.max(4,Math.min(center,canvasWidth-4-arrowLength)):Math.max(4+arrowLength,Math.min(center,canvasWidth-4));
-    const tip=start+direction*arrowLength,head=Math.min(6,arrowLength*.35),halfHead=head*.65;
-    c.lineWidth=Math.min(1.8,Math.max(.15,arrowLength/2));c.beginPath();c.moveTo(start,y);c.lineTo(tip,y);
-    c.moveTo(tip-direction*head,y-halfHead);c.lineTo(tip,y);c.lineTo(tip-direction*head,y+halfHead);c.stroke();
+ const row = document.createElement('div');
+ row.className = 'param-row';
+ row.innerHTML = '<label for="duration-input">展示时间（s）</label><input id="duration-input" type="number" min="1" max="120" step="1" aria-label="展示时间">';
+ root.append(row);
+ const input = $('duration-input');
+ input.value = state.duration;
+ function updateDuration(commit) {
+  const value = Number(input.value);
+  if (input.value.trim() !== '' && Number.isFinite(value) && (commit || (value >= 1 && value <= 120))) {
+   state.duration = Math.max(1, Math.min(120, value));
   }
-  c.restore();
+  if (commit) input.value = state.duration;
+  state.time = Math.min(state.time, state.duration);
+  state.playing = false;
+  state.last = null;
+  refresh();
+ }
+ input.addEventListener('input', () => updateDuration(false));
+ input.addEventListener('change', () => updateDuration(true));
+ input.addEventListener('blur', () => updateDuration(true));
 }
-// Include zero in each vertical scale so the axes really intersect at (0, 0).
-// Only pad on sides containing nonzero data, avoiding artificial negative space.
-function plotLimits(type){
-  let low,high;
-  if(type==='x'){
-    const b=P.bounds(state.A,state.B,state.duration);low=b.min;high=b.max;
-  }else{
-    const values=[P.velocity(state.A,0),P.velocity(state.A,state.duration),P.velocity(state.B,0),P.velocity(state.B,state.duration)];
-    low=Math.min(...values);high=Math.max(...values);
-  }
-  low=Math.min(0,low);high=Math.max(0,high);
-  if(low===high)return [0,1];
-  const padding=(high-low)*.06;
-  return [low<0?low-padding:0,high>0?high+padding:0];
+let analysisKey = '', analysisEvents = null, resultsKey = '';
+function currentAnalysis() {
+ const key = JSON.stringify([state.A, state.B, state.duration]);
+ if (key !== analysisKey) {
+  analysisKey = key;
+  analysisEvents = P.events(state.A, state.B, state.duration);
+ }
+ return analysisEvents;
 }
-function plot(canvas,type){
-  const {ctx:c,w,h}=canvasContext(canvas),scale=canvasFontScale(),T=state.duration;
-  const fontSize=10*scale,top=Math.ceil(18+fontSize*.8),bottom=h-Math.ceil(18+fontSize),r=Math.ceil(Math.max(17,fontSize*1.6));
-  const [dataMin,dataMax]=plotLimits(type),ph=Math.max(1,bottom-top);
-  // Generate tidy tick labels separately from the view limits. Expanding to
-  // the next major tick can double unused space; data remain on a linear scale.
-  const yAxis=niceAxis(dataMin,dataMax,Math.max(4,Math.min(6,Math.floor(ph/(27*scale))))*1.5);
-  const visibleTicks=yAxis.ticks.filter(t=>t>=dataMin-yAxis.step*1e-9&&t<=dataMax+yAxis.step*1e-9);
-  c.font=`600 ${fontSize}px -apple-system, sans-serif`;
-  const labelWidth=Math.max(0,...visibleTicks.map(t=>c.measureText(axisLabel(t,yAxis.step)).width));
-  const l=Math.max(36,Math.ceil(labelWidth+13)),pw=Math.max(1,w-l-r);
-  const X=t=>l+t/T*pw,Y=v=>top+(dataMax-v)/(dataMax-dataMin)*ph;
-  const at=(o,t)=>type==='x'?P.position(o,t):P.velocity(o,t);
-  const zeroY=Y(0),axisColor='#68766a',tickLength=3;
-  c.lineWidth=1;c.textAlign='right';c.textBaseline='middle';
-  // Thin gridlines are guides; the zero line is the actual horizontal axis.
-  for(const tick of visibleTicks){
-    const yy=Y(tick);
-    if(Math.abs(tick)>yAxis.step*1e-9){c.strokeStyle='#edf0e8';c.beginPath();c.moveTo(l,yy);c.lineTo(w-r,yy);c.stroke();}
-    c.fillStyle='#4d5c50';c.fillText(axisLabel(tick,yAxis.step),l-6,yy);
-    c.strokeStyle=axisColor;c.beginPath();c.moveTo(l-tickLength,yy);c.lineTo(l,yy);c.stroke();
-  }
-  const timeAxis=niceAxis(0,T,Math.max(3,Math.min(6,Math.floor(pw/(65*scale)))));
-  c.textAlign='center';c.textBaseline='top';c.fillStyle='#4d5c50';
-  for(const tick of timeAxis.ticks){
-    if(tick<=0||tick>T+timeAxis.step*1e-9)continue;
-    const xx=X(tick);
-    c.strokeStyle=axisColor;c.beginPath();c.moveTo(xx,zeroY);c.lineTo(xx,zeroY+tickLength);c.stroke();
-    c.fillText(axisLabel(tick,timeAxis.step),xx,zeroY+tickLength+2);
-  }
-  // Standard x/v versus t axes with positive direction indicated by arrows.
-  c.strokeStyle=axisColor;c.lineWidth=1.1;c.setLineDash([]);c.beginPath();
-  c.moveTo(l,bottom);c.lineTo(l,top-5);c.lineTo(l-3.5,top);
-  c.moveTo(l,top-5);c.lineTo(l+3.5,top);
-  c.moveTo(l,zeroY);c.lineTo(w-r+5,zeroY);c.lineTo(w-r,zeroY-3.5);
-  c.moveTo(w-r+5,zeroY);c.lineTo(w-r,zeroY+3.5);c.stroke();
-  c.fillStyle='#4d5c50';c.textBaseline='alphabetic';c.textAlign='left';
-  c.fillText(type==='x'?'x / m':'v / (m/s)',l+5,top-10);
-  c.textAlign='right';c.fillText('t / s',w-2,Math.max(fontSize+1,zeroY-6));
-  for(const [obj,col,dashed] of [[state.A,'#477fa8',false],[state.B,'#795bb1',true]]){
-    c.strokeStyle=col;c.lineWidth=2.1;c.setLineDash(dashed?[6,3.5]:[]);c.beginPath();
-    for(let i=0;i<=160;i++){const t=T*i/160,px=X(t),py=Y(at(obj,t));if(i===0)c.moveTo(px,py);else c.lineTo(px,py);}c.stroke();
-    c.setLineDash([]);const px=X(state.time),py=Y(at(obj,state.time));c.fillStyle='#fbfaf5';c.beginPath();c.arc(px,py,4,0,Math.PI*2);c.fill();c.strokeStyle=col;c.lineWidth=2;c.stroke();
-  }
-  if(state.time>1e-9){c.strokeStyle='#bfc8b9';c.lineWidth=1;c.setLineDash([3,4]);c.beginPath();c.moveTo(X(state.time),top);c.lineTo(X(state.time),bottom);c.stroke();c.setLineDash([]);}
-  const ev=P.events(state.A,state.B,T);
-  for(const t of type==='x'?ev.meetings:ev.equalTimes){if(t<0||t>T)continue;const py=Y(at(state.A,t));c.fillStyle='#c28a55';c.beginPath();c.arc(X(t),py,3.3,0,Math.PI*2);c.fill();}
-  c.textBaseline='alphabetic';
-}
-function formatTimes(arr){return arr.map(t=>`${nice(t)} s`).join('、');}
+function formatTime(t){const ev=currentAnalysis();return preciseTime(t,[...ev.meetings,...ev.equalTimes]);}
+function formatTimes(arr){return arr.map(t=>`${formatTime(t)} s`).join('、');}
 // Distinguish genuine distance turns from a stretch of equal velocities.
 function timelineEvents(){
- const T=state.duration, ev=P.events(state.A,state.B,T), points=[];
+ const T=state.duration, ev=currentAnalysis(), points=[];
  const add=(t,label)=>{if(Number.isFinite(t)&&t>=0&&t<=T)points.push({t,label});};
  if(!ev.coincident)for(const t of ev.meetings)add(t,t===0?'初始同位':'相遇');
  for(const t of ev.equalTimes){
@@ -1067,21 +1902,22 @@ function timelineEvents(){
  return merged;
 }
 let timelineCache='', timelinePoints=[], timelineDragging=false;
-function timelineTime(t){
+function preciseTime(t,times){
  let digits=3;
  while(digits<12){
   const rounded=Number(t.toFixed(digits));
-  if((t===0||rounded!==0)&&!timelinePoints.some(p=>p.t!==t&&Number(p.t.toFixed(digits))===rounded))break;
+  if((t===0||rounded!==0)&&!times.some(other=>other!==t&&Number(other.toFixed(digits))===rounded))break;
   digits++;
  }
  const value=Number(t.toFixed(digits));
  return value===0&&t!==0?Number(t.toPrecision(3)).toString():value.toString();
 }
+function timelineTime(t){return preciseTime(t,timelinePoints.map(point=>point.t));}
 function renderTimeline(){
  const enabled=$('timeline-enabled').checked;
- const key=JSON.stringify([state.A,state.B,state.duration,enabled]);
+ const key=JSON.stringify([state.demoId,state.A,state.B,state.duration,enabled]);
  if(key!==timelineCache){
-  timelineCache=key; timelinePoints=enabled?timelineEvents():[];
+  timelineCache=key; timelinePoints=enabled?(isComparison()?window.MotionComparison.events():timelineEvents()):[];
   const marks=$('timeline-marks'), list=$('timeline-events');marks.replaceChildren();list.replaceChildren();
   for(const point of timelinePoints){
    const fraction=point.t/state.duration, marker=document.createElement('i');
@@ -1097,7 +1933,7 @@ function renderTimeline(){
  $('timeline').setAttribute('aria-valuetext',`${timelineTime(state.time)} 秒${at?'，'+at.labels.join('，'):''}`);
 }
 function renderResults(){
- const ev=P.events(state.A,state.B,state.duration),EPS=1e-8;
+ const ev=currentAnalysis(),EPS=1e-8;
  const initialSame=Math.abs(P.position(state.A,0)-P.position(state.B,0))<EPS;
  const laterMeetings=ev.meetings.filter(t=>t>EPS);
  const joinedAt=t=>{
@@ -1113,13 +1949,13 @@ function renderResults(){
    const laterJoined=laterMeetings.find(joinedAt);
    meetTitle=`之后相遇 ${laterMeetings.length} 次`;
    meetDetail=`初始位于同一位置；之后相遇时刻：${formatTimes(laterMeetings)}。`;
-   if(laterJoined!==undefined)meetDetail+=`${nice(laterJoined)} s 起有一段时间重合。`;
+   if(laterJoined!==undefined)meetDetail+=`${formatTime(laterJoined)} s 起有一段时间重合。`;
   }else{
    meetTitle='同一位置出发';
    meetDetail=joined===0?'初始位于同一位置，并有一段时间重合；之后没有再次相遇。':'初始位于同一位置；展示时间内没有再次相遇。';
   }
  }else if(joined!==undefined){
-  meetTitle='相遇后有一段时间重合';meetDetail=`${nice(joined)} s 起，两者有一段时间处在同一位置。`;
+  meetTitle='相遇后有一段时间重合';meetDetail=`${formatTime(joined)} s 起，两者有一段时间处在同一位置。`;
  }else if(ev.meetings.length){
   meetTitle=`${ev.meetings.length} 次相遇`;meetDetail=`相遇时刻：${formatTimes(ev.meetings)}。`;
  }else{
@@ -1130,7 +1966,7 @@ function renderResults(){
  if(eq.length){
   const t=eq[0],delta=Math.min(.01,Math.max(0,(state.duration-t)/2));
   const continues=delta>0&&Math.abs(P.velocity(state.A,t+delta)-P.velocity(state.B,t+delta))<1e-7;
-  $('equal-result').textContent=continues?(t<1e-7?'有一段时间共速':`${nice(t)} s 起有一段共速`):formatTimes(eq);
+  $('equal-result').textContent=continues?(t<1e-7?'有一段时间共速':`${formatTime(t)} s 起有一段共速`):formatTimes(eq);
   $('equal-detail').textContent='速度相同不代表位置相同；是否为距离极值还需看前后变化。';
  }else{
   $('equal-result').textContent='没有共速时刻';$('equal-detail').textContent='在当前展示时间内，两者速度没有相同。';
@@ -1142,20 +1978,189 @@ function renderResults(){
  const smallest=candidates.reduce((a,b)=>b.d<a.d?b:a),largest=candidates.reduce((a,b)=>b.d>a.d?b:a);
  $('rule-title').textContent='间距的最大与最小';
  const interval=initialSame?(laterMeetings.length?'再次相遇前（含相遇）':'当前展示时间内'):(ev.meetings.length?'首次相遇前（含相遇）':'当前展示时间内');
- $('rule-detail').textContent=`${interval}：最大 ${nice(largest.d)} m（${nice(largest.t)} s），最小 ${nice(smallest.d)} m（${nice(smallest.t)} s）。`;
+ $('rule-detail').textContent=`${interval}：最大 ${nice(largest.d)} m（${formatTime(largest.t)} s），最小 ${nice(smallest.d)} m（${formatTime(smallest.t)} s）。`;
 }
-function refresh(){renderTimeline();const t=state.time,shownTime=timelinePoints.some(p=>p.t===t)?timelineTime(t):fmt(t); $('time-readout').innerHTML=`${shownTime} <em>s</em>`;const relative=P.position(state.B,t)-P.position(state.A,t);$('distance-readout').innerHTML=`${fmt(Math.abs(relative))} <em>m</em>`;$('relative-readout').textContent=`位置差 xB − xA = ${relative>0?'+':''}${fmt(relative)} m` ;for(const key of ['A','B']){const obj=state[key],prefix=key.toLowerCase(),position=P.position(obj,t);const signed=value=>Math.abs(value)<.00001?fmt(0):(value>0?'+':'')+fmt(value);$(prefix+'-position').textContent=signed(position);$(prefix+'-displacement').textContent=signed(position-obj.x);$(prefix+'-velocity').textContent=signed(P.velocity(obj,t));} $('play').innerHTML=state.playing?'Ⅱ &nbsp;暂停':'▶ &nbsp;播放';$('timeline').max=state.duration;$('timeline').value=t;$('duration-label').textContent=`${fmt(t)} / ${nice(state.duration)} s`;drawTrack();plot($('position-chart'),'x');plot($('velocity-chart'),'v');renderResults();}
-$('params-reset').addEventListener('click',()=>{if(state.scope==='general')resetGeneral();else loadPreset();});
-document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
-document.querySelectorAll('[data-theme]').forEach(b=>b.addEventListener('click',()=>showTheme(b.dataset.theme)));
-document.querySelectorAll('[data-scope]').forEach(b=>b.addEventListener('click',()=>{state.scope=b.dataset.scope;state.category='';state.presetId='';state.resultFilter='';populateGroups();}));
-$('category').addEventListener('change',e=>{state.category=e.target.value;state.presetId='';state.resultFilter='';populateMoreExamples();});
-$('result-filter').addEventListener('change',e=>{state.resultFilter=e.target.value;state.presetId='';populateMoreExamples();});
-$('preset').addEventListener('change',e=>{state.presetId=e.target.value;loadPreset();});
-$('play').addEventListener('click',()=>{if(state.time>=state.duration)state.time=0;state.playing=!state.playing;state.last=null;refresh();});$('reset').addEventListener('click',()=>{state.time=0;state.playing=false;state.last=null;refresh();});$('timeline').addEventListener('pointerdown',()=>{timelineDragging=true;});window.addEventListener('pointerup',()=>{timelineDragging=false;});window.addEventListener('pointercancel',()=>{timelineDragging=false;});$('timeline').addEventListener('input',e=>{let time=Number(e.target.value);if(timelineDragging&&$('timeline-enabled').checked&&timelinePoints.length){const width=e.target.getBoundingClientRect().width,threshold=state.duration*Math.min(.025,12/Math.max(width-20,1));const nearest=timelinePoints.reduce((a,b)=>Math.abs(b.t-time)<Math.abs(a.t-time)?b:a);if(Math.abs(nearest.t-time)<=threshold)time=nearest.t;}state.time=time;state.playing=false;state.last=null;refresh();});$('timeline-enabled').addEventListener('change',refresh);$('show-uniform').checked=showUniform;$('show-uniform').addEventListener('change',e=>{showUniform=e.target.checked;try{localStorage.setItem('motion-show-uniform',String(showUniform));}catch(_){}if(state.mode==='more'){const oldId=state.presetId,oldA={...state.A},oldB={...state.B},oldTime=state.time,oldDuration=state.duration,oldPlaying=state.playing;populateGroups();if(state.presetId===oldId){state.A=oldA;state.B=oldB;state.time=oldTime;state.duration=oldDuration;state.playing=oldPlaying;state.last=null;renderParams();refresh();}}});$('settings-open').addEventListener('click',()=>$('settings-dialog').showModal());$('settings-dialog').addEventListener('click',e=>{if(e.target===$('settings-dialog'))$('settings-dialog').close();});let timer;window.addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(refresh,80);});function tick(now){if(state.playing){if(state.last!==null)state.time=Math.min(state.duration,state.time+(now-state.last)/1000);state.last=now;if(state.time>=state.duration){state.playing=false;state.last=null;}refresh();}requestAnimationFrame(tick);}selectMode('typical');requestAnimationFrame(tick);
+// Reserve each numeric slot from the entire trajectory, once per model.
+// Playback only replaces the digits; units and neighbouring readings stay put.
+let readoutKey = '';
+function reserveNumber(id, values, formatter) {
+ const characters = Math.max(...values.map(value => formatter(value).length));
+ $(id).style.setProperty('--number-width', `${characters + .5}ch`);
+ return characters;
+}
+function reserveReadouts() {
+ currentAnalysis();
+ if (readoutKey === analysisKey) return;
+ readoutKey = analysisKey;
+ const times = timelineEvents().map(point => point.t);
+ const timeCharacters = reserveNumber('time-value', [0, state.duration, ...times], time => {
+  const exact = preciseTime(time, times), ordinary = fmt(time);
+  return exact.length > ordinary.length ? exact : ordinary;
+ });
+ let widestReading = timeCharacters;
+ const bounds = P.bounds(state.A, state.B, state.duration);
+ const distanceBound = bounds.max - bounds.min;
+ widestReading = Math.max(widestReading, reserveNumber('distance-value', [0, distanceBound], fmt));
+ widestReading = Math.max(widestReading, reserveNumber('relative-value', [-distanceBound, 0, distanceBound], signed));
+ for (const key of ['A', 'B']) {
+  const object = state[key], prefix = key.toLowerCase();
+  const range = P.bounds(object, object, state.duration);
+  widestReading = Math.max(widestReading, reserveNumber(prefix + '-position', [range.min, 0, range.max], signed));
+  widestReading = Math.max(widestReading, reserveNumber(prefix + '-displacement', [range.min - object.x, 0, range.max - object.x], signed));
+  widestReading = Math.max(widestReading, reserveNumber(prefix + '-velocity', [P.velocity(object, 0), 0, P.velocity(object, state.duration)], signed));
+ }
+ // Long signed values also need the full-width reading layout. The choice
+ // stays fixed for the whole trajectory, so playback never moves the panels.
+ $('single-stage').querySelector('.status-row').classList.toggle('wide-time', widestReading > 6);
+ $('single-stage').classList.toggle('wide-readings', widestReading > 6);
+}
+function refresh() {
+ renderTimeline();
+ const time = state.time;
+ $('play').innerHTML = state.playing ? 'Ⅱ &nbsp;暂停' : '▶ &nbsp;播放';
+ const playbackTarget = isComparison() ? `全部${window.MotionComparison.cases.length === 4 ? '四' : '三'}组` : '演示';
+ $('play').setAttribute('aria-label', `${state.playing ? '暂停' : '播放'}${playbackTarget}`);
+ $('timeline').max = state.duration;
+ $('timeline').value = time;
+ $('duration-label').textContent = `${fmt(time)} / ${nice(state.duration)} s`;
+ if (isComparison()) {
+  window.MotionComparison.render(time);
+  return;
+ }
+ reserveReadouts();
+ const shownTime = timelinePoints.some(point => point.t === time) ? timelineTime(time) : fmt(time);
+ $('time-value').textContent = shownTime;
+ const relative = P.position(state.B, time) - P.position(state.A, time);
+ $('distance-value').textContent = fmt(Math.abs(relative));
+ $('relative-value').textContent = signed(relative);
+ for (const key of ['A', 'B']) {
+  const object = state[key], prefix = key.toLowerCase(), position = P.position(object, time);
+  $(prefix + '-position').textContent = signed(position);
+  $(prefix + '-displacement').textContent = signed(position - object.x);
+  $(prefix + '-velocity').textContent = signed(P.velocity(object, time));
+ }
+ const scene = {...state, scope: physicalScope(), events: currentAnalysis()};
+ window.MotionRenderer.track($('track'), scene);
+ window.MotionRenderer.plot($('position-chart'), 'x', scene);
+ window.MotionRenderer.plot($('velocity-chart'), 'v', scene);
+ if (resultsKey !== analysisKey) { renderResults(); resultsKey = analysisKey; }
+}
+
+$('params-reset').addEventListener('click', () => {
+ if (state.mode === 'typical') return;
+ if (state.scope === 'general') resetGeneral(); else loadPreset();
+});
+document.querySelectorAll('button[data-mode]').forEach(button => {
+ button.addEventListener('click', () => selectMode(button.dataset.mode));
+});
+document.querySelectorAll('button[data-theme]').forEach(button => {
+ button.addEventListener('click', () => showTheme(button.dataset.theme));
+});
+document.querySelectorAll('button[data-demo]').forEach(button => {
+ button.addEventListener('click', () => showComparison(button.dataset.demo));
+});
+document.querySelectorAll('button[data-scope]').forEach(button => {
+ button.addEventListener('click', () => {
+  state.scope = button.dataset.scope;
+  state.category = '';
+  state.presetId = '';
+  state.resultFilter = '';
+  populateGroups();
+ });
+});
+$('category').addEventListener('change', event => {
+ state.category = event.target.value;
+ state.presetId = '';
+ state.resultFilter = '';
+ populateMoreExamples();
+});
+$('result-filter').addEventListener('change', event => {
+ state.resultFilter = event.target.value;
+ state.presetId = '';
+ populateMoreExamples();
+});
+$('preset').addEventListener('change', event => { state.presetId = event.target.value; loadPreset(); });
+
+// Request frames only while playing; pause when the page becomes hidden.
+let animationFrame = null;
+function requestTick() {
+ if (state.playing && animationFrame === null) animationFrame = requestAnimationFrame(tick);
+}
+function tick(now) {
+ animationFrame = null;
+ if (!state.playing) return;
+ if (state.last !== null) state.time = Math.min(state.duration, state.time + (now - state.last) / 1000);
+ state.last = now;
+ if (state.time >= state.duration) { state.playing = false; state.last = null; }
+ refresh();
+ requestTick();
+}
+$('play').addEventListener('click', () => {
+ if (state.time >= state.duration) state.time = 0;
+ state.playing = !state.playing;
+ state.last = null;
+ refresh();
+ requestTick();
+});
+$('reset').addEventListener('click', () => {
+ state.time = 0;
+ state.playing = false;
+ state.last = null;
+ refresh();
+});
+$('timeline').addEventListener('pointerdown', () => { timelineDragging = true; });
+window.addEventListener('pointerup', () => { timelineDragging = false; });
+window.addEventListener('pointercancel', () => { timelineDragging = false; });
+$('timeline').addEventListener('input', event => {
+ let time = Number(event.target.value);
+ if (timelineDragging && $('timeline-enabled').checked && timelinePoints.length) {
+  const width = event.target.getBoundingClientRect().width;
+  const threshold = state.duration * Math.min(.025, 12 / Math.max(width - 20, 1));
+  const nearest = timelinePoints.reduce((a, b) => Math.abs(b.t - time) < Math.abs(a.t - time) ? b : a);
+  if (Math.abs(nearest.t - time) <= threshold) time = nearest.t;
+ }
+ state.time = time;
+ state.playing = false;
+ state.last = null;
+ refresh();
+});
+$('timeline-enabled').addEventListener('change', refresh);
+$('show-uniform').checked = showUniform;
+$('show-uniform').addEventListener('change', event => {
+ showUniform = event.target.checked;
+ try { localStorage.setItem('motion-show-uniform', String(showUniform)); } catch (_) {}
+ if (state.mode !== 'more') return;
+ const previous = {id: state.presetId, A: {...state.A}, B: {...state.B}, time: state.time, duration: state.duration, playing: state.playing};
+ populateGroups();
+ if (state.presetId === previous.id) {
+  Object.assign(state, {A: previous.A, B: previous.B, time: previous.time, duration: previous.duration, playing: previous.playing, last: null});
+  renderParams();
+  refresh();
+  requestTick();
+ }
+});
+$('settings-open').addEventListener('click', () => $('settings-dialog').showModal());
+$('settings-dialog').addEventListener('click', event => {
+ if (event.target === $('settings-dialog')) $('settings-dialog').close();
+});
+document.addEventListener('visibilitychange', () => {
+ if (document.hidden && state.playing) {
+  state.playing = false;
+  state.last = null;
+  refresh();
+ }
+});
+let resizeTimer;
+window.addEventListener('resize', () => {
+ clearTimeout(resizeTimer);
+ resizeTimer = setTimeout(() => { syncControlHeight(); refresh(); }, 80);
+});
+window.MotionComparison.mount($('comparison-cards'));
+selectMode('typical');
 })();
 
-</script><script>
+</script>
+<script>
 (() => {
   'use strict';
   const trigger = document.getElementById('map-open');
